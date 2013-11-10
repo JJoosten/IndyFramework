@@ -19,6 +19,8 @@ namespace Indy
 					 const GLchar** const uniformSubNames, 
 					 const GLshort numUniforms);
 
+		void Destroy( void);
+
 		void SetUniform( const GLuint index,
 						 const GLvoid* data, 
 						 const GLuint dataSizeInBytes);

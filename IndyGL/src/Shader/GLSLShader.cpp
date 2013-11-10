@@ -19,15 +19,14 @@ namespace Indy
 
 	GLSLShader::~GLSLShader( void)
 	{
-		if( m_usageCounter > 0)
-			BREAKPOINT(~GLSLShader still being used by one or more shader programs);
+		if(m_shaderSource != NULL)
+			BREAKPOINT(GLSLShader was not yet destroyed, use the Destroy function);
 
 		if(m_shaderID != 0)
-			glDeleteShader( m_shaderID);
+			BREAKPOINT(GLSLShader was not yet destroyed, use the Destroy function);
 
-		if(m_shaderSource != NULL)
-			delete m_shaderSource;
-		m_shaderSource = NULL;
+		if( m_usageCounter > 0)
+			BREAKPOINT(GLSLShader still being used by one or more shader programs);
 	}
 
 
@@ -68,6 +67,25 @@ namespace Indy
 			BREAKPOINT( This shader is already created!);
 
 		m_shaderID = glCreateShader(m_shaderType);
+	}
+
+	
+	void GLSLShader::Destroy( void)
+	{
+		if(m_shaderSource == NULL)
+			BREAKPOINT(GLSLShader was already destroy or not initialized);
+
+		if(m_shaderID == 0)
+			BREAKPOINT(GLSLShader was already destroy or not initialized);
+
+		if( m_usageCounter > 0)
+			BREAKPOINT(GLSLShader still being used by one or more shader programs);
+
+		glDeleteShader( m_shaderID);
+		m_shaderID = 0;
+
+		delete m_shaderSource;
+		m_shaderSource = NULL;
 	}
 
 	bool GLSLShader::Compile( void)

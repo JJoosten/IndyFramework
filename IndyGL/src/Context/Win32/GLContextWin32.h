@@ -23,6 +23,8 @@ namespace Indy
 		bool Create( const HDC const deviceContext,
 					 const PIXELFORMATDESCRIPTOR* pixelFormatDiscriptor);
 
+		void Destroy( void);
+
 		// inherited
 		void Bind( void);
 		void UnBind( void);

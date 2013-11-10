@@ -105,6 +105,9 @@ int main( int argc, char** argv)
 
 	// deinitialize
 	glContext->UnBind();
+#ifdef WIN32
+	win32GLContext->Destroy();
+#endif
 	delete glContext;
 	glContext = NULL;
 

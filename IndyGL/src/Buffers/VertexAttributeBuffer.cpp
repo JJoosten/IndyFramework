@@ -19,13 +19,11 @@ namespace Indy
 
 	VertexAttributeBuffer::~VertexAttributeBuffer( void)
 	{
-		if(m_attributeData)
-			delete m_attributeData;
-		m_attributeData = NULL;
-
+		if(m_attributeData != 0)
+			BREAKPOINT(VertexAttributeBuffer was not yet destroyed);
+		
 		if(m_vboID != 0)
-			glDeleteBuffers( 1, &m_vboID);
-
+			BREAKPOINT(VertexAttributeBuffer was not yet destroyed);
 	}
 
 	
@@ -61,6 +59,21 @@ namespace Indy
 		glBufferData( GL_ARRAY_BUFFER, m_attributeSizeInBytes * m_numAttributes * m_numAttributeChannels, m_attributeData, usage);
 
 		UnBind();
+	}
+	
+	void VertexAttributeBuffer::Destroy( void)
+	{
+		if(m_attributeData == 0)
+			BREAKPOINT(VertexAttributeBuffer was already destroyed or not initialized);
+		
+		if(m_vboID == 0)
+			BREAKPOINT(VertexAttributeBuffer was already destroyed or not initialized);
+		
+		delete m_attributeData;
+		m_attributeData = NULL;
+
+		glDeleteBuffers( 1, &m_vboID);
+		m_vboID = 0;
 	}
 
 	

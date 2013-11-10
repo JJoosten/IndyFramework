@@ -21,6 +21,7 @@ namespace Indy
 
 		
 		void Create( void);
+		void Destroy( void);
 
 		bool Link( void);
 

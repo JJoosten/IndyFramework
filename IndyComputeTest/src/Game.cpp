@@ -44,15 +44,30 @@ namespace Indy
 
 	Game::~Game( void)
 	{
+		m_computeShaderProgram->Destroy();
 		delete m_computeShaderProgram;
+
+		m_computeShader->Destroy();
 		delete m_computeShader;
+		
+		m_vertexFragShaderProgram->Destroy();
 		delete m_vertexFragShaderProgram;
+
+		m_vertexShader->Destroy();
 		delete m_vertexShader;
+
+		m_fragmentShader->Destroy();
 		delete m_fragmentShader;
+		
 		m_texture->Destroy();
 		delete m_texture;
+		
+		m_planeVertices->Destroy();
 		delete m_planeVertices;
+
+		m_cameraDataUBO->Destroy();
 		delete m_cameraDataUBO;
+		
 		delete m_vertexArray;
 	}
 

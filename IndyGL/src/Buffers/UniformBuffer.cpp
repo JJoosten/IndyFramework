@@ -20,16 +20,12 @@ namespace Indy
 
 	UniformBuffer::~UniformBuffer( void)
 	{
-		if( m_handle != 0)
-			glDeleteBuffers( 1, &m_handle);
-
-		if( m_buffer != NULL)
-			delete m_buffer;
-		m_buffer = NULL;
-
-		if( m_offsets != NULL)
-			delete m_offsets;
-		m_offsets = NULL;
+		if(m_handle != 0)
+			BREAKPOINT(Uniform buffer was not yet destroyed);
+		if(m_buffer != NULL)
+			BREAKPOINT(Uniform buffer was not yet destroyed);
+		if(m_offsets != NULL)
+			BREAKPOINT(Uniform buffer was not yet destroyed);
 	}
 
 	
@@ -85,6 +81,26 @@ namespace Indy
 			BREAKPOINT(UniformBuffer SetUniform memcpy overflow);
 
 		memcpy( m_buffer + m_offsets[index], data, dataSizeInBytes);
+	}
+
+	
+	void UniformBuffer::Destroy( void)
+	{
+		if(m_handle == 0)
+			BREAKPOINT(Uniform buffer was already destroyed before or does not yet excist);
+		if(m_buffer == NULL)
+			BREAKPOINT(Uniform buffer was already destroyed before or does not yet excist);
+		if(m_offsets == NULL)
+			BREAKPOINT(Uniform buffer was already destroyed before or does not yet excist);
+
+		glDeleteBuffers( 1, &m_handle);
+		m_handle = 0;
+
+		delete m_buffer;
+		m_buffer = NULL;
+
+		delete m_offsets;
+		m_offsets = NULL;
 	}
 
 	void UniformBuffer::SendToGPU( const GLuint blockIndex)

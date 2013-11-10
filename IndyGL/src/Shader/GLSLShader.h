@@ -34,6 +34,8 @@ namespace Indy
 
 		void Create( void);
 
+		void Destroy( void);
+
 		bool Compile( void);
 
 		/* --- Getters & Setters --- */

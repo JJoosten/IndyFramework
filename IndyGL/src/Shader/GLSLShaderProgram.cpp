@@ -21,32 +21,8 @@ namespace Indy
 
 	GLSLShaderProgram::~GLSLShaderProgram( void)
 	{
-		if( m_vertexShader != NULL)
-		{
-			glDetachShader( m_shaderProgramID, m_vertexShader->GetID());
-			m_vertexShader->substractFromReferenceCounter();
-		}
-
-		if( m_fragmentShader != NULL)
-		{
-			glDetachShader( m_shaderProgramID, m_fragmentShader->GetID());
-			m_fragmentShader->substractFromReferenceCounter();
-		}
-
-		if( m_geometryShader != NULL)
-		{
-			glDetachShader( m_shaderProgramID, m_geometryShader->GetID());
-			m_geometryShader->substractFromReferenceCounter();
-		}
-
-		if( m_computeShader != NULL)
-		{
-			glDetachShader( m_shaderProgramID, m_computeShader->GetID());
-			m_computeShader->substractFromReferenceCounter();
-		}	
-
 		if( m_shaderProgramID != 0)
-			glDeleteProgram( m_shaderProgramID);
+			BREAKPOINT(GLSLShaderProgram is not yet destroyed, use Destroy to destroy the program);
 	}
 
 	
@@ -90,6 +66,39 @@ namespace Indy
 	void GLSLShaderProgram::Create( void)
 	{
 		m_shaderProgramID = glCreateProgram();
+	}
+	
+	void GLSLShaderProgram::Destroy( void)
+	{
+		if( m_shaderProgramID == 0)
+			BREAKPOINT(GLSLShaderProgram was already destroyed or not created);
+
+		if( m_vertexShader != NULL)
+		{
+			glDetachShader( m_shaderProgramID, m_vertexShader->GetID());
+			m_vertexShader->substractFromReferenceCounter();
+		}
+
+		if( m_fragmentShader != NULL)
+		{
+			glDetachShader( m_shaderProgramID, m_fragmentShader->GetID());
+			m_fragmentShader->substractFromReferenceCounter();
+		}
+
+		if( m_geometryShader != NULL)
+		{
+			glDetachShader( m_shaderProgramID, m_geometryShader->GetID());
+			m_geometryShader->substractFromReferenceCounter();
+		}
+
+		if( m_computeShader != NULL)
+		{
+			glDetachShader( m_shaderProgramID, m_computeShader->GetID());
+			m_computeShader->substractFromReferenceCounter();
+		}	
+
+		glDeleteProgram( m_shaderProgramID);
+		m_shaderProgramID = 0;
 	}
 
 	bool GLSLShaderProgram::Link( void)

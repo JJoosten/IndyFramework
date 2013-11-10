@@ -20,9 +20,9 @@ namespace Indy
 		WindowWin32( void);
 		virtual ~WindowWin32( void);
 
-		bool	Create( const unsigned int width, const unsigned int height, 
-						const bool requestFullscreen, const char* windowTitle, 
-						const unsigned int bits);
+		bool Create( const unsigned int width, const unsigned int height, 
+					 const bool requestFullscreen, const char* windowTitle, 
+					 const unsigned int bits);
 
 		void Destroy( void);
 

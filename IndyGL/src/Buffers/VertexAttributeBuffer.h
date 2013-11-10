@@ -23,6 +23,8 @@ namespace Indy
 					 GLuint attributeSizeInBytes,
 					 GLenum usage = GL_STATIC_DRAW );
 
+		void Destroy( void);
+
 		void ReSend( const GLuint numElementsToSend, 
 					 const GLuint numElementsOffset = 0);
 

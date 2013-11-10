@@ -19,11 +19,8 @@ namespace Indy
 
 	GLContextWin32::~GLContextWin32( void)
 	{
-		// delete context
-		if( !wglDeleteContext(m_glContextHandle))
-			BREAKPOINT(GLContext could not be deleted properly);
-
-
+		if( m_glContextHandle)
+			BREAKPOINT(GLContextWin32 was not destroyed yet, use the Destroy function!);
 	}
 
 	bool GLContextWin32::Create( const HDC const deviceContext, 
@@ -133,6 +130,14 @@ namespace Indy
 
 
 		return true;
+	}
+	
+	void GLContextWin32::Destroy( void)
+	{
+		// delete context
+		if( !wglDeleteContext(m_glContextHandle))
+			BREAKPOINT(GLContext could not be deleted properly);
+		m_glContextHandle = NULL;
 	}
 
 	void GLContextWin32::Bind( void)
