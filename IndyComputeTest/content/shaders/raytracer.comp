@@ -1,0 +1,83 @@
+// Juul Joosten 2013
+
+#version 420
+
+#extension GL_ARB_compute_shader : require
+#extension GL_ARB_shader_storage_buffer_object : require
+#extension GL_ARB_explicit_uniform_location : require
+#extension GL_EXT_shader_image_load_store : require
+
+// defines
+#define LOCAL_SIZE 8
+
+/* --- includes work using preprocessor  ---
+	- defines.incl contains rename defines to have a easier portable shader language 
+*/
+#include "defines.incl"
+#include "geometry.incl"
+#include "collision.incl" 
+#include "lights.incl"
+
+
+//input
+layout(RGBA32F) uniform image2D Texture;
+
+// uniform buffer 
+layout(std140) uniform CameraInfo
+{
+	float3	ViewPlaneBL;		// BL = bottom left
+	float3	ViewPlaneDeltaXY;
+}; 
+
+layout (local_size_x = LOCAL_SIZE, local_size_y = LOCAL_SIZE, local_size_z = 1) in;
+
+
+// raytrace kernel
+void main() 
+{
+	/* Compute Shader Input From OpenGL 
+	--- Work group dimensions ---
+	gl_NumWorkGroups (uvec3)
+	gl_WorkGroupSize (const uvec3)
+	--- Work group and invocation IDs ---
+	gl_WorkGroupID (uvec3)
+	gl_LocalInvocationID (uvec3)
+	--- Derived variables ---
+	gl_GlobalInvocationID (uvec3)
+	gl_LocalInvocationIndex (uint) */
+
+	// --- setup the scene ---
+	Sphere sphere = Sphere( 0, 0, 5, 1); // x,y,z,radius
+
+	Light light;
+	light.position = float3(0,4,0);
+	light.radius = 1.0;
+	light.color = RED;
+
+
+	// --- Setup the screenplane ---
+	const float3 centerOfPixelOffset = ViewPlaneDeltaXY * 0.5;
+
+	// --- trace ray ---
+	const float3 rayOrigin = float3(0,0,0); 
+	const float3 rayDirection = normalize(ViewPlaneBL + centerOfPixelOffset + ViewPlaneDeltaXY * gl_GlobalInvocationID);
+
+	const IntersectionData intersectionData = IntersectWithSphere( sphere, rayOrigin, rayDirection);
+
+	float4 finalColor = BLACK;
+
+	if( intersectionData.result == INTERSECT_RESULTS_OUTSIDE)
+	{
+		// check if we can see the light
+		float3 L = normalize(light.position - intersectionData.intersectionPoint);
+		float3 N = normalize(intersectionData.intersectionPoint - sphere.xyz );
+		float dot = dot(N, L);
+		if(dot > 0)
+		{
+			finalColor = dot * RED * light.color;
+		}
+	}
+
+	const int2 texelLocation = int2( gl_GlobalInvocationID.xy);
+	imageStore( Texture, texelLocation, finalColor);
+};

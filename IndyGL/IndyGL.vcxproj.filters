@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{f369df48-8f82-44b0-a764-2082a333c0b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Window">
+      <UniqueIdentifier>{286eb31b-3092-405c-8fe3-f3264d86a3b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Window\Win32">
+      <UniqueIdentifier>{fe2fb97b-3e6f-4eea-8e68-2f994f21807b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Textures">
+      <UniqueIdentifier>{264acd5d-10d1-4123-8b86-db5543df0595}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Shader">
+      <UniqueIdentifier>{0cff0d91-3a58-4691-acbd-0722502c3000}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Camera">
+      <UniqueIdentifier>{19cc70bc-06cb-4c0f-9c48-90827e9bf729}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Context">
+      <UniqueIdentifier>{e821f520-af9d-4b94-9fd0-5332a7947a0e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Context\Win32">
+      <UniqueIdentifier>{7599d3ae-4fee-4cda-b5cf-c448bb140e6e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Buffers">
+      <UniqueIdentifier>{16ed0270-0860-4586-8a96-5527dbec8df1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lib">
+      <UniqueIdentifier>{11af5b66-07f5-4679-be52-40f6b8711752}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lib\stb_image">
+      <UniqueIdentifier>{da7feb56-acfc-4e3a-9c8e-fa5a582cede1}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Window\Window.h">
+      <Filter>src\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Window\Win32\WindowWin32.h">
+      <Filter>src\Window\Win32</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Textures\Texture2D.h">
+      <Filter>src\Textures</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Shader\GLSLShaderPreprocessor.h">
+      <Filter>src\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Shader\GLSLShaderProgram.h">
+      <Filter>src\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Shader\GLSLShader.h">
+      <Filter>src\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Context\GLContext.h">
+      <Filter>src\Context</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Context\Win32\GLContextWin32.h">
+      <Filter>src\Context\Win32</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Buffers\VertexArray.h">
+      <Filter>src\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Buffers\VertexAttributeBuffer.h">
+      <Filter>src\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Buffers\UniformBuffer.h">
+      <Filter>src\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\stb_image\include\stb_image\stb_image.h">
+      <Filter>lib\stb_image</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Window\Win32\WindowWin32.cpp">
+      <Filter>src\Window\Win32</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Textures\Texture2D.cpp">
+      <Filter>src\Textures</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Shader\GLSLShaderProgram.cpp">
+      <Filter>src\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Shader\GLSLShader.cpp">
+      <Filter>src\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Shader\GLSLShaderPreprocessor.cpp">
+      <Filter>src\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Context\GLContext.cpp">
+      <Filter>src\Context</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Context\Win32\GLContextWin32.cpp">
+      <Filter>src\Context\Win32</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Buffers\VertexAttributeBuffer.cpp">
+      <Filter>src\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Buffers\UniformBuffer.cpp">
+      <Filter>src\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Buffers\VertexArray.cpp">
+      <Filter>src\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\stb_image\include\stb_image\stb_image.c">
+      <Filter>lib\stb_image</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="CopyCoreLibToGL.bat" />
+    <None Include="GenerateIncludeDir.bat" />
+  </ItemGroup>
+</Project>

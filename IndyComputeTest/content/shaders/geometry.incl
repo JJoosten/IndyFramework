@@ -1,0 +1,8 @@
+/* --- includes work using preprocessor  ---
+	- defines.incl contains rename defines to have a easier portable shader language 
+*/
+#include "defines.incl"
+
+#define Sphere float4	// x,y,z, radius
+#define radius w		// Sphere.radius becomes Sphere.w where Sphere is a vec4
+

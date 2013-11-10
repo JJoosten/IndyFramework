@@ -1,0 +1,219 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="lib\stb_image\include\stb_image\stb_image.h" />
+    <ClInclude Include="src\Buffers\UniformBuffer.h" />
+    <ClInclude Include="src\Buffers\VertexArray.h" />
+    <ClInclude Include="src\Buffers\VertexAttributeBuffer.h" />
+    <ClInclude Include="src\Context\GLContext.h" />
+    <ClInclude Include="src\Context\Win32\GLContextWin32.h" />
+    <ClInclude Include="src\Shader\GLSLShader.h" />
+    <ClInclude Include="src\Shader\GLSLShaderPreprocessor.h" />
+    <ClInclude Include="src\Shader\GLSLShaderProgram.h" />
+    <ClInclude Include="src\Textures\Texture2D.h" />
+    <ClInclude Include="src\Window\Win32\WindowWin32.h" />
+    <ClInclude Include="src\Window\Window.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="lib\stb_image\include\stb_image\stb_image.c" />
+    <ClCompile Include="src\Buffers\UniformBuffer.cpp" />
+    <ClCompile Include="src\Buffers\VertexArray.cpp" />
+    <ClCompile Include="src\Buffers\VertexAttributeBuffer.cpp" />
+    <ClCompile Include="src\Context\GLContext.cpp" />
+    <ClCompile Include="src\Context\Win32\GLContextWin32.cpp" />
+    <ClCompile Include="src\Shader\GLSLShader.cpp" />
+    <ClCompile Include="src\Shader\GLSLShaderPreprocessor.cpp" />
+    <ClCompile Include="src\Shader\GLSLShaderProgram.cpp" />
+    <ClCompile Include="src\Textures\Texture2D.cpp" />
+    <ClCompile Include="src\Window\Win32\WindowWin32.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="CopyCoreLibToGL.bat">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</DeploymentContent>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">call CopyCoreLibToGL.bat</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">copy IndyCore lib to IndyGL</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">forcerun</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkObjects>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">call CopyCoreLibToGL.bat</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">copy IndyCore lib to IndyGL</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">forcerun</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkObjects>
+      <FileType>Document</FileType>
+      <TreatOutputAsContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</TreatOutputAsContent>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</DeploymentContent>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="GenerateIncludeDir.bat">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</DeploymentContent>
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">call GenerateIncludeDir.bat</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">generate include dir</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">forcerun</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">call GenerateIncludeDir.bat</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">forcerun</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">generate include dir</Message>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</DeploymentContent>
+    </CustomBuild>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{4BF2BF06-3EAB-426C-96F1-DEC8194ACABA}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>IndyGL</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(ProjectDir)lib\$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)build\$(Configuration)\</IntDir>
+    <CustomBuildAfterTargets>
+    </CustomBuildAfterTargets>
+    <IncludePath>$(ProjectDir)lib/openGL/include/;$(ProjectDir)lib/glew-1.10.0/include/;$(ProjectDir)lib/stb_image/include/;$(ProjectDir)lib/IndyCore/include/;%(AdditionalIncludeDirectories);$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(WindowsSDK_IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)lib/openGL/lib/;$(ProjectDir)lib/glew-1.10.0/lib/Release/$(Platform)/;$(ProjectDir)lib/IndyCore/lib/$(Configuration)/;%(AdditionalIncludeDirectories);$(VCInstallDir)lib;$(VCInstallDir)atlmfc\lib;$(WindowsSDK_LibraryPath_x86)</LibraryPath>
+    <CustomBuildBeforeTargets>
+    </CustomBuildBeforeTargets>
+    <PreBuildEventUseInBuild>true</PreBuildEventUseInBuild>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(ProjectDir)lib\$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)build\$(Configuration)\</IntDir>
+    <CustomBuildAfterTargets>
+    </CustomBuildAfterTargets>
+    <IncludePath>$(ProjectDir)lib/openGL/include/;$(ProjectDir)lib/glew-1.10.0/include/;$(ProjectDir)lib/stb_image/include/;$(ProjectDir)lib/IndyCore/include/;%(AdditionalIncludeDirectories);$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(WindowsSDK_IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)lib/openGL/lib/;$(ProjectDir)lib/glew-1.10.0/lib/Release/$(Platform)/;$(ProjectDir)lib/IndyCore/lib/$(Configuration)/;%(AdditionalIncludeDirectories);$(VCInstallDir)lib;$(VCInstallDir)atlmfc\lib;$(WindowsSDK_LibraryPath_x86)</LibraryPath>
+    <CustomBuildBeforeTargets>
+    </CustomBuildBeforeTargets>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <FloatingPointModel>Fast</FloatingPointModel>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <CustomBuildStep>
+      <Command>
+      </Command>
+      <Message>
+      </Message>
+      <Outputs>
+      </Outputs>
+    </CustomBuildStep>
+    <Lib>
+      <AdditionalDependencies>IndyCore.lib;GLU32.lib;OpenGL32.Lib;glew32.lib;glew32s.lib;</AdditionalDependencies>
+    </Lib>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>
+      </Message>
+    </PreBuildEvent>
+    <CustomBuild>
+      <Command>
+      </Command>
+    </CustomBuild>
+    <CustomBuild>
+      <Message>
+      </Message>
+    </CustomBuild>
+    <CustomBuild>
+      <Outputs>
+      </Outputs>
+    </CustomBuild>
+    <CustomBuild>
+      <LinkObjects>false</LinkObjects>
+    </CustomBuild>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <CustomBuildStep>
+      <Command>
+      </Command>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Message>
+      </Message>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Outputs>
+      </Outputs>
+    </CustomBuildStep>
+    <Lib>
+      <AdditionalDependencies>IndyCore.lib;GLU32.lib;OpenGL32.Lib;glew32.lib;glew32s.lib;</AdditionalDependencies>
+    </Lib>
+    <CustomBuild>
+      <Message />
+    </CustomBuild>
+    <CustomBuild>
+      <LinkObjects>false</LinkObjects>
+    </CustomBuild>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

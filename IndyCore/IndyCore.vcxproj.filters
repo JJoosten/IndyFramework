@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{cc8af832-6dcb-49be-8976-504f11446266}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Input">
+      <UniqueIdentifier>{c4680217-03e8-4e06-bf82-4c455a0f5e30}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Time">
+      <UniqueIdentifier>{56f2ad0c-e8dc-4967-974c-0eeff883e470}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Utilities">
+      <UniqueIdentifier>{e6e91e2d-a5ae-474f-969b-e5c1eb418d93}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\CoreDefines.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Input\Keyboard.h">
+      <Filter>src\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Input\KeyboardKeys.h">
+      <Filter>src\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Time\Timer.h">
+      <Filter>src\Time</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Utilities\FPSTracker.h">
+      <Filter>src\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Utilities\Hash.h">
+      <Filter>src\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Utilities\NonCopyable.h">
+      <Filter>src\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Utilities\Random.h">
+      <Filter>src\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Utilities\Singleton.h">
+      <Filter>src\Utilities</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Input\Keyboard.cpp">
+      <Filter>src\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Time\Timer.cpp">
+      <Filter>src\Time</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Utilities\Hash.cpp">
+      <Filter>src\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Utilities\Random.cpp">
+      <Filter>src\Utilities</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\Input\Keyboard.inl">
+      <Filter>src\Input</Filter>
+    </None>
+    <None Include="GenerateIncludeDir.bat" />
+  </ItemGroup>
+</Project>

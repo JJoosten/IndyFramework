@@ -1,0 +1,49 @@
+/* --- includes work using preprocessor  ---
+	- defines.incl contains rename defines to have a easier portable shader language 
+*/
+#include "defines.incl"
+#include "geometry.incl"
+
+#define INTERSECT_RESULTS_NONE		0
+#define INTERSECT_RESULTS_OUTSIDE	1
+#define INTERSECT_RESULTS_INSIDE	2
+
+
+// collision detection
+ struct IntersectionData
+ {
+	int		result;
+	float3	intersectionPoint;
+ };
+
+ // intersection function referenced from page 178 realtime collision detection by Christer Ericson
+const IntersectionData IntersectWithSphere( Sphere sphere, vec3 rayOrigin, vec3 rayDir)
+{
+	IntersectionData intersectionData;
+	intersectionData.result = INTERSECT_RESULTS_NONE;
+		
+	const float3 m = rayOrigin - sphere.xyz;
+	const float b = dot(m, rayDir);
+	const float c = dot(m, m) - sphere.radius * sphere.radius;
+
+	if(c > 0.0 && b > 0.0) 
+		return intersectionData;
+
+	const float discr = b * b - c;
+
+	if( discr < 0.0)
+		return intersectionData;
+
+	float t = -b - sqrt(discr);
+	intersectionData.result = INTERSECT_RESULTS_OUTSIDE;
+
+	if( t < 0.0)
+	{
+		t = 0;
+		intersectionData.result = INTERSECT_RESULTS_INSIDE;
+	}
+
+	intersectionData.intersectionPoint = rayOrigin + t * rayDir;
+
+	return intersectionData; 
+};

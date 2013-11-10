@@ -1,0 +1,24 @@
+
+// define types and functions like HLSL and CG
+
+#define float4 vec4
+#define float3 vec3
+#define float2 vec2
+
+#define bool2 bvec2
+#define bool3 bvec3
+#define bool4 bvec4
+
+#define int2 ivec2
+#define int3 ivec3
+#define int4 ivec4
+
+#define lerp mix
+
+#define BLACK float4(0,0,0,0)
+#define WHITE float4(1,1,1,1)
+#define RED   float4(1,0,0,1)
+#define GREEN float4(0,1,0,1)
+#define BLUE  float4(0,0,1,1)
+
+#define Color float4

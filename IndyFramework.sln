@@ -1,0 +1,39 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IndyComputeTest", "IndyComputeTest\IndyComputeTest.vcxproj", "{1B111B43-210A-4737-ABF9-B410B2EF6B97}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4BF2BF06-3EAB-426C-96F1-DEC8194ACABA} = {4BF2BF06-3EAB-426C-96F1-DEC8194ACABA}
+		{B716641F-0FB9-4373-96A1-9FBB02E2B153} = {B716641F-0FB9-4373-96A1-9FBB02E2B153}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IndyCore", "IndyCore\IndyCore.vcxproj", "{B716641F-0FB9-4373-96A1-9FBB02E2B153}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IndyGL", "IndyGL\IndyGL.vcxproj", "{4BF2BF06-3EAB-426C-96F1-DEC8194ACABA}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B716641F-0FB9-4373-96A1-9FBB02E2B153} = {B716641F-0FB9-4373-96A1-9FBB02E2B153}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1B111B43-210A-4737-ABF9-B410B2EF6B97}.Debug|Win32.ActiveCfg = Debug|Win32
+		{1B111B43-210A-4737-ABF9-B410B2EF6B97}.Debug|Win32.Build.0 = Debug|Win32
+		{1B111B43-210A-4737-ABF9-B410B2EF6B97}.Release|Win32.ActiveCfg = Release|Win32
+		{1B111B43-210A-4737-ABF9-B410B2EF6B97}.Release|Win32.Build.0 = Release|Win32
+		{B716641F-0FB9-4373-96A1-9FBB02E2B153}.Debug|Win32.ActiveCfg = Debug|Win32
+		{B716641F-0FB9-4373-96A1-9FBB02E2B153}.Debug|Win32.Build.0 = Debug|Win32
+		{B716641F-0FB9-4373-96A1-9FBB02E2B153}.Release|Win32.ActiveCfg = Release|Win32
+		{B716641F-0FB9-4373-96A1-9FBB02E2B153}.Release|Win32.Build.0 = Release|Win32
+		{4BF2BF06-3EAB-426C-96F1-DEC8194ACABA}.Debug|Win32.ActiveCfg = Debug|Win32
+		{4BF2BF06-3EAB-426C-96F1-DEC8194ACABA}.Debug|Win32.Build.0 = Debug|Win32
+		{4BF2BF06-3EAB-426C-96F1-DEC8194ACABA}.Release|Win32.ActiveCfg = Release|Win32
+		{4BF2BF06-3EAB-426C-96F1-DEC8194ACABA}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

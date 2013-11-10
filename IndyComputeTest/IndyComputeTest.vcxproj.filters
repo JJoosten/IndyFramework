@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{6d1f53aa-f43e-4587-8de7-14a5a6bcb5af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="content">
+      <UniqueIdentifier>{72cdb20c-8027-4aed-9c95-2cc319a0e7f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="content\shaders">
+      <UniqueIdentifier>{afda12e5-7478-4ef0-bf1a-b54314138eba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="content\shaders\shaders[filter]">
+      <UniqueIdentifier>{ad9ec528-aeb1-424d-a56a-7969fd3e3ae4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="content\shaders\raytrace[filter]">
+      <UniqueIdentifier>{de8375ca-d8ab-4614-9d45-ffd4b6ef2705}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\main.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\WindowInputWin32.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Game.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\WindowInputWin32.h">
+      <Filter>src</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="content\shaders\geometry.incl">
+      <Filter>content\shaders\raytrace[filter]</Filter>
+    </None>
+    <None Include="content\shaders\defines.incl">
+      <Filter>content\shaders\raytrace[filter]</Filter>
+    </None>
+    <None Include="content\shaders\collision.incl">
+      <Filter>content\shaders\raytrace[filter]</Filter>
+    </None>
+    <None Include="content\shaders\raytracer.comp">
+      <Filter>content\shaders\raytrace[filter]</Filter>
+    </None>
+    <None Include="content\shaders\planeVertexShader.vert">
+      <Filter>content\shaders\shaders[filter]</Filter>
+    </None>
+    <None Include="content\shaders\defaultFragmentShader.frag">
+      <Filter>content\shaders\shaders[filter]</Filter>
+    </None>
+    <None Include="content\shaders\lights.incl">
+      <Filter>content\shaders\raytrace[filter]</Filter>
+    </None>
+    <None Include="CopyCoreLibToProject.bat" />
+    <None Include="CopyGLLibToProject.bat" />
+  </ItemGroup>
+</Project>

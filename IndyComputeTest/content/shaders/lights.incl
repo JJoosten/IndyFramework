@@ -1,0 +1,16 @@
+/* --- includes work using preprocessor  ---
+	- defines.incl contains rename defines to have a easier portable shader language 
+*/
+#include "defines.incl"
+
+struct Light
+{
+	float3 position;
+	float  radius;
+	float4 color;		// Intensity can be retrieved from GetIntensityFromLight function
+};
+
+const float GetIntensityFromLight( Color color)
+{
+	return sqrt( dot( color, color));	
+}
