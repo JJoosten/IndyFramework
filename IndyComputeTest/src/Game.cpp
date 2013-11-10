@@ -174,9 +174,10 @@ namespace Indy
 		// load texture to adjust in compute shader
 		float* texData = new float[1280 * 720 * 4];
 		memset( texData, 0, 1280 * 720 * 4);
-		m_texture = new Texture2D( 1280, 720, (unsigned char*)texData, 4, sizeof(float));
-		m_texture->CreateGPUTexture(false);
-		m_texture->DeleteLocalData();
+		m_texture = new Texture2D();
+		m_texture->Create(1280, 720, (unsigned char*)texData, 4, sizeof(float));
+		m_texture->GenerateGPUTexture(false);
+		m_texture->DestroyLocalTexture();
 		m_texture->Bind();
 		m_texture->SetSamplerFilter(GL_NEAREST, GL_NEAREST);
 		m_texture->UnBind();

@@ -10,20 +10,25 @@ namespace Indy
 	{
 
 	public:
-		Texture2D( const char* const textureFile);
-		Texture2D( const unsigned int width, const unsigned int height, 
-				   const unsigned char* textureData, const unsigned char numComponents,
-				   const unsigned char componentSizeInBytes);
+		Texture2D( void);
 
 		~Texture2D( void);
 
+		void Create( const char* const textureFile);
 
-		void CreateGPUTexture( const bool generateMipMaps = true);
-
+		void Create( const unsigned int width, 
+					 const unsigned int height, 
+				     const unsigned char* textureData, 
+					 const unsigned char numComponents,
+				     const unsigned char componentSizeInBytes);
 		
-		void DeleteGPUData( void);
+		void Destroy( void);
 
-		void DeleteLocalData( void);
+		void GenerateGPUTexture( const bool generateMipMaps = true);
+		
+		void DestroyGPUTexture( void);
+
+		void DestroyLocalTexture( void);
 
 		
 		void Bind( void);

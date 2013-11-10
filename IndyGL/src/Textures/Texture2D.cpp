@@ -12,7 +12,7 @@
 
 namespace Indy
 {
-	Texture2D::Texture2D( const char* const textureFile)
+	Texture2D::Texture2D( void)
 		:
 	m_textureData(NULL),
 	m_textureID(0),
@@ -23,40 +23,51 @@ namespace Indy
 	m_isOnGPU(false),
 	m_isLocalDataAvailable(false),
 	m_hasMipMaps(false),
-	m_isLoadedFromImage(true)
+	m_isLoadedFromImage(false)
+	{
+
+	}
+
+	Texture2D::~Texture2D( void)
+	{
+		if(m_isLocalDataAvailable || m_isOnGPU)
+			BREAKPOINT("Destroy was not called \n");
+	}
+
+	void Texture2D::Create( const char* const textureFile)
 	{
 		// load texture data
 		loadTextureData( textureFile);
 	}
 
-	Texture2D::Texture2D( const unsigned int width, const unsigned int height, 
-						  const unsigned char* textureData, const unsigned char numComponents, 
-						  const unsigned char componentSizeInBytes)
-	  :
-	m_textureData( new unsigned char[width * height * numComponents * componentSizeInBytes]),
-	m_textureID(0),
-	m_width(width),
-	m_height(height),
-	m_numComponents(numComponents),
-	m_componentSizeInBytes(componentSizeInBytes),
-	m_isOnGPU(false),
-	m_isLocalDataAvailable(true),
-	m_hasMipMaps(false),
-	m_isLoadedFromImage(false)
+	void Texture2D::Create( const unsigned int width, 
+							const unsigned int height, 
+							const unsigned char* textureData, 
+							const unsigned char numComponents, 
+							const unsigned char componentSizeInBytes)
 	{
+		m_isLocalDataAvailable = true;
+		m_width = width;
+		m_height = height;
+		m_numComponents = numComponents;
+		m_componentSizeInBytes = componentSizeInBytes;
+
+		m_textureData = new unsigned char[width * height * numComponents * componentSizeInBytes];
+
 		if(textureData != NULL)
-			memcpy(m_textureData, textureData, m_width * m_height * m_componentSizeInBytes * m_numComponents);
+			memcpy( m_textureData, textureData, m_width * m_height * m_componentSizeInBytes * m_numComponents);
 	}
 
-	Texture2D::~Texture2D( void)
+	void Texture2D::Destroy( void)
 	{
-		DeleteGPUData();
+		if(m_isOnGPU)
+			DestroyGPUTexture();
 
-		DeleteLocalData();
+		if(m_isLocalDataAvailable)
+			DestroyLocalTexture();
 	}
 
-
-	void Texture2D::CreateGPUTexture( const bool generateMipMaps /*= true*/)
+	void Texture2D::GenerateGPUTexture( const bool generateMipMaps /*= true*/)
 	{
 		if( !m_isLocalDataAvailable)
 			BREAKPOINT(Local texture data is not available!);
@@ -113,14 +124,18 @@ namespace Indy
 	}
 
 
-	void Texture2D::DeleteGPUData( void)
+	void Texture2D::DestroyGPUTexture( void)
 	{
+		if( m_textureID == 0)
+			BREAKPOINT("GPU texture was not initialized or was already deleted!");
+
 		glDeleteTextures(1, &m_textureID);
+		m_textureID = 0;
 
 		m_isOnGPU = false;
 	}
 
-	void Texture2D::DeleteLocalData( void)
+	void Texture2D::DestroyLocalTexture( void)
 	{
 		if( m_textureData != NULL)
 		{
@@ -188,7 +203,7 @@ namespace Indy
 									 const unsigned int width, const unsigned int height, 
 									 const char* const data)
 	{
-#ifdef DEBUG
+#ifdef _DEBUG
 		if( m_hasMipMaps )
 			printf("Update can be done but mipmaps stay uneffected\n");
 #endif
