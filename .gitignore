@@ -31,8 +31,18 @@ obj/
 [Ll]eak*/
 *.sdf
 *.opensdf
+
+#auto generated files and folders
 [Ii]ndyCore/include/
+[Ii]ndyCore/lib/Release/
+[Ii]ndyCore/lib/Debug/
 [Ii]ndyGL/include/
+[Ii]ndyGL/lib/IndyCore
+[Ii]ndyGL/lib/Release/
+[Ii]ndyGL/lib/Debug/
+[Ii]ndyComputeTest/lib/IndyCore/
+[Ii]ndyComputeTest/lib/IndyGL/
+
 
 #Subversion files
 .svn
