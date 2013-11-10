@@ -49,6 +49,7 @@ namespace Indy
 		delete m_vertexFragShaderProgram;
 		delete m_vertexShader;
 		delete m_fragmentShader;
+		m_texture->Destroy();
 		delete m_texture;
 		delete m_planeVertices;
 		delete m_cameraDataUBO;
