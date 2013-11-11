@@ -3,6 +3,9 @@
 #pragma once
 
 #include "GL/glew.h"
+#include <vector>
+
+#define MAX_VERTEX_ARRAY_ATTRIBUTES 32
 
 namespace Indy
 {
@@ -21,8 +24,7 @@ namespace Indy
 									 const GLint size, 
 									 const GLenum type,
 									 const GLboolean normalized,
-									 const GLsizei stride, 
-									 const GLvoid* pointer);
+									 const GLsizei stride);
 
 		void VertexAttributePointer( const GLuint index, 
 									 const GLint size, 
@@ -31,8 +33,13 @@ namespace Indy
 									 const GLsizei stride, 
 									 const GLvoid* pointer);
 
+		bool IsVertexAttributeArrayEnabled( const GLuint index) const;
+
+		GLuint GetHandle( void) const { return m_handle; }
+
+
 	private:
 		GLuint m_handle;
-
+		GLuint m_vertexAttributePointerIndexFlags;
 	};
 }

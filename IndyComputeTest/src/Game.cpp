@@ -222,6 +222,6 @@ namespace Indy
 		m_vertexArray = new VertexArray();
 			
 		// index 0, size of 2 (2 attributes xy), type float, not normalized, 0 offset and 0 data due to binding of m_planeVertices
-		m_vertexArray->VertexAttributePointer( m_planeVertices, 0, 2, GL_FLOAT, GL_FALSE, 0, NULL);
+		m_vertexArray->VertexAttributePointer( m_planeVertices, 0, 2, GL_FLOAT, GL_FALSE, 0);
 	}
 }
