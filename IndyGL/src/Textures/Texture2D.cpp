@@ -118,7 +118,7 @@ namespace Indy
 
 		glTexImage2D( GL_TEXTURE_2D, 0, internalFormat, (GLsizei)m_width, (GLsizei)m_height, 0, format, type, (GLvoid*)m_textureData);
 
-		UnBind();
+		Unbind();
 
 		m_isOnGPU = true;
 	}
@@ -159,7 +159,7 @@ namespace Indy
 		glBindTexture( GL_TEXTURE_2D, m_textureID);
 	}
 
-	void Texture2D::UnBind( void) const
+	void Texture2D::Unbind( void) const
 	{
 		glBindTexture( GL_TEXTURE_2D, 0);
 	}
@@ -242,7 +242,7 @@ namespace Indy
 
 		Bind();
 		glTexSubImage2D(GL_TEXTURE_2D, 0, (GLint)xOffset, (GLint)yOffset, (GLsizei)width, (GLsizei)height, format, type, (GLvoid*)data );
-		UnBind();
+		Unbind();
 	}
 
 

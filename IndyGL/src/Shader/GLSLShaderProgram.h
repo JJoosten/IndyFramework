@@ -27,7 +27,7 @@ namespace Indy
 
 
 		void Bind( void);
-		void UnBind( void);
+		void Unbind( void);
 
 		GLuint GetUniformBlockIndex( const GLchar* uniformBlockName) const;
 

@@ -25,7 +25,7 @@ namespace Indy
 		~GLContext( void);
 		
 		virtual void Bind  ( void) = 0;
-		virtual void UnBind( void) = 0;
+		virtual void Unbind( void) = 0;
 
 		void Enable ( const GLenum param) const;
 		void Disable( const GLenum param) const;

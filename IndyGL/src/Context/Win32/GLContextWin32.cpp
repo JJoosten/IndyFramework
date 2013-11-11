@@ -148,7 +148,7 @@ namespace Indy
 		m_currentGLContextBound = this;
 	}
 
-	void GLContextWin32::UnBind( void)
+	void GLContextWin32::Unbind( void)
 	{
 		wglMakeCurrent( NULL, NULL);
 		m_currentGLContextBound = NULL;

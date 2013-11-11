@@ -32,7 +32,7 @@ namespace Indy
 		}
 	}
 
-	void VertexArray::UnBind( void) const
+	void VertexArray::Unbind( void) const
 	{
 		for(unsigned int i = 0; i < 32; ++i)
 		{
@@ -52,7 +52,7 @@ namespace Indy
 	{
 		buffer->Bind();
 		this->VertexAttributePointer(index, size, type, normalized, stride, NULL);
-		buffer->UnBind();
+		buffer->Unbind();
 	}
 
 	void VertexArray::VertexAttributePointer( const GLuint index, 
@@ -62,13 +62,16 @@ namespace Indy
 											  const GLsizei stride, 
 											  const GLvoid* pointer)
 	{
+		if(index > MAX_VERTEX_ARRAY_ATTRIBUTES - 1)
+			BREAKPOINT(VertexArray Index is bigger then the 32 supported slots);
+
 		m_vertexAttributePointerIndexFlags |= 1 << index;
 
 		Bind();
 		
 		glVertexAttribPointer( index, size, type, normalized, stride, pointer);
 
-		UnBind();
+		Unbind();
 	}
 
 	
@@ -79,7 +82,7 @@ namespace Indy
 		GLuint isVertexAttribEnabled = GL_FALSE;
 		glGetVertexAttribIuiv( index, GL_VERTEX_ATTRIB_ARRAY_ENABLED, &isVertexAttribEnabled);
 
-		UnBind();
+		Unbind();
 		
 		return isVertexAttribEnabled == GL_TRUE ? true : false;
 	}

@@ -148,7 +148,7 @@ namespace Indy
 		glUseProgram( m_shaderProgramID);
 	}
 
-	void GLSLShaderProgram::UnBind( void)
+	void GLSLShaderProgram::Unbind( void)
 	{
 		glUseProgram(NULL);
 	}

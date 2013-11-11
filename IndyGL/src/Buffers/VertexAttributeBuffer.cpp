@@ -58,7 +58,7 @@ namespace Indy
 			
 		glBufferData( GL_ARRAY_BUFFER, m_attributeSizeInBytes * m_numAttributes * m_numAttributeChannels, m_attributeData, usage);
 
-		UnBind();
+		Unbind();
 	}
 	
 	void VertexAttributeBuffer::Destroy( void)
@@ -91,7 +91,7 @@ namespace Indy
 
 		glBufferSubData( GL_ARRAY_BUFFER, m_attributeSizeInBytes * numElementsOffset * m_numAttributeChannels, m_attributeSizeInBytes * numElementsToSend * m_numAttributeChannels, m_attributeData);
 
-		UnBind();
+		Unbind();
 	}
 
 	void VertexAttributeBuffer::Bind( void) const
@@ -103,7 +103,7 @@ namespace Indy
 
 	}
 
-	void VertexAttributeBuffer::UnBind( void) const
+	void VertexAttributeBuffer::Unbind( void) const
 	{
 		if(m_vboID == 0)
 			BREAKPOINT(VertexAttributeBuffer is not yet a VBO);

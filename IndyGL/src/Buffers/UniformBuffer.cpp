@@ -109,7 +109,7 @@ namespace Indy
 		
 		glBufferData( GL_UNIFORM_BUFFER, m_sizeInBytes, m_buffer, GL_DYNAMIC_DRAW );
 
-		UnBind();
+		Unbind();
 	}
 
 	void UniformBuffer::Bind( const GLuint blockIndex) const
@@ -118,7 +118,7 @@ namespace Indy
 		glBindBufferBase( GL_UNIFORM_BUFFER, blockIndex, m_handle );
 	}
 
-	void UniformBuffer::UnBind( void) const
+	void UniformBuffer::Unbind( void) const
 	{
 		glBindBufferBase( GL_UNIFORM_BUFFER, 0, m_handle );
 		glBindBuffer( GL_UNIFORM_BUFFER, 0);

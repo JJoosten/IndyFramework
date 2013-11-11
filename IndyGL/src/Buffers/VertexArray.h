@@ -17,7 +17,7 @@ namespace Indy
 		~VertexArray( void);
 
 		void Bind( void) const;
-		void UnBind( void) const;
+		void Unbind( void) const;
 
 		void VertexAttributePointer( const VertexAttributeBuffer* const buffer,
 									 const GLuint index, 

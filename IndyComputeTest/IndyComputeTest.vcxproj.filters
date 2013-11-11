@@ -58,7 +58,9 @@
     <None Include="content\shaders\lights.incl">
       <Filter>content\shaders\raytrace[filter]</Filter>
     </None>
-    <None Include="CopyCoreLibToProject.bat" />
-    <None Include="CopyGLLibToProject.bat" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="CopyGLLibToProject.bat" />
+    <CustomBuild Include="CopyCoreLibToProject.bat" />
   </ItemGroup>
 </Project>

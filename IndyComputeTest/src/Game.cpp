@@ -83,11 +83,11 @@ namespace Indy
 
 			glDispatchCompute( 1280 / 8, 720 / 8, 1);
 			
-			m_computeShaderProgram->UnBind();
+			m_computeShaderProgram->Unbind();
 			
 			glBindImageTexture( 0, 0, 0, GL_FALSE, 0, GL_READ_ONLY, GL_R8);
 
-			m_cameraDataUBO->UnBind();
+			m_cameraDataUBO->Unbind();
 		}
 	}
 
@@ -104,11 +104,11 @@ namespace Indy
 
 		glDrawArrays( GL_TRIANGLES, 0, 6);
 		
-		m_vertexArray->UnBind();
+		m_vertexArray->Unbind();
 
-		m_vertexFragShaderProgram->UnBind();
+		m_vertexFragShaderProgram->Unbind();
 
-		m_texture->UnBind();
+		m_texture->Unbind();
 
 		glFinish();
 	}
@@ -196,7 +196,7 @@ namespace Indy
 		m_texture->DestroyLocalTexture();
 		m_texture->Bind();
 		m_texture->SetSamplerFilter(GL_NEAREST, GL_NEAREST);
-		m_texture->UnBind();
+		m_texture->Unbind();
 		delete texData;
 		
 		m_computeShaderProgram->SetUniformi( "Texture", 0);

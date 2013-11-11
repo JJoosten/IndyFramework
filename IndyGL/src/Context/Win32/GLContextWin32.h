@@ -27,7 +27,7 @@ namespace Indy
 
 		// inherited
 		void Bind( void);
-		void UnBind( void);
+		void Unbind( void);
 
 		void SwitchHDC( const HDC const newHDC);
 

@@ -33,7 +33,7 @@ namespace Indy
 		
 		void Bind( void) const;
 
-		void UnBind( void) const;
+		void Unbind( void) const;
 
 
 		void SetTextureWrapMode( const GLint wrapModeS = GL_REPEAT, 

@@ -147,34 +147,20 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </None>
     <CustomBuild Include="CopyCoreLibToProject.bat">
-      <FileType>Document</FileType>
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">call CopyCoreLibToProject.bat</Command>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">copy IndyCore lib to project</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">copy IndyCore to Project</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">forcerun</Outputs>
-      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkObjects>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</DeploymentContent>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">call CopyCoreLibToProject.bat</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">copy IndyCore to Project</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">forcerun</Outputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">copy IndyCore lib to project</Message>
-      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkObjects>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</DeploymentContent>
     </CustomBuild>
     <CustomBuild Include="CopyGLLibToProject.bat">
-      <FileType>Document</FileType>
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">call CopyGLLibToProject.bat</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">copy IndyGL to Project</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">forcerun</Outputs>
-      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkObjects>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">copy IndyGL lib to project</Message>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</DeploymentContent>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">call CopyGLLibToProject.bat</Command>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">copy IndyGL lib to project</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">forcerun</Outputs>
-      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkObjects>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</DeploymentContent>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">copy IndyGL to Project</Message>
     </CustomBuild>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
