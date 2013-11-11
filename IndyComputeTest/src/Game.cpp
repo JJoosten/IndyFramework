@@ -220,15 +220,8 @@ namespace Indy
 
 		// generate vertex arrays
 		m_vertexArray = new VertexArray();
-		m_vertexArray->Bind();
 			
-		m_planeVertices->Bind();
-		
 		// index 0, size of 2 (2 attributes xy), type float, not normalized, 0 offset and 0 data due to binding of m_planeVertices
-		m_vertexArray->VertexAttributePointer( 0, 2, GL_FLOAT, GL_FALSE, 0, NULL);
-		
-		m_planeVertices->UnBind();
-
-		m_vertexArray->UnBind();
+		m_vertexArray->VertexAttributePointer( m_planeVertices, 0, 2, GL_FLOAT, GL_FALSE, 0, NULL);
 	}
 }

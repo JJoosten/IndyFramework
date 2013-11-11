@@ -112,13 +112,13 @@ namespace Indy
 		UnBind();
 	}
 
-	void UniformBuffer::Bind( const GLuint blockIndex)
+	void UniformBuffer::Bind( const GLuint blockIndex) const
 	{
 		glBindBuffer( GL_UNIFORM_BUFFER, m_handle);
 		glBindBufferBase( GL_UNIFORM_BUFFER, blockIndex, m_handle );
 	}
 
-	void UniformBuffer::UnBind( void)
+	void UniformBuffer::UnBind( void) const
 	{
 		glBindBufferBase( GL_UNIFORM_BUFFER, 0, m_handle );
 		glBindBuffer( GL_UNIFORM_BUFFER, 0);

@@ -39,7 +39,7 @@ namespace Indy
 	}
 
 	
-	void GLContext::Enable ( const GLenum param)
+	void GLContext::Enable ( const GLenum param) const
 	{
 		if ( !isThisTheCurrentGLContext())
 			BREAKPOINT(GLEnable is called through context that is currently not bound!);
@@ -47,7 +47,7 @@ namespace Indy
 		glEnable(param);
 	}
 	
-	void GLContext::Disable( const GLenum param)
+	void GLContext::Disable( const GLenum param) const
 	{
 		if ( !isThisTheCurrentGLContext())
 			BREAKPOINT(GLDisable is called through context that is currently not bound!);
@@ -56,17 +56,17 @@ namespace Indy
 	}
 
 	
-	void GLContext::EnableDepthBuffer( void)
+	void GLContext::EnableDepthBuffer( void) const
 	{
 		Enable(GL_DEPTH_TEST);
 	}
 
-	void GLContext::DisableDepthBuffer( void)
+	void GLContext::DisableDepthBuffer( void) const
 	{
 		Disable(GL_DEPTH_TEST);
 	}
 
-	void GLContext::EnableDepthWrite( void)
+	void GLContext::EnableDepthWrite( void) const
 	{
 		if ( !isThisTheCurrentGLContext())
 			BREAKPOINT(EnableDepthWrite is called through context that is currently not bound!);
@@ -74,7 +74,7 @@ namespace Indy
 		glDepthMask( true);
 	}
 
-	void GLContext::DisableDepthWrite( void)
+	void GLContext::DisableDepthWrite( void) const
 	{
 		if ( !isThisTheCurrentGLContext())
 			BREAKPOINT(DisableDepthWrite is called through context that is currently not bound!);
@@ -83,17 +83,17 @@ namespace Indy
 	}
 
 	
-	void GLContext::EnableCulling( void)
+	void GLContext::EnableCulling( void) const
 	{
 		Enable(GL_CULL_FACE);
 	}
 
-	void GLContext::DisableCulling( void)
+	void GLContext::DisableCulling( void) const
 	{
 		Disable(GL_CULL_FACE);
 	}
 
-	void GLContext::SetCullFace( const GLenum cullFace)
+	void GLContext::SetCullFace( const GLenum cullFace) const
 	{
 		if ( !isThisTheCurrentGLContext())
 			BREAKPOINT(SetCullFace is called through context that is currently not bound!);
@@ -102,17 +102,17 @@ namespace Indy
 	}
 
 
-	void GLContext::EnableAlphaBlending( void)
+	void GLContext::EnableAlphaBlending( void) const
 	{
 		Enable(GL_BLEND);
 	}
 
-	void GLContext::DisableAlphaBlending( void)
+	void GLContext::DisableAlphaBlending( void) const
 	{
 		Disable(GL_BLEND);
 	}
 
-	void GLContext::SetBlendFunc( const GLenum source, const GLenum dest)
+	void GLContext::SetBlendFunc( const GLenum source, const GLenum dest) const
 	{	
 		if ( !isThisTheCurrentGLContext())
 			BREAKPOINT(SetBlendFunc is called through context that is currently not bound!);
@@ -122,7 +122,7 @@ namespace Indy
 
 
 	void GLContext::ResizeViewport( const GLint x, const GLint y, 
-									const GLsizei width, const GLsizei height)
+									const GLsizei width, const GLsizei height) const
 	{
 		if ( !isThisTheCurrentGLContext())
 			BREAKPOINT(ResizeViewport is called through context that is currently not bound!);
@@ -132,7 +132,7 @@ namespace Indy
 	
 
 	void GLContext::ClearBuffers( const GLulong color /*= 0x0*/, 
-								  const GLbitfield buffersToClear /*= GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT*/)
+								  const GLbitfield buffersToClear /*= GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT*/) const
 	{
 		if ( !isThisTheCurrentGLContext())
 			BREAKPOINT(Clear is called through context that is currently not bound!);
@@ -147,12 +147,12 @@ namespace Indy
 	}
 
 
-	bool GLContext::HasGLError( void)
+	bool GLContext::HasGLError( void) const
 	{
 		if ( !isThisTheCurrentGLContext())
 			BREAKPOINT(HasGLError is called through context that is currently not bound!);
 
-#ifdef DEBUG
+#ifdef _DEBUG
 		{
 			GLenum error = glGetError();
 
@@ -189,7 +189,7 @@ namespace Indy
 
 
 	/* --- Private functions --- */
-	bool GLContext::isThisTheCurrentGLContext( void)
+	bool GLContext::isThisTheCurrentGLContext( void) const
 	{
 		return this == m_currentGLContextBound ? true : false;
 	}

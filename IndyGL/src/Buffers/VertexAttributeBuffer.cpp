@@ -27,12 +27,12 @@ namespace Indy
 	}
 
 	
-	void VertexAttributeBuffer::Create( GLuint attributeBindLocation, 
-										GLuint numAttributes, 
-										GLuint numAttributeChannels, 
-										GLvoid* attributeData, 
-										GLuint attributeSizeInBytes,
-										GLenum usage /* = GL_STATIC_DRAW */)
+	void VertexAttributeBuffer::Create( const GLuint attributeBindLocation, 
+										const GLuint numAttributes, 
+										const GLuint numAttributeChannels, 
+										GLvoid* const attributeData, 
+										const GLuint attributeSizeInBytes,
+										const GLenum usage /* = GL_STATIC_DRAW */)
 	{
 		if(m_vboID != 0)
 			BREAKPOINT(This AttributeBuffer is already in use!);
@@ -94,7 +94,7 @@ namespace Indy
 		UnBind();
 	}
 
-	void VertexAttributeBuffer::Bind( void)
+	void VertexAttributeBuffer::Bind( void) const
 	{
 		if(m_vboID == 0)
 			BREAKPOINT(VertexAttributeBuffer is not yet a VBO);
@@ -103,7 +103,7 @@ namespace Indy
 
 	}
 
-	void VertexAttributeBuffer::UnBind( void)
+	void VertexAttributeBuffer::UnBind( void) const
 	{
 		if(m_vboID == 0)
 			BREAKPOINT(VertexAttributeBuffer is not yet a VBO);

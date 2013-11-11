@@ -16,12 +16,12 @@ namespace Indy
 
 
 		// ownership of attribute data is transferred
-		void Create( GLuint attributeBindLocation, 
-					 GLuint numAttributes, 
-					 GLuint numAttributeChannels, 
-					 GLvoid* attributeData, 
-					 GLuint attributeSizeInBytes,
-					 GLenum usage = GL_STATIC_DRAW );
+		void Create( const GLuint attributeBindLocation, 
+					 const GLuint numAttributes, 
+					 const GLuint numAttributeChannels, 
+					 GLvoid* const attributeData, 
+					 const GLuint attributeSizeInBytes,
+					 const GLenum usage = GL_STATIC_DRAW );
 
 		void Destroy( void);
 
@@ -29,8 +29,8 @@ namespace Indy
 					 const GLuint numElementsOffset = 0);
 
 
-		void Bind( void);
-		void UnBind( void);
+		void Bind( void) const;
+		void UnBind( void) const;
 
 
 		/* --- Getters & Setters --- */

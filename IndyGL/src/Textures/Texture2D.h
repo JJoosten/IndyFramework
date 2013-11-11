@@ -31,16 +31,16 @@ namespace Indy
 		void DestroyLocalTexture( void);
 
 		
-		void Bind( void);
+		void Bind( void) const;
 
-		void UnBind( void);
+		void UnBind( void) const;
 
 
 		void SetTextureWrapMode( const GLint wrapModeS = GL_REPEAT, 
 								 const GLint wrapModeT = GL_REPEAT);
 
 		void SetSamplerFilter( const GLint minSampler = GL_NEAREST_MIPMAP_LINEAR, 
-							  const GLint magSampler = GL_LINEAR);
+							   const GLint magSampler = GL_LINEAR);
 
 		void SetTextureBorderColor( const GLuint color = 0x0);
 
@@ -55,15 +55,15 @@ namespace Indy
 		
 		bool IsLocalDataAvailable( void) const { return m_isLocalDataAvailable; }
 
-		unsigned int GetTextureID() const { return m_textureID; }
+		unsigned int GetTextureID( void) const { return m_textureID; }
 
-		unsigned int GetWidth() const { return m_width; }
+		unsigned int GetWidth( void) const { return m_width; }
 		
-		unsigned int GetHeight() const { return m_width; }
+		unsigned int GetHeight( void) const { return m_width; }
 
-		unsigned int GetNumComponents() const { return m_numComponents; }
+		unsigned int GetNumComponents( void) const { return m_numComponents; }
 
-		unsigned char GetComponentSizeInBytes() const { return m_componentSizeInBytes; }
+		unsigned char GetComponentSizeInBytes( void) const { return m_componentSizeInBytes; }
 
 
 	private:

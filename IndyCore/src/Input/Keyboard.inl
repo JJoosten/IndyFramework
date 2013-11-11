@@ -17,12 +17,12 @@ void Indy::Keyboard::SetKeyUp( const Indy::KeyboardKeys::KeyboardKey key)
 }
 
 
-bool Indy::Keyboard::IsKeyDown( const Indy::KeyboardKeys::KeyboardKey key)
+bool Indy::Keyboard::IsKeyDown( const Indy::KeyboardKeys::KeyboardKey key) const
 {
 	return m_keysDown[key];
 }
 
-bool Indy::Keyboard::IsAnyKeyDown( void)
+bool Indy::Keyboard::IsAnyKeyDown( void) const
 {
 	for( unsigned int i = 0; i < NUM_KEYBOARD_KEYS; ++i)
 		if( m_keysDown[i] == true)
@@ -32,18 +32,18 @@ bool Indy::Keyboard::IsAnyKeyDown( void)
 }			
 
 
-bool Indy::Keyboard::IsKeyUp( const Indy::KeyboardKeys::KeyboardKey key)
+bool Indy::Keyboard::IsKeyUp( const Indy::KeyboardKeys::KeyboardKey key) const
 {
 	return !IsKeyDown( key);
 }
 
 
-bool Indy::Keyboard::IsKeyPressed( const Indy::KeyboardKeys::KeyboardKey key)
+bool Indy::Keyboard::IsKeyPressed( const Indy::KeyboardKeys::KeyboardKey key) const
 {
 	return m_keysPressed[key];
 }
 
-bool Indy::Keyboard::IsAnyKeyPressed( void)
+bool Indy::Keyboard::IsAnyKeyPressed( void) const
 {
 	for( unsigned int i = 0; i < NUM_KEYBOARD_KEYS; ++i)
 		if( m_keysPressed[i] == true)

@@ -27,8 +27,8 @@ namespace Indy
 
 		void SendToGPU( const GLuint blockIndex);
 
-		void Bind( const GLuint blockIndex);
-		void UnBind( void);
+		void Bind( const GLuint blockIndex) const;
+		void UnBind( void) const;
 
 	private:
 		GLubyte*	m_buffer;

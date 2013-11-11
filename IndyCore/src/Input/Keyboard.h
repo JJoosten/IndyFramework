@@ -23,13 +23,13 @@ namespace Indy
 
 		inline void SetKeyUp( const KeyboardKeys::KeyboardKey key);
 
-		inline bool IsKeyDown( const KeyboardKeys::KeyboardKey key);
-		inline bool IsAnyKeyDown( void);
+		inline bool IsKeyDown( const KeyboardKeys::KeyboardKey key) const;
+		inline bool IsAnyKeyDown( void) const;
 
-		inline bool IsKeyUp( const KeyboardKeys::KeyboardKey key);
+		inline bool IsKeyUp( const KeyboardKeys::KeyboardKey key) const;
 
-		inline bool IsKeyPressed( const KeyboardKeys::KeyboardKey key);
-		inline bool IsAnyKeyPressed( void);
+		inline bool IsKeyPressed( const KeyboardKeys::KeyboardKey key) const;
+		inline bool IsAnyKeyPressed( void) const;
 		
 
 	private:

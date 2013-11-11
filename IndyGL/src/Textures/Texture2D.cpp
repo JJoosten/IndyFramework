@@ -154,12 +154,12 @@ namespace Indy
 	}
 
 
-	void Texture2D::Bind( void)
+	void Texture2D::Bind( void) const
 	{
 		glBindTexture( GL_TEXTURE_2D, m_textureID);
 	}
 
-	void Texture2D::UnBind( void)
+	void Texture2D::UnBind( void) const
 	{
 		glBindTexture( GL_TEXTURE_2D, 0);
 	}
