@@ -2,6 +2,7 @@
 
 #include "Game.h"
 
+#include <IndyCore/CoreDefines.h>
 #include <IndyGL/Window/Window.h>
 #include <IndyGL/Context/GLContext.h>
 #include <IndyGL/Shader/GLSLShader.h>
@@ -9,7 +10,7 @@
 #include <IndyGL/Textures/Texture2D.h>
 #include <IndyGL/Buffers/VertexAttributeBuffer.h>
 #include <IndyGL/Buffers/UniformBuffer.h>
-#include <IndyGL/Buffers/VertexArray.h>
+#include <IndyGL/Buffers/VertexArrayObject.h>
 
 #include <stdio.h>
 
@@ -20,7 +21,7 @@ namespace Indy
 {
 	Game::Game( GLContext* const openGLContext, Window* const window)
 		:
-	m_window(window),
+	m_window( window),
 	m_glContext( openGLContext),
 	m_computeShader( NULL),
 	m_computeShaderProgram( NULL),
@@ -30,7 +31,7 @@ namespace Indy
 	m_vertexFragShaderProgram( NULL),
 	m_planeVertices( NULL),
 	m_cameraDataUBO( NULL),
-	m_vertexArray( NULL)
+	m_vertexArrayObject( NULL)
 	{
 		// setup viewport
 		m_glContext->ResizeViewport( 0, 0, 1280, 720);
@@ -70,7 +71,7 @@ namespace Indy
 		m_cameraDataUBO->Destroy();
 		delete m_cameraDataUBO;
 		
-		delete m_vertexArray;
+		delete m_vertexArrayObject;
 	}
 
 	void Game::UpdateFrame( const double deltaTimeSec)
@@ -102,11 +103,11 @@ namespace Indy
 
 		m_vertexFragShaderProgram->Bind();
 		
-		m_vertexArray->Bind();
+		m_vertexArrayObject->Bind();
 
 		glDrawArrays( GL_TRIANGLES, 0, 6);
 		
-		m_vertexArray->Unbind();
+		m_vertexArrayObject->Unbind();
 
 		m_vertexFragShaderProgram->Unbind();
 
@@ -124,13 +125,13 @@ namespace Indy
 		m_computeShader->LoadSourceFromFile( GLSLShaderTypes::COMPUTE_SHADER, "content/shaders/raytracer.comp");
 		m_computeShader->Create();
 		if( !m_computeShader->Compile())
-			printf("Compiling compute shader failed!");
+			BREAKPOINT(Compiling compute shader failed!);
 
 		m_computeShaderProgram = new GLSLShaderProgram();
 		m_computeShaderProgram->SetComputeShader(m_computeShader);
 		m_computeShaderProgram->Create();
 		if( !m_computeShaderProgram->Link())
-			printf("Linking compute shader program failed!");
+			BREAKPOINT(Linking compute shader program failed!);
 
 
 		enum CameraDataUniform
@@ -167,20 +168,20 @@ namespace Indy
 		m_vertexShader->LoadSourceFromFile( GLSLShaderTypes::VERTEX_SHADER, "content/shaders/planeVertexShader.vert");
 		m_vertexShader->Create();
 		if( !m_vertexShader->Compile())
-			printf("Compiling vertex shader failed!");
+			BREAKPOINT(Compiling vertex shader failed!);
 		
 		m_fragmentShader = new GLSLShader();
 		m_fragmentShader->LoadSourceFromFile( GLSLShaderTypes::FRAGMENT_SHADER, "content/shaders/defaultFragmentShader.frag");
 		m_fragmentShader->Create();
 		if( !m_fragmentShader->Compile())
-			printf("Compiling fragment shader failed!");
+			BREAKPOINT(Compiling fragment shader failed!);
 
 		m_vertexFragShaderProgram = new GLSLShaderProgram();
 		m_vertexFragShaderProgram->SetVertexShader(m_vertexShader);
 		m_vertexFragShaderProgram->SetFragmentShader(m_fragmentShader);
 		m_vertexFragShaderProgram->Create();
 		if( !m_vertexFragShaderProgram->Link())
-			printf("Linking vertex frag shader program failed!");
+			BREAKPOINT(Linking vertex frag shader program failed!);
 	}
 
 	void Game::loadTexture( void)
@@ -221,9 +222,9 @@ namespace Indy
 		m_planeVertices->Create(0, 6, 2, vertices, sizeof(GLfloat));
 
 		// generate vertex arrays
-		m_vertexArray = new VertexArray();
+		m_vertexArrayObject = new VertexArrayObject();
 			
 		// index 0, size of 2 (2 attributes xy), type float, not normalized, 0 offset and 0 data due to binding of m_planeVertices
-		m_vertexArray->VertexAttributePointer( m_planeVertices, 0, 2, GL_FLOAT, GL_FALSE, 0);
+		m_vertexArrayObject->VertexAttributePointer( m_planeVertices, 0, 2, GL_FLOAT, GL_FALSE, 0);
 	}
 }

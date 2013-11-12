@@ -3,11 +3,12 @@
 #pragma once
 
 #include "GL/glew.h"
+#include <IndyCore/Utilities/NonCopyable.h>
 
 namespace Indy
 {
 	class GLSLShader;
-	class GLSLShaderProgram
+	class GLSLShaderProgram : public NonCopyable
 	{
 
 	public:
@@ -18,16 +19,18 @@ namespace Indy
 		void SetFragmentShader( GLSLShader* const fragmentShader);
 		void SetGeometryShader( GLSLShader* const geometryShader);
 		void SetComputeShader ( GLSLShader* const computeShader);
+		void SetTesselationControlShader( GLSLShader* const tesselationControlShader); 
+		void SetTesselationEvaluationShader( GLSLShader* const tesselationEvaluationShader); 
 
 		
 		void Create( void);
 		void Destroy( void);
 
-		bool Link( void);
+		bool Link( void) const;
 
 
-		void Bind( void);
-		void Unbind( void);
+		void Bind( void) const;
+		void Unbind( void) const;
 
 		GLuint GetUniformBlockIndex( const GLchar* uniformBlockName) const;
 
@@ -59,6 +62,7 @@ namespace Indy
 		GLSLShader*		m_fragmentShader;
 		GLSLShader*		m_geometryShader;
 		GLSLShader*		m_computeShader;
-
+		GLSLShader*		m_tesselationControlShader;
+		GLSLShader*		m_tesselationEvaluationShader;
 	};
 }

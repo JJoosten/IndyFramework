@@ -12,8 +12,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="lib\stb_image\include\stb_image\stb_image.h" />
+    <ClInclude Include="src\Buffers\IndexBuffer.h" />
     <ClInclude Include="src\Buffers\UniformBuffer.h" />
-    <ClInclude Include="src\Buffers\VertexArray.h" />
+    <ClInclude Include="src\Buffers\VertexArrayObject.h" />
     <ClInclude Include="src\Buffers\VertexAttributeBuffer.h" />
     <ClInclude Include="src\Context\GLContext.h" />
     <ClInclude Include="src\Context\Win32\GLContextWin32.h" />
@@ -26,8 +27,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="lib\stb_image\include\stb_image\stb_image.c" />
+    <ClCompile Include="src\Buffers\IndexBuffer.cpp" />
     <ClCompile Include="src\Buffers\UniformBuffer.cpp" />
-    <ClCompile Include="src\Buffers\VertexArray.cpp" />
+    <ClCompile Include="src\Buffers\VertexArrayObject.cpp" />
     <ClCompile Include="src\Buffers\VertexAttributeBuffer.cpp" />
     <ClCompile Include="src\Context\GLContext.cpp" />
     <ClCompile Include="src\Context\Win32\GLContextWin32.cpp" />

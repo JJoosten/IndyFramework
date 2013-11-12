@@ -3,21 +3,23 @@
 #pragma once
 
 #include "GL/glew.h"
-#include <vector>
 
-#define MAX_VERTEX_ARRAY_ATTRIBUTES 32
+#include <IndyCore/Utilities/NonCopyable.h>
 
 namespace Indy
 {
 	class VertexAttributeBuffer;
-	class VertexArray
+	class IndexBuffer;
+	class VertexArrayObject : public NonCopyable
 	{
 	public:
-		VertexArray( void);
-		~VertexArray( void);
+		VertexArrayObject( void);
+		~VertexArrayObject( void);
 
 		void Bind( void) const;
 		void Unbind( void) const;
+
+		void BindIndexBuffer( const IndexBuffer* const indexBuffer) const;
 
 		void VertexAttributePointer( const VertexAttributeBuffer* const buffer,
 									 const GLuint index, 

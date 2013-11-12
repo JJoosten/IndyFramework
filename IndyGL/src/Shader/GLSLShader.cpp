@@ -88,7 +88,7 @@ namespace Indy
 		m_shaderSource = NULL;
 	}
 
-	bool GLSLShader::Compile( void)
+	bool GLSLShader::Compile( void) const
 	{
 		if(m_shaderID == 0)
 			BREAKPOINT( Shader is not yet created!);

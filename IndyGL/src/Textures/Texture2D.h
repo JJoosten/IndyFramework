@@ -11,8 +11,11 @@ namespace Indy
 
 	public:
 		Texture2D( void);
-
+		Texture2D( const Texture2D& cpyCtor);
 		~Texture2D( void);
+
+		const Texture2D& operator=( const Texture2D& rvalue);
+
 
 		void Create( const char* const textureFile);
 
@@ -64,6 +67,8 @@ namespace Indy
 		unsigned int GetNumComponents( void) const { return m_numComponents; }
 
 		unsigned char GetComponentSizeInBytes( void) const { return m_componentSizeInBytes; }
+
+		const void* const GetReadOnlyTextureData( void) const { return m_textureData; }
 
 
 	private:

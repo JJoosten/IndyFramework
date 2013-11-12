@@ -14,24 +14,41 @@ namespace Indy
 {
 	Texture2D::Texture2D( void)
 		:
-	m_textureData(NULL),
-	m_textureID(0),
-	m_width(0),
-	m_height(0),
-	m_numComponents(0),
-	m_componentSizeInBytes(0),
-	m_isOnGPU(false),
-	m_isLocalDataAvailable(false),
-	m_hasMipMaps(false),
-	m_isLoadedFromImage(false)
+	m_textureID(0)
+	,m_width(0)
+	,m_height(0)
+	,m_numComponents(0)
+	,m_componentSizeInBytes(0)
+	,m_isOnGPU(false)
+	,m_isLocalDataAvailable(false)
+	,m_hasMipMaps(false)
+	,m_isLoadedFromImage(false)
+	,m_textureData(NULL)
 	{
 
+	}
+
+	
+	Texture2D::Texture2D( const Texture2D& cpyCtor)
+	{
+		*this = cpyCtor;
 	}
 
 	Texture2D::~Texture2D( void)
 	{
 		if(m_isLocalDataAvailable || m_isOnGPU)
 			BREAKPOINT("Destroy was not called \n");
+	}
+
+	
+	const Texture2D& Texture2D::operator=( const Texture2D& rvalue)
+	{
+		memcpy( this, &rvalue, sizeof(Texture2D) - sizeof(m_textureData));
+
+		if( rvalue.IsLocalDataAvailable())
+			memcpy( m_textureData, rvalue.GetReadOnlyTextureData(), m_numComponents * m_componentSizeInBytes * m_width * m_height);
+
+		return *this;
 	}
 
 	void Texture2D::Create( const char* const textureFile)

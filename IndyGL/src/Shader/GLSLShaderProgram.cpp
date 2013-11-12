@@ -10,11 +10,13 @@ namespace Indy
 
 	GLSLShaderProgram::GLSLShaderProgram( void)
 		:
-	m_shaderProgramID(0),
-	m_vertexShader(NULL),
-	m_fragmentShader(NULL),
-	m_geometryShader(NULL),
-	m_computeShader(NULL)
+	m_shaderProgramID(0)
+	,m_vertexShader(NULL)
+	,m_fragmentShader(NULL)
+	,m_geometryShader(NULL)
+	,m_computeShader(NULL)
+	,m_tesselationControlShader(NULL)
+	,m_tesselationEvaluationShader(NULL)
 	{
 
 	}
@@ -62,6 +64,24 @@ namespace Indy
 		m_computeShader->addToReferenceCounter();
 	}
 
+	
+	void GLSLShaderProgram::SetTesselationControlShader( GLSLShader* const tesselationControlShader)
+	{
+		if( m_tesselationControlShader != NULL)
+			m_tesselationControlShader->substractFromReferenceCounter();
+
+		m_tesselationControlShader = tesselationControlShader;
+		m_tesselationControlShader->addToReferenceCounter();
+	}
+
+	void GLSLShaderProgram::SetTesselationEvaluationShader( GLSLShader* const tesselationEvaluationShader)
+	{
+		if( m_tesselationEvaluationShader != NULL)
+			m_tesselationEvaluationShader->substractFromReferenceCounter();
+
+		m_tesselationEvaluationShader = tesselationEvaluationShader;
+		m_tesselationEvaluationShader->addToReferenceCounter();
+	}
 
 	void GLSLShaderProgram::Create( void)
 	{
@@ -101,7 +121,7 @@ namespace Indy
 		m_shaderProgramID = 0;
 	}
 
-	bool GLSLShaderProgram::Link( void)
+	bool GLSLShaderProgram::Link( void) const
 	{
 		if( m_vertexShader != NULL)
 			glAttachShader( m_shaderProgramID, m_vertexShader->GetID());
@@ -140,7 +160,7 @@ namespace Indy
 
 
 	
-	void GLSLShaderProgram::Bind( void)
+	void GLSLShaderProgram::Bind( void) const
 	{
 		if( m_shaderProgramID == 0)
 			BREAKPOINT(Shader Program is not yet created);
@@ -148,7 +168,7 @@ namespace Indy
 		glUseProgram( m_shaderProgramID);
 	}
 
-	void GLSLShaderProgram::Unbind( void)
+	void GLSLShaderProgram::Unbind( void) const
 	{
 		glUseProgram(NULL);
 	}

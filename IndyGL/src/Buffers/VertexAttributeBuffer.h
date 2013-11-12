@@ -43,11 +43,11 @@ namespace Indy
 
 
 	private:
-		GLvoid*	m_attributeData;
 		GLuint  m_vboID;
 		GLuint	m_attributeBindLocation;
 		GLuint	m_numAttributes;
 		GLuint  m_numAttributeChannels;
 		GLubyte m_attributeSizeInBytes;
+		GLvoid*	m_attributeData;
 	};
 }

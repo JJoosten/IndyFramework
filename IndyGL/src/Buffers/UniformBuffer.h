@@ -31,10 +31,10 @@ namespace Indy
 		void Unbind( void) const;
 
 	private:
-		GLubyte*	m_buffer;
-		GLint*		m_offsets;
 		GLint		m_sizeInBytes;
 		GLuint		m_numUniforms;
 		GLuint		m_handle;
+		GLubyte*	m_buffer;
+		GLint*		m_offsets;
 	};
 }

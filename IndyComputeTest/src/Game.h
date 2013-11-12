@@ -13,7 +13,7 @@ namespace Indy
 	class Texture2D;
 	class VertexAttributeBuffer;
 	class UniformBuffer;
-	class VertexArray;
+	class VertexArrayObject;
 	class Game : public NonCopyable
 	{
 
@@ -42,6 +42,6 @@ namespace Indy
 		Texture2D*				m_texture;
 		VertexAttributeBuffer*	m_planeVertices;
 		UniformBuffer*			m_cameraDataUBO;
-		VertexArray*			m_vertexArray;
+		VertexArrayObject*		m_vertexArrayObject;
 	};
 }

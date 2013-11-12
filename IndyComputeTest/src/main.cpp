@@ -70,6 +70,9 @@ int main( int argc, char** argv)
 	
 	initializeGlew();
 
+	Indy::Timer	renderTimer;
+	Indy::Timer updateTimer;
+
 	Indy::Timer gameClock;
 	gameClock.Start();
 
@@ -95,9 +98,15 @@ int main( int argc, char** argv)
 		if( window->IsQuitRequested())
 			hasStopped = true;
 
+		updateTimer.Start();
 		game.UpdateFrame( frameTimeInSeconds);
+		updateTimer.Stop();
+		const double updateTimerMS = updateTimer.GetMilliSeconds();
 
+		renderTimer.Start();
 		game.DrawFrame( frameTimeInSeconds);
+		renderTimer.Stop();
+		const double renderTimeInMS = renderTimer.GetMilliSeconds();
 
 		// check GL error
 		glContext->HasGLError();

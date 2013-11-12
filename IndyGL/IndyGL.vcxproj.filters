@@ -60,9 +60,6 @@
     <ClInclude Include="src\Context\Win32\GLContextWin32.h">
       <Filter>src\Context\Win32</Filter>
     </ClInclude>
-    <ClInclude Include="src\Buffers\VertexArray.h">
-      <Filter>src\Buffers</Filter>
-    </ClInclude>
     <ClInclude Include="src\Buffers\VertexAttributeBuffer.h">
       <Filter>src\Buffers</Filter>
     </ClInclude>
@@ -71,6 +68,12 @@
     </ClInclude>
     <ClInclude Include="lib\stb_image\include\stb_image\stb_image.h">
       <Filter>lib\stb_image</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Buffers\VertexArrayObject.h">
+      <Filter>src\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Buffers\IndexBuffer.h">
+      <Filter>src\Buffers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -101,11 +104,14 @@
     <ClCompile Include="src\Buffers\UniformBuffer.cpp">
       <Filter>src\Buffers</Filter>
     </ClCompile>
-    <ClCompile Include="src\Buffers\VertexArray.cpp">
-      <Filter>src\Buffers</Filter>
-    </ClCompile>
     <ClCompile Include="lib\stb_image\include\stb_image\stb_image.c">
       <Filter>lib\stb_image</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Buffers\VertexArrayObject.cpp">
+      <Filter>src\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Buffers\IndexBuffer.cpp">
+      <Filter>src\Buffers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

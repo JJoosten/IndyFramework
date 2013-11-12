@@ -2,9 +2,11 @@
 
 #pragma once
 
+#include <IndyCore/Utilities/NonCopyable.h>
+
 namespace Indy
 {
-	class Window
+	class Window : public NonCopyable
 	{
 
 	public:

@@ -3,6 +3,7 @@
 #pragma once
 
 #include "GL/glew.h"
+#include <IndyCore/Utilities/NonCopyable.h>
 
 namespace Indy
 {
@@ -10,14 +11,16 @@ namespace Indy
 	{
 		enum GLSLShaderType
 		{
-			VERTEX_SHADER	= GL_VERTEX_SHADER,
-			FRAGMENT_SHADER = GL_FRAGMENT_SHADER,
-			GEOMETRY_SHADER = GL_GEOMETRY_SHADER,
-			COMPUTE_SHADER	= GL_COMPUTE_SHADER
+			VERTEX_SHADER	              = GL_VERTEX_SHADER,
+			FRAGMENT_SHADER               = GL_FRAGMENT_SHADER,
+			GEOMETRY_SHADER               = GL_GEOMETRY_SHADER,
+			TESSELATION_CONTROL_SHADER    = GL_TESS_CONTROL_SHADER,
+			TESSELATION_EVALUATION_SHADER = GL_TESS_EVALUATION_SHADER,
+			COMPUTE_SHADER	              = GL_COMPUTE_SHADER
 		};
 	};
 
-	class GLSLShader
+	class GLSLShader : public NonCopyable
 	{
 		friend class GLSLShaderProgram;
 
@@ -36,7 +39,7 @@ namespace Indy
 
 		void Destroy( void);
 
-		bool Compile( void);
+		bool Compile( void) const;
 
 		/* --- Getters & Setters --- */
 		unsigned int GetID( void) const { return m_shaderID; }
