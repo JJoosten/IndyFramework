@@ -6,6 +6,7 @@
 
 namespace Indy
 {
+	class Window;
 	class GLContext;
 	class GLSLShader;
 	class GLSLShaderProgram;
@@ -17,7 +18,7 @@ namespace Indy
 	{
 
 	public:
-		Game( void);
+		Game( GLContext* const openGLContext, Window* const window);
 		~Game( void);
 
 		void UpdateFrame( const double deltaTimeSec);
@@ -31,7 +32,8 @@ namespace Indy
 		void loadPlaneVertexData( void);
 
 	private:
-		GLContext*&				m_glContext;
+		GLContext*				m_glContext;
+		Window*					m_window;
 		GLSLShader*				m_computeShader;
 		GLSLShaderProgram*		m_computeShaderProgram;
 		GLSLShader*				m_vertexShader;

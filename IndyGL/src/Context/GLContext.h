@@ -24,6 +24,9 @@ namespace Indy
 		GLContext ( const OpenGLInfo& info);
 		~GLContext( void);
 		
+		unsigned int Create( void);
+		void Destroy( void);
+
 		virtual void Bind  ( void) = 0;
 		virtual void Unbind( void) = 0;
 
@@ -58,7 +61,11 @@ namespace Indy
 		/* --- Getters & Setters --- */
 		const OpenGLInfo& GetOpenGLInfo( void) const { return m_openGLInfo; }
 
+		unsigned int GetHandle( void) const { return m_handle; }
+
 		static GLContext*& GetCurrentBoundGLContext( void) { return m_currentGLContextBound; }
+
+		static GLContext*& GetContext( const unsigned int handle);
 
 
 	protected:
@@ -66,8 +73,9 @@ namespace Indy
 
 
 	protected:
-		OpenGLInfo		m_openGLInfo;
-		
+		OpenGLInfo		 m_openGLInfo;
+		unsigned int	m_handle;
+
 		// static data
 		static std::vector<GLContext*>	m_contexts;
 		static GLContext*				m_currentGLContextBound;

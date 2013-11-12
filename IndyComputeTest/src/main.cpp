@@ -73,7 +73,7 @@ int main( int argc, char** argv)
 	Indy::Timer gameClock;
 	gameClock.Start();
 
-	Indy::Game game;
+	Indy::Game game( glContext, window);
 
 	// start of loop
 	bool hasStopped = false;

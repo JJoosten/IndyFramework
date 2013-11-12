@@ -2,6 +2,7 @@
 
 #include "Game.h"
 
+#include <IndyGL/Window/Window.h>
 #include <IndyGL/Context/GLContext.h>
 #include <IndyGL/Shader/GLSLShader.h>
 #include <IndyGL/Shader/GLSLShaderProgram.h>
@@ -17,9 +18,10 @@
 
 namespace Indy
 {
-	Game::Game( void)
+	Game::Game( GLContext* const openGLContext, Window* const window)
 		:
-	m_glContext( GLContext::GetCurrentBoundGLContext()),
+	m_window(window),
+	m_glContext( openGLContext),
 	m_computeShader( NULL),
 	m_computeShaderProgram( NULL),
 	m_texture( NULL),

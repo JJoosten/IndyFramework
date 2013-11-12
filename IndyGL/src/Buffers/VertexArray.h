@@ -24,14 +24,14 @@ namespace Indy
 									 const GLint size, 
 									 const GLenum type,
 									 const GLboolean normalized,
-									 const GLsizei stride);
+									 const GLsizei stride) const;
 
 		void VertexAttributePointer( const GLuint index, 
 									 const GLint size, 
 									 const GLenum type,
 									 const GLboolean normalized,
 									 const GLsizei stride, 
-									 const GLvoid* pointer);
+									 const GLvoid* pointer) const;
 
 		bool IsVertexAttributeArrayEnabled( const GLuint index) const;
 
@@ -40,6 +40,5 @@ namespace Indy
 
 	private:
 		GLuint m_handle;
-		GLuint m_vertexAttributePointerIndexFlags;
 	};
 }

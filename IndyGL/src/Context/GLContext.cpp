@@ -15,6 +15,7 @@ namespace Indy
 	GLContext::GLContext( const OpenGLInfo& openGLInfo)
 		:
 	m_openGLInfo(openGLInfo)
+	,m_handle((unsigned int)this)
 	{
 		m_contexts.push_back( this);
 	}
@@ -192,6 +193,16 @@ namespace Indy
 	bool GLContext::isThisTheCurrentGLContext( void) const
 	{
 		return this == m_currentGLContextBound ? true : false;
+	}
+
+	
+	GLContext*& GLContext::GetContext( const unsigned int handle)
+	{
+		for( unsigned int i = 0; i < m_contexts.size(); ++i)
+		{
+			if( (unsigned int)m_contexts[i] == handle)
+				return m_contexts[i];
+		}
 	}
 
 
