@@ -3,11 +3,12 @@
 #pragma once
 
 #include "GL/glew.h"
+#include <IndyCore/Utilities/NonCopyable.h>
 
 namespace Indy
 {
 	class GLSLShaderProgram;
-	class UniformBuffer
+	class UniformBuffer : public NonCopyable
 	{
 
 	public:
@@ -25,7 +26,7 @@ namespace Indy
 						 const GLvoid* data, 
 						 const GLuint dataSizeInBytes);
 
-		void SendToGPU( const GLuint blockIndex);
+		void SendToGPU( const GLuint blockIndex) const;
 
 		void Bind( const GLuint blockIndex) const;
 		void Unbind( void) const;

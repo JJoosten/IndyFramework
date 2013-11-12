@@ -3,10 +3,11 @@
 #pragma once
 
 #include "GL/glew.h"
+#include <IndyCore/Utilities/NonCopyable.h>
 
 namespace Indy
 {
-	class VertexAttributeBuffer
+	class VertexAttributeBuffer : public NonCopyable
 	{
 
 	public:
@@ -40,7 +41,9 @@ namespace Indy
 
 		GLuint GetNumAttributeChannels( void) const { return m_numAttributeChannels; }
 
+		GLuint GetAttributeSizeInBytes( void) const { return m_attributeSizeInBytes; }
 
+		const GLvoid* const GetReadOnlyAttributeData( void) const { return m_attributeData; }
 
 	private:
 		GLuint  m_vboID;

@@ -115,6 +115,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Game.h" />
+    <ClInclude Include="src\Paths.h" />
     <ClInclude Include="src\WindowInputWin32.h" />
   </ItemGroup>
   <ItemGroup>

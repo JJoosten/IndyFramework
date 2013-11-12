@@ -16,6 +16,7 @@
     <ClInclude Include="src\Buffers\UniformBuffer.h" />
     <ClInclude Include="src\Buffers\VertexArrayObject.h" />
     <ClInclude Include="src\Buffers\VertexAttributeBuffer.h" />
+    <ClInclude Include="src\Camera\Camera.h" />
     <ClInclude Include="src\Context\GLContext.h" />
     <ClInclude Include="src\Context\Win32\GLContextWin32.h" />
     <ClInclude Include="src\Shader\GLSLShader.h" />
@@ -31,6 +32,7 @@
     <ClCompile Include="src\Buffers\UniformBuffer.cpp" />
     <ClCompile Include="src\Buffers\VertexArrayObject.cpp" />
     <ClCompile Include="src\Buffers\VertexAttributeBuffer.cpp" />
+    <ClCompile Include="src\Camera\Camera.cpp" />
     <ClCompile Include="src\Context\GLContext.cpp" />
     <ClCompile Include="src\Context\Win32\GLContextWin32.cpp" />
     <ClCompile Include="src\Shader\GLSLShader.cpp" />
@@ -71,6 +73,9 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</DeploymentContent>
     </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\Camera\Camera.inl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{4BF2BF06-3EAB-426C-96F1-DEC8194ACABA}</ProjectGuid>

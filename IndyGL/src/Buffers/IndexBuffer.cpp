@@ -12,11 +12,6 @@ namespace Indy
 	{
 
 	}
-	
-	IndexBuffer::IndexBuffer( const IndexBuffer& cpyctr)
-	{
-		*this = cpyctr;
-	}
 
 	IndexBuffer::~IndexBuffer( void)
 	{
@@ -27,17 +22,10 @@ namespace Indy
 			BREAKPOINT( IndexBuffer was not yet destroyed);
 	}
 	
-	const IndexBuffer& IndexBuffer::operator=( const IndexBuffer& rvalue)
-	{
-		memcpy( this, &rvalue, sizeof(IndexBuffer) - sizeof(m_indices));
-
-		if( rvalue.GetReadOnlyIndexData() != NULL)
-			memcpy( m_indices, rvalue.GetReadOnlyIndexData(), m_numIndices * m_sizeOfElementInBytes);
-
-		return *this;
-	}
-	
-	void IndexBuffer::Create( const GLuint numIndices, void* const indices, const GLuint sizeOfElementInBytes, const GLenum usage /* = GL_STATIC_DRAW */)
+	void IndexBuffer::Create( const GLuint numIndices, 
+							  const GLuint sizeOfElementInBytes, 
+							  void* const indices, 
+							  const GLenum usage /* = GL_STATIC_DRAW */)
 	{
 		if(m_indices != 0)
 			BREAKPOINT( IndexBuffer was already created);
@@ -91,4 +79,4 @@ namespace Indy
 	{
 		glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0);
 	}
-};
+}

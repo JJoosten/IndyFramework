@@ -19,10 +19,10 @@ namespace Indy
 
 	VertexAttributeBuffer::~VertexAttributeBuffer( void)
 	{
-		if(m_attributeData != 0)
+		if( m_attributeData != 0)
 			BREAKPOINT(VertexAttributeBuffer was not yet destroyed);
 		
-		if(m_vboID != 0)
+		if( m_vboID != 0)
 			BREAKPOINT(VertexAttributeBuffer was not yet destroyed);
 	}
 

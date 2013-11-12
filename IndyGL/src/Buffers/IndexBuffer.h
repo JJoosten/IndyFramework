@@ -3,20 +3,22 @@
 #pragma once
 
 #include "GL/glew.h"
+#include <IndyCore/Utilities/NonCopyable.h>
 
 namespace Indy
 {
-	class IndexBuffer
+	class IndexBuffer : public NonCopyable
 	{
 
 	public:
 		IndexBuffer( void);
-		IndexBuffer( const IndexBuffer& cpyctr);
 		~IndexBuffer( void);
 
-		const IndexBuffer& operator=( const IndexBuffer& rvalue);
+		void Create( const GLuint numIndices, 
+					 const GLuint sizeOfElementInBytes, 
+					 void* const indices, 
+					 const GLenum usage = GL_STATIC_DRAW);
 
-		void Create( const GLuint numIndices, void* const indices, const GLuint sizeOfElementInBytes, const GLenum usage = GL_STATIC_DRAW);
 		void Destroy( void);
 
 		void DestroyLocalBuffer( void);

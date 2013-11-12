@@ -35,6 +35,9 @@
     <ClInclude Include="src\WindowInputWin32.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="src\Paths.h">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="content\shaders\geometry.incl">

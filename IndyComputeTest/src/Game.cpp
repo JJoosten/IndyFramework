@@ -1,6 +1,7 @@
 // Juul Joosten 2013
 
 #include "Game.h"
+#include "Paths.h"
 
 #include <IndyCore/CoreDefines.h>
 #include <IndyGL/Window/Window.h>
@@ -78,8 +79,6 @@ namespace Indy
 	{
 		if(GLEW_ARB_compute_shader)
 		{
-			m_cameraDataUBO->Bind( m_computeShaderProgram->GetUniformBlockIndex("CameraInfo"));
-
 			glBindImageTexture( 0, m_texture->GetTextureID(), 0, GL_FALSE, 0, GL_WRITE_ONLY, GL_RGBA32F);  
 
 			m_computeShaderProgram->Bind();
@@ -89,8 +88,6 @@ namespace Indy
 			m_computeShaderProgram->Unbind();
 			
 			glBindImageTexture( 0, 0, 0, GL_FALSE, 0, GL_READ_ONLY, GL_R8);
-
-			m_cameraDataUBO->Unbind();
 		}
 	}
 
@@ -122,7 +119,7 @@ namespace Indy
 	{
 		// load compute shader and create compute shader program
 		m_computeShader = new GLSLShader();
-		m_computeShader->LoadSourceFromFile( GLSLShaderTypes::COMPUTE_SHADER, "content/shaders/raytracer.comp");
+		m_computeShader->LoadSourceFromFile( GLSLShaderTypes::COMPUTE_SHADER, CONTENT_SHADER_PATH "raytracer.comp");
 		m_computeShader->Create();
 		if( !m_computeShader->Compile())
 			BREAKPOINT(Compiling compute shader failed!);
@@ -165,13 +162,13 @@ namespace Indy
 	{
 		// load default vertex and fragment shader
 		m_vertexShader = new GLSLShader();
-		m_vertexShader->LoadSourceFromFile( GLSLShaderTypes::VERTEX_SHADER, "content/shaders/planeVertexShader.vert");
+		m_vertexShader->LoadSourceFromFile( GLSLShaderTypes::VERTEX_SHADER, CONTENT_SHADER_PATH "planeVertexShader.vert");
 		m_vertexShader->Create();
 		if( !m_vertexShader->Compile())
 			BREAKPOINT(Compiling vertex shader failed!);
 		
 		m_fragmentShader = new GLSLShader();
-		m_fragmentShader->LoadSourceFromFile( GLSLShaderTypes::FRAGMENT_SHADER, "content/shaders/defaultFragmentShader.frag");
+		m_fragmentShader->LoadSourceFromFile( GLSLShaderTypes::FRAGMENT_SHADER, CONTENT_SHADER_PATH "defaultFragmentShader.frag");
 		m_fragmentShader->Create();
 		if( !m_fragmentShader->Compile())
 			BREAKPOINT(Compiling fragment shader failed!);
@@ -194,7 +191,7 @@ namespace Indy
 		float* texData = new float[1280 * 720 * 4];
 		memset( texData, 0, 1280 * 720 * 4);
 		m_texture = new Texture2D();
-		m_texture->Create(1280, 720, (unsigned char*)texData, 4, sizeof(float));
+		m_texture->Create( 1280, 720, (unsigned char*)texData, 4, sizeof(float));
 		m_texture->GenerateGPUTexture(false);
 		m_texture->DestroyLocalTexture();
 		m_texture->Bind();

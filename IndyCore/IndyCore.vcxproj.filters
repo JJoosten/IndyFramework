@@ -13,6 +13,9 @@
     <Filter Include="src\Utilities">
       <UniqueIdentifier>{e6e91e2d-a5ae-474f-969b-e5c1eb418d93}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Math">
+      <UniqueIdentifier>{a14ddeb4-c108-4382-8890-af1570f86401}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\CoreDefines.h">

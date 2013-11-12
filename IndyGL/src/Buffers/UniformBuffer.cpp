@@ -103,7 +103,7 @@ namespace Indy
 		m_offsets = NULL;
 	}
 
-	void UniformBuffer::SendToGPU( const GLuint blockIndex)
+	void UniformBuffer::SendToGPU( const GLuint blockIndex) const
 	{
 		Bind( blockIndex);
 		

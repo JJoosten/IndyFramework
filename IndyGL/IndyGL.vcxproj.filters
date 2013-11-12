@@ -75,6 +75,9 @@
     <ClInclude Include="src\Buffers\IndexBuffer.h">
       <Filter>src\Buffers</Filter>
     </ClInclude>
+    <ClInclude Include="src\Camera\Camera.h">
+      <Filter>src\Camera</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Window\Win32\WindowWin32.cpp">
@@ -113,9 +116,17 @@
     <ClCompile Include="src\Buffers\IndexBuffer.cpp">
       <Filter>src\Buffers</Filter>
     </ClCompile>
+    <ClCompile Include="src\Camera\Camera.cpp">
+      <Filter>src\Camera</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="CopyCoreLibToGL.bat" />
     <CustomBuild Include="GenerateIncludeDir.bat" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\Camera\Camera.inl">
+      <Filter>src\Camera</Filter>
+    </None>
   </ItemGroup>
 </Project>
