@@ -8,7 +8,7 @@
 	#define M_PI	3.14159265358979323846264338327950288419716939937510582097494459072381640628620899862803482534211706798
 #endif
 
-#ifndef DEGREES_TO_RADIANS(D)
+#ifndef DEGREES_TO_RADIANS
 	#define DEGREES_TO_RADIANS(D)	(D * M_PI / 180.0)
 #endif
 
@@ -332,7 +332,7 @@ namespace Indy
 
 		Matrix4<T>& RotateX(T degrees)
 		{
-			const T radians = DEGREES_TO_RADIANS( degrees);
+			const T radians = (T)DEGREES_TO_RADIANS( degrees);
 
 			C2R2 = cos( radians); 
 			C2R3 = -sin( radians);
@@ -344,7 +344,7 @@ namespace Indy
 
 		Matrix4<T>& RotateY(T degrees)
 		{
-			const T radians = DEGREES_TO_RADIANS( degrees);
+			const T radians = (T)DEGREES_TO_RADIANS( degrees);
 
 			C1R1 = cos( radians); 
 			C1R3 = -sin( radians);
@@ -356,7 +356,7 @@ namespace Indy
 
 		Matrix4<T>& RotateZ(T degrees)
 		{
-			const T radians = DEGREES_TO_RADIANS( degrees);
+			const T radians = (T)DEGREES_TO_RADIANS( degrees);
 
 			C1R1 = cos( radians); 
 			C1R2 = -sin( radians);
@@ -371,7 +371,7 @@ namespace Indy
 										   const T normalZ, 
 										   const T degrees)
 		{
-			const T rads = DEGREES_TO_RADIANS(degrees);
+			const T rads = (T)DEGREES_TO_RADIANS(degrees);
 			const T cosine = cos(rads);
 			const T oneMinCos = 1.0f - cosine;
 			const T sine = sin(rads);

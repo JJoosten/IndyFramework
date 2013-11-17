@@ -20,7 +20,7 @@ namespace Indy
 	GLContextWin32::~GLContextWin32( void)
 	{
 		if( m_glContextHandle)
-			BREAKPOINT(GLContextWin32 was not destroyed yet, use the Destroy function!);
+			BREAKPOINT(GLContextWin32 was not destroyed yet use the Destroy function!);
 	}
 
 	bool GLContextWin32::Create( const HDC const deviceContext, 

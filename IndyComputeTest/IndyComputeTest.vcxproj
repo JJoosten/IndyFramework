@@ -50,7 +50,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(ProjectDir)bin\$(Configuration)\</OutDir>
     <IntDir>$(ProjectDir)build\$(Configuration)\</IntDir>
-    <CustomBuildBeforeTargets>Build</CustomBuildBeforeTargets>
+    <CustomBuildBeforeTargets>
+    </CustomBuildBeforeTargets>
     <LibraryPath>$(ProjectDir)lib/openGL/lib/;$(ProjectDir)lib/glew-1.10.0/lib/Release/$(Platform)/;$(ProjectDir)lib/IndyGL/lib/$(Configuration);$(ProjectDir)lib/IndyCore/lib/$(Configuration);%(AdditionalIncludeDirectories);$(VCInstallDir)lib;$(VCInstallDir)atlmfc\lib;$(WindowsSDK_LibraryPath_x86)</LibraryPath>
     <IncludePath>$(ProjectDir)lib/openGL/include;$(ProjectDir)lib/glew-1.10.0/include;$(ProjectDir)lib/glm-0.9.4.4/glm-0.9.4.4/include;$(ProjectDir)lib/IndyGL/include;$(ProjectDir)lib/IndyCore/include;%(AdditionalIncludeDirectories);$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(WindowsSDK_IncludePath)</IncludePath>
   </PropertyGroup>
@@ -60,13 +61,15 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_MBCS;WIN32;DEBUG;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)libs/openGL/include/;$(ProjectDir)libs/glew-1.10.0/include/;$(ProjectDir)libs/stb_image/include/;$(ProjectDir)libs/glm-0.9.4.4/glm-0.9.4.4/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>
+      </AdditionalIncludeDirectories>
       <FloatingPointModel>Fast</FloatingPointModel>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(ProjectDir)libs/openGL/lib/;$(ProjectDir)libs/glew-1.10.0/lib/Release/$(Platform)/;%(AdditionalIncludeDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
       <AdditionalDependencies>IndyCore.lib;IndyGL.lib;GLU32.lib;OpenGL32.Lib;glew32.lib;glew32s.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
@@ -78,6 +81,8 @@
     </CustomBuild>
     <CustomBuildStep>
       <Message />
+      <Outputs>
+      </Outputs>
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -107,6 +112,11 @@
     <PreBuildEvent>
       <Command>xcopy "$(ProjectDir)\lib\glew-1.10.0\bin\Release\$(Platform)\glew32.dll" "$(TargetDir)" /Y /D</Command>
     </PreBuildEvent>
+    <CustomBuildStep>
+      <Outputs>
+      </Outputs>
+      <Message />
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Game.cpp" />

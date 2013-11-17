@@ -20,10 +20,10 @@ namespace Indy
 	GLSLShader::~GLSLShader( void)
 	{
 		if(m_shaderSource != NULL)
-			BREAKPOINT(GLSLShader was not yet destroyed, use the Destroy function);
+			BREAKPOINT(GLSLShader was not yet destroyed use the Destroy function);
 
 		if(m_shaderID != 0)
-			BREAKPOINT(GLSLShader was not yet destroyed, use the Destroy function);
+			BREAKPOINT(GLSLShader was not yet destroyed use the Destroy function);
 
 		if( m_usageCounter > 0)
 			BREAKPOINT(GLSLShader still being used by one or more shader programs);

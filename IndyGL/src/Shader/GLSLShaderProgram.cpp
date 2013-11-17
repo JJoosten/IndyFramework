@@ -24,7 +24,7 @@ namespace Indy
 	GLSLShaderProgram::~GLSLShaderProgram( void)
 	{
 		if( m_shaderProgramID != 0)
-			BREAKPOINT(GLSLShaderProgram is not yet destroyed, use Destroy to destroy the program);
+			BREAKPOINT(GLSLShaderProgram is not yet destroyed use Destroy to destroy the program);
 	}
 
 	
