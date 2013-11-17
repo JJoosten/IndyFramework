@@ -31,6 +31,7 @@ namespace Indy
 		void loadVertexFragmentShader( void);
 		void loadTexture( void);
 		void loadPlaneVertexData( void);
+		void loadCamera( void);
 
 	private:
 		GLContext*				m_glContext;

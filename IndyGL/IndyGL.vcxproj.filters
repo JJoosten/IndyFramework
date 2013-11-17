@@ -34,6 +34,9 @@
     <Filter Include="lib\stb_image">
       <UniqueIdentifier>{da7feb56-acfc-4e3a-9c8e-fa5a582cede1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Geometry">
+      <UniqueIdentifier>{026c47d2-91ff-4509-95b9-b21e1052dd21}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Window\Window.h">
@@ -77,6 +80,9 @@
     </ClInclude>
     <ClInclude Include="src\Camera\Camera.h">
       <Filter>src\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Geometry\VertexData.h">
+      <Filter>src\Geometry</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

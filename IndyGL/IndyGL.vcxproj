@@ -19,6 +19,7 @@
     <ClInclude Include="src\Camera\Camera.h" />
     <ClInclude Include="src\Context\GLContext.h" />
     <ClInclude Include="src\Context\Win32\GLContextWin32.h" />
+    <ClInclude Include="src\Geometry\VertexData.h" />
     <ClInclude Include="src\Shader\GLSLShader.h" />
     <ClInclude Include="src\Shader\GLSLShaderPreprocessor.h" />
     <ClInclude Include="src\Shader\GLSLShaderProgram.h" />

@@ -38,7 +38,7 @@ namespace Indy
 	m_vertexArrayObject( NULL)
 	{
 		// setup viewport
-		m_glContext->ResizeViewport( 0, 0, 1280, 720);
+		m_glContext->ResizeViewport( 0, 0, m_window->GetWidth(), m_window->GetHeight());
 
 		loadComputeShader();
 
@@ -47,9 +47,8 @@ namespace Indy
 		loadTexture();
 
 		loadPlaneVertexData();
-
-		m_camera = new Camera();
-		m_camera->Init(70.0f, 1280.0f / 720.0f, 0.1f, 100.0f);
+		
+		loadCamera();
 	}
 
 	Game::~Game( void)
@@ -91,7 +90,7 @@ namespace Indy
 
 			m_computeShaderProgram->Bind();
 
-			glDispatchCompute( 1280 / 8, 720 / 8, 1);
+			glDispatchCompute( m_window->GetWidth() / 8, m_window->GetHeight() / 8, 1);
 			
 			m_computeShaderProgram->Unbind();
 			
@@ -147,8 +146,8 @@ namespace Indy
 		};
 
 		// compute camera info
-		const float halfWidth = 640.0f;
-		const float halfHeight = 360.0f;
+		const float halfWidth = (float)m_window->GetWidth() * 0.5f;
+		const float halfHeight = (float)m_window->GetHeight() * 0.5f;
 
 		const GLfloat fov = 70.0f;
 		const float focalLength = 2.0f / tan( fov / 2.0f);
@@ -196,10 +195,10 @@ namespace Indy
 		glActiveTexture(GL_TEXTURE0);
 
 		// load texture to adjust in compute shader
-		float* texData = new float[1280 * 720 * 4];
-		memset( texData, 0, 1280 * 720 * 4);
+		float* texData = new float[m_window->GetWidth() * m_window->GetHeight() * 4];
+		memset( texData, 0, m_window->GetWidth() * m_window->GetHeight() * 4);
 		m_texture = new Texture2D();
-		m_texture->Create( 1280, 720, (unsigned char*)texData, 4, sizeof(float));
+		m_texture->Create( m_window->GetWidth(), m_window->GetHeight(), (unsigned char*)texData, 4, sizeof(float));
 		m_texture->GenerateGPUTexture(false);
 		m_texture->DestroyLocalTexture();
 		m_texture->Bind();
@@ -231,5 +230,11 @@ namespace Indy
 			
 		// index 0, size of 2 (2 attributes xy), type float, not normalized, 0 offset and 0 data due to binding of m_planeVertices
 		m_vertexArrayObject->VertexAttributePointer( m_planeVertices, 0, 2, GL_FLOAT, GL_FALSE, 0);
+	}
+
+	void Game::loadCamera( void)
+	{
+		m_camera = new Camera();
+		m_camera->Init( 70.0f, (float)m_window->GetWidth() / (float)m_window->GetHeight(), 0.1f, 100.0f);
 	}
 }
