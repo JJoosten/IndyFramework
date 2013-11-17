@@ -8,6 +8,7 @@ namespace Indy
 {
 	class Window;
 	class GLContext;
+	class Camera;
 	class GLSLShader;
 	class GLSLShaderProgram;
 	class Texture2D;
@@ -34,6 +35,7 @@ namespace Indy
 	private:
 		GLContext*				m_glContext;
 		Window*					m_window;
+		Camera*					m_camera;
 		GLSLShader*				m_computeShader;
 		GLSLShaderProgram*		m_computeShaderProgram;
 		GLSLShader*				m_vertexShader;

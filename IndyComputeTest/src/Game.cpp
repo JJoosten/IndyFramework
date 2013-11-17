@@ -4,7 +4,7 @@
 #include "Paths.h"
 
 #include <IndyCore/CoreDefines.h>
-#include <IndyCore/Math/Vector3.h>
+#include <IndyGL/Camera/Camera.h>
 #include <IndyGL/Window/Window.h>
 #include <IndyGL/Context/GLContext.h>
 #include <IndyGL/Shader/GLSLShader.h>
@@ -26,6 +26,7 @@ namespace Indy
 		:
 	m_window( window),
 	m_glContext( openGLContext),
+	m_camera(NULL),
 	m_computeShader( NULL),
 	m_computeShaderProgram( NULL),
 	m_texture( NULL),
@@ -47,12 +48,14 @@ namespace Indy
 
 		loadPlaneVertexData();
 
-		Vector3f vecTest(10,10,10);
-		vecTest.Normalize();
+		m_camera = new Camera();
+		m_camera->Init(70.0f, 1280.0f / 720.0f, 0.1f, 100.0f);
 	}
 
 	Game::~Game( void)
 	{
+		delete m_camera;
+
 		m_computeShaderProgram->Destroy();
 		delete m_computeShaderProgram;
 

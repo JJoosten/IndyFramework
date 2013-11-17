@@ -2,6 +2,8 @@
 
 #pragma once
 
+#include <IndyCore/Math/Matrix4.h>
+
 namespace Indy
 {
 	class Camera
@@ -68,27 +70,27 @@ namespace Indy
 		void Pitch( const float degrees);
 		void Roll( const float degrees);
 
-		float GetYawInDegrees( void) const;
-		float GetPitchInDegrees( void) const;
-		float GetRollInDegrees( void) const;
+		inline float GetYawInDegrees( void) const;
+		inline float GetPitchInDegrees( void) const;
+		inline float GetRollInDegrees( void) const;
 
-		void GetPosition( float& xOUT, float& yOUT, float& zOUT) const;
+		inline void GetPosition( float& xOUT, float& yOUT, float& zOUT) const;
 
-		void GetUp( float& xOUT, float& yOUT, float& zOUT) const;
-		void GetRight( float& xOUT, float& yOUT, float& zOUT) const;
-		void GetForward( float& xOUT, float& yOUT, float& zOUT) const;
+		inline void GetUp( float& xOUT, float& yOUT, float& zOUT) const;
+		inline void GetRight( float& xOUT, float& yOUT, float& zOUT) const;
+		inline void GetForward( float& xOUT, float& yOUT, float& zOUT) const;
 
 	private:
 		void computeViewMatrix( void);
 
 	protected:
-		float m_projectionMatrix[16];
-		float m_viewMatrix[16];
-		float m_position[3];
-		float m_yawInDegrees;
-		float m_pitchInDegrees;
-		float m_rollInDegrees;
+		Matrix4f	m_projectionMatrix;
+		Matrix4f	m_viewMatrix;
+		Vector3f	m_position;
+		float		m_yawInDegrees;
+		float		m_pitchInDegrees;
+		float		m_rollInDegrees;
 	};
-}
 
-#include "Camera.inl"
+	#include "Camera.inl"
+}

@@ -3,45 +3,48 @@
 float Indy::Camera::GetYawInDegrees( void) const
 {
 	return m_yawInDegrees;
-}
+};
 
 float Indy::Camera::GetPitchInDegrees( void) const
 {
 	return m_pitchInDegrees;
-}
+};
 
 float Indy::Camera::GetRollInDegrees( void) const
 {
 	return m_rollInDegrees;
-}
+};
 
 void Indy::Camera::GetPosition( float& xOUT, float& yOUT, float& zOUT) const
 {
-	xOUT = m_position[0];
-	yOUT = m_position[1];
-	zOUT = m_position[2];
-}
+	xOUT = m_position.X;
+	yOUT = m_position.Y;
+	zOUT = m_position.Z;
+};
 
 void Indy::Camera::GetUp( float& xOUT, float& yOUT, float& zOUT) const
 {
 	// get row 1
-	xOUT = m_viewMatrix[1];
-	yOUT = m_viewMatrix[5];
-	zOUT = m_viewMatrix[9];
-}
+	Vector3f row1 = m_viewMatrix.GetXYZRow(1);
+	xOUT = row1.X;
+	yOUT = row1.Y;
+	zOUT = row1.Z;
+};
 
 void Indy::Camera::GetRight( float& xOUT, float& yOUT, float& zOUT) const
 {
 	// get row 0
-	xOUT = m_viewMatrix[0];
-	yOUT = m_viewMatrix[4];
-	zOUT = m_viewMatrix[8];
-}
+	Vector3f row0 = m_viewMatrix.GetXYZRow(0);
+	xOUT = row0.X;
+	yOUT = row0.Y;
+	zOUT = row0.Z;
+};
 
 void Indy::Camera::GetForward( float& xOUT, float& yOUT, float& zOUT) const
 {
 	// get row 2
-	xOUT = m_viewMatrix[ 2];
-	yOUT = m_viewMatrix[ 6];
-	zOUT = m_viewMatrix[10];  
-}
+	Vector3f row2 = m_viewMatrix.GetXYZRow(2);
+	xOUT = row2.X;
+	yOUT = row2.Y;
+	zOUT = row2.Z; 
+};

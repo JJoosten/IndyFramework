@@ -14,17 +14,7 @@ namespace Indy
 	,m_pitchInDegrees()
 	,m_rollInDegrees()
 	{
-		// identity
-		m_projectionMatrix[ 0] = 1.0f;
-		m_projectionMatrix[ 5] = 1.0f;
-		m_projectionMatrix[10] = 1.0f;
-		m_projectionMatrix[15] = 1.0f;
 
-		// identity
-		m_viewMatrix[ 0] = 1.0f;
-		m_viewMatrix[ 5] = 1.0f;
-		m_viewMatrix[10] = 1.0f;
-		m_viewMatrix[15] = 1.0f;
 	}
 
 	Camera::~Camera( void)
@@ -81,12 +71,12 @@ namespace Indy
 										   const float nearPlane, 
 										   const float farPlane)
 	{
-		
+		m_projectionMatrix = CreatePerspectiveMatrix( fov, aspectRatio, nearPlane, farPlane);
 	}
 
 	void Camera::SetPerspectiveProjection( const float* const projection)
 	{
-		memcpy( m_projectionMatrix, projection, sizeof(float) * 16);
+		memcpy( &m_projectionMatrix, projection, sizeof(float) * 16);
 	}
 
 	void Camera::SetOrthographicProjection( const float left, 
@@ -96,20 +86,20 @@ namespace Indy
 											const float near, 
 											const float far)
 	{
-
+		m_projectionMatrix = CreateOrthographicMatrix( left, right, bottom, top, near, far);
 	}
 
 	void Camera::SetOrthographicProjection( const float* const projection)
 	{
-		memcpy( m_projectionMatrix, projection, sizeof(float) * 16);
+		memcpy( &m_projectionMatrix, projection, sizeof(float) * 16);
 	}
 
 	
 	void Camera::SetPosition( const float* const position)
 	{
-		m_position[0] = position[0];
-		m_position[1] = position[1];
-		m_position[2] = position[2];
+		m_position.X = position[0];
+		m_position.Y = position[1];
+		m_position.Z = position[2];
 
 		this->computeViewMatrix();
 	}
@@ -118,7 +108,8 @@ namespace Indy
 						 const float* const targetPositionXYZ, 
 						 const float* const worldUpNormalXYZ)
 	{
-
+		m_position = Vector3f(eyePositionXYZ);
+		m_viewMatrix = CreateLookatMatrix<float>( m_position, Vector3f(targetPositionXYZ), Vector3f(worldUpNormalXYZ));
 	}
 
 
@@ -129,9 +120,9 @@ namespace Indy
 		float zRelativeX = 0;
 		this->GetForward( xRelativeX, yRelativeX, zRelativeX);
 
-		m_position[0] += xRelativeX * distance;
-		m_position[1] += yRelativeX * distance;
-		m_position[2] += zRelativeX * distance;
+		m_position.X += xRelativeX * distance;
+		m_position.Y += yRelativeX * distance;
+		m_position.Z += zRelativeX * distance;
 
 		this->computeViewMatrix();
 	}
@@ -143,9 +134,9 @@ namespace Indy
 		float zRelativeY = 0;
 		this->GetForward( xRelativeY, yRelativeY, zRelativeY);
 
-		m_position[0] += xRelativeY * distance;
-		m_position[1] += yRelativeY * distance;
-		m_position[2] += zRelativeY * distance;
+		m_position.X += xRelativeY * distance;
+		m_position.Y += yRelativeY * distance;
+		m_position.Z += zRelativeY * distance;
 
 		this->computeViewMatrix();
 	}
@@ -157,9 +148,9 @@ namespace Indy
 		float zRelativeZ = 0;
 		this->GetForward( xRelativeZ, yRelativeZ, zRelativeZ);
 
-		m_position[0] += xRelativeZ * distance;
-		m_position[1] += yRelativeZ * distance;
-		m_position[2] += zRelativeZ * distance;
+		m_position.X += xRelativeZ * distance;
+		m_position.Y += yRelativeZ * distance;
+		m_position.Z += zRelativeZ * distance;
 
 		this->computeViewMatrix();
 	}
@@ -186,6 +177,11 @@ namespace Indy
 	
 	void Camera::computeViewMatrix( void)
 	{
-
+		Matrix4f rotMatrix;
+		rotMatrix *= Matrix4f().RotateX(m_pitchInDegrees);
+		rotMatrix *= Matrix4f().RotateY(m_yawInDegrees);
+		rotMatrix *= Matrix4f().RotateZ(m_rollInDegrees);
+	
+		LookAt(m_position.XYZ, (m_position + rotMatrix.GetXYZRow(2)).XYZ, rotMatrix.GetXYZRow(1).XYZ);
 	}
 }

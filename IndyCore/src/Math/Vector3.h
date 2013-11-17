@@ -132,12 +132,10 @@ namespace Indy
 			return *this;
 		}
 
-
 		void Zero() 
 		{ 
 			X, Y, Z = 0; 
 		}
-
 
 		Vector3<T>& Normalize()
 		{
@@ -174,6 +172,10 @@ namespace Indy
 			{
 				T XYZ[3];
 			};
+			struct
+			{
+				T RGB[3];
+			};
 		};
 
 	};
@@ -186,6 +188,43 @@ namespace Indy
 	typedef Vector3<unsigned short>		Vector3us;	
 	typedef Vector3<char>				Vector3c;	
 	typedef Vector3<unsigned char>		Vector3uc;	
+
+
+	template< typename T>
+	inline  Vector3<T> operator -( const  Vector3<T>& vecA, const  Vector3<T>& vecB)
+	{
+		return  Vector3<T>( vecA.X - vecB.X, vecA.Y - vecB.Y, vecA.Z - vecB.Z);
+	}
+	
+	template< typename T>
+	inline  Vector3<T> operator +( const  Vector3<T>& vecA, const  Vector3<T>& vecB)
+	{
+		return  Vector3<T>( vecA.X + vecB.X, vecA.Y + vecB.Y, vecA.Z + vecB.Z);
+	}
+	
+	template< typename T>
+	inline  Vector3<T> operator *( const  Vector3<T>& vecA, const  Vector3<T>& vecB)
+	{
+		return  Vector3<T>( vecA.X * vecB.X, vecA.Y * vecB.Y, vecA.Z * vecB.Z);
+	}
+	
+	template< typename T>
+	inline  Vector3<T> operator *(const T value, const  Vector3<T>& vecA)
+	{
+		return  Vector3<T>(vecA.X * value, vecA.Y * value, vecA.Z * value);
+	}
+	
+	template< typename T>
+	inline  Vector3<T> operator /( const Vector3f& vecA, const  Vector3<T>& vecB)
+	{
+		return  Vector3<T>( vecA.X / vecB.X, vecA.Y / vecB.Y, vecA.Z / vecB.Z);
+	}
+	
+	template< typename T>
+	inline  Vector3<T> operator /(const T value, const  Vector3<T>& vecA)
+	{
+		return  Vector3<T>(vecA.X / value, vecA.Y / value, vecA.Z / value);
+	}
 
 	
 	template< typename T>
