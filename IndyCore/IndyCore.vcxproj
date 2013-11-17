@@ -14,6 +14,8 @@
     <ClInclude Include="src\CoreDefines.h" />
     <ClInclude Include="src\Input\Keyboard.h" />
     <ClInclude Include="src\Input\KeyboardKeys.h" />
+    <ClInclude Include="src\Math\Matrix4.h" />
+    <ClInclude Include="src\Math\Vector3.h" />
     <ClInclude Include="src\Time\Timer.h" />
     <ClInclude Include="src\Utilities\FPSTracker.h" />
     <ClInclude Include="src\Utilities\Hash.h" />

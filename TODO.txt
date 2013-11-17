@@ -1,0 +1,12 @@
+
+--- TODO: ---
+- Create Aos Matrix4x4f in IndyCore
+- Create Aos Vector3f in IndyCore
+
+- Create FrameBuffer in IndyGL
+- Fix Camera class with Matrix4x4f and Vector3f 
+- Clean namespace ; 
+- Create enum for vbo and ibo usage GL_STATIC...
+- Create enum for VertexAttributeBuffers
+
+- Create propper inline files and make sure the header never has functions

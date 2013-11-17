@@ -4,6 +4,7 @@
 #include "Paths.h"
 
 #include <IndyCore/CoreDefines.h>
+#include <IndyCore/Math/Vector3.h>
 #include <IndyGL/Window/Window.h>
 #include <IndyGL/Context/GLContext.h>
 #include <IndyGL/Shader/GLSLShader.h>
@@ -12,6 +13,7 @@
 #include <IndyGL/Buffers/VertexAttributeBuffer.h>
 #include <IndyGL/Buffers/UniformBuffer.h>
 #include <IndyGL/Buffers/VertexArrayObject.h>
+
 
 #include <stdio.h>
 
@@ -44,6 +46,9 @@ namespace Indy
 		loadTexture();
 
 		loadPlaneVertexData();
+
+		Vector3f vecTest(10,10,10);
+		vecTest.Normalize();
 	}
 
 	Game::~Game( void)
