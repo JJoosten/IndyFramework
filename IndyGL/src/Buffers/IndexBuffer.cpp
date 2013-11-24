@@ -9,6 +9,7 @@ namespace Indy
 	,m_numIndices(0)
 	,m_sizeOfElementInBytes(0)
 	,m_indices(NULL)
+	,m_drawMode(GL_TRIANGLES)
 	{
 
 	}
@@ -25,7 +26,8 @@ namespace Indy
 	void IndexBuffer::Create( const GLuint numIndices, 
 							  const GLuint sizeOfElementInBytes, 
 							  void* const indices, 
-							  const GLenum usage /* = GL_STATIC_DRAW */)
+							  const GLenum usage /* = GL_STATIC_DRAW */,
+							  const GLenum drawMode /* = GL_TRIANGLES */)
 	{
 		if(m_indices != 0)
 			BREAKPOINT( IndexBuffer was already created);
@@ -33,6 +35,7 @@ namespace Indy
 		if(m_numIndices != 0)
 			BREAKPOINT( IndexBuffer was already created);
 
+		m_drawMode = drawMode;
 		m_numIndices = numIndices;
 		m_indices = indices;
 		m_sizeOfElementInBytes = sizeOfElementInBytes;

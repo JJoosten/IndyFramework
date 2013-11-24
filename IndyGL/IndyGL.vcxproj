@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="lib\stb_image\include\stb_image\stb_image.h" />
+    <ClInclude Include="src\Buffers\FrameBuffer.h" />
     <ClInclude Include="src\Buffers\IndexBuffer.h" />
     <ClInclude Include="src\Buffers\UniformBuffer.h" />
     <ClInclude Include="src\Buffers\VertexArrayObject.h" />
@@ -29,6 +30,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="lib\stb_image\include\stb_image\stb_image.c" />
+    <ClCompile Include="src\Buffers\FrameBuffer.cpp" />
     <ClCompile Include="src\Buffers\IndexBuffer.cpp" />
     <ClCompile Include="src\Buffers\UniformBuffer.cpp" />
     <ClCompile Include="src\Buffers\VertexArrayObject.cpp" />
@@ -77,6 +79,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="src\Camera\Camera.inl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\IndyCore\IndyCore.vcxproj">
+      <Project>{b716641f-0fb9-4373-96a1-9fbb02e2b153}</Project>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{4BF2BF06-3EAB-426C-96F1-DEC8194ACABA}</ProjectGuid>

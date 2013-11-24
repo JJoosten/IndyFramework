@@ -21,7 +21,7 @@ namespace Indy
 
 		void Create( const unsigned int width, 
 					 const unsigned int height, 
-				     const unsigned char* textureData, 
+				     const unsigned char* const textureData, 
 					 const unsigned char numComponents,
 				     const unsigned char componentSizeInBytes);
 		

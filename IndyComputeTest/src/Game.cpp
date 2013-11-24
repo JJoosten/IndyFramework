@@ -13,6 +13,7 @@
 #include <IndyGL/Buffers/VertexAttributeBuffer.h>
 #include <IndyGL/Buffers/UniformBuffer.h>
 #include <IndyGL/Buffers/VertexArrayObject.h>
+#include <IndyGL/Buffers/FrameBuffer.h>
 
 
 #include <stdio.h>
@@ -35,7 +36,8 @@ namespace Indy
 	m_vertexFragShaderProgram( NULL),
 	m_planeVertices( NULL),
 	m_cameraDataUBO( NULL),
-	m_vertexArrayObject( NULL)
+	m_vertexArrayObject( NULL),
+	m_frameBuffer( NULL)
 	{
 		// setup viewport
 		m_glContext->ResizeViewport( 0, 0, m_window->GetWidth(), m_window->GetHeight());
@@ -49,10 +51,15 @@ namespace Indy
 		loadPlaneVertexData();
 		
 		loadCamera();
+
+		m_frameBuffer = new FrameBuffer();
+		m_frameBuffer->Create( 1280, 720, 1);
 	}
 
 	Game::~Game( void)
 	{
+		delete m_frameBuffer;
+
 		delete m_camera;
 
 		m_computeShaderProgram->Destroy();
@@ -82,9 +89,10 @@ namespace Indy
 		delete m_vertexArrayObject;
 	}
 
+
 	void Game::UpdateFrame( const double deltaTimeSec)
 	{
-		if(GLEW_ARB_compute_shader)
+		if( GLEW_ARB_compute_shader)
 		{
 			glBindImageTexture( 0, m_texture->GetTextureID(), 0, GL_FALSE, 0, GL_WRITE_ONLY, GL_RGBA32F);  
 
@@ -103,19 +111,42 @@ namespace Indy
 		// set clear color to black and clear depth and color buffer 
 		m_glContext->ClearBuffers( 0x0, GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		m_texture->Bind();
+
+		// draw in frame buffer
+		m_frameBuffer->Bind();
+
+		 m_texture->Bind();
+		 
+		 m_vertexFragShaderProgram->Bind();
+		 
+		 m_vertexArrayObject->Bind();
+		 
+		 glDrawArrays( GL_TRIANGLES, 0, 6);
+		 
+		 m_vertexArrayObject->Unbind();
+		 
+		 m_vertexFragShaderProgram->Unbind();
+		 
+		 m_texture->Unbind();
+
+		m_frameBuffer->Unbind();
+
+
+		// draw framebuffer on quad
+		m_frameBuffer->BindRTAsTexture();
 
 		m_vertexFragShaderProgram->Bind();
-		
+
 		m_vertexArrayObject->Bind();
 
 		glDrawArrays( GL_TRIANGLES, 0, 6);
-		
+
 		m_vertexArrayObject->Unbind();
 
 		m_vertexFragShaderProgram->Unbind();
 
-		m_texture->Unbind();
+		m_frameBuffer->UnbindRTAsTexture();
+
 
 		glFinish();
 	}
@@ -191,7 +222,6 @@ namespace Indy
 	void Game::loadTexture( void)
 	{
 		// enable textures
-		m_glContext->Enable(GL_TEXTURE_2D);
 		glActiveTexture(GL_TEXTURE0);
 
 		// load texture to adjust in compute shader

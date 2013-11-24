@@ -37,6 +37,7 @@ namespace Indy
 		void DisableDepthBuffer( void) const;
 		void EnableDepthWrite( void) const;
 		void DisableDepthWrite( void) const;
+		void SetDepthFunc(GLenum depthFunc = GL_LESS) const;
 
 		void EnableCulling( void) const;
 		void DisableCulling( void) const;
@@ -54,6 +55,12 @@ namespace Indy
 
 		void ClearBuffers( const GLulong color = 0x0, 
 						   const GLbitfield buffersToClear = GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT) const;
+
+		const char* const GetRenderer( void) const;
+		const char* const GetVendor( void) const;
+		const char* const GetVersion( void) const;
+		const char* const GetExtensions( void) const;
+
 
 		bool HasGLError( void) const;
 
@@ -75,6 +82,11 @@ namespace Indy
 	protected:
 		OpenGLInfo		 m_openGLInfo;
 		unsigned int	m_handle;
+		
+		char* m_rendererString;
+		char* m_vendorString;
+		char* m_versionString;
+		char* m_extensionsString;
 
 		// static data
 		static std::vector<GLContext*>	m_contexts;

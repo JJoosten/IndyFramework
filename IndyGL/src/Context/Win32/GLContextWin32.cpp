@@ -98,7 +98,7 @@ namespace Indy
 								 WGL_CONTEXT_FLAGS_ARB, 0,0};/*WGL_CONTEXT_FORWARD_COMPATIBLE_BIT_ARB | WGL_CONTEXT_DEBUG_BIT_ARB,  
 								 WGL_CONTEXT_PROFILE_MASK_ARB, WGL_CONTEXT_CORE_PROFILE_BIT_ARB,
 								 0};*/
-
+			
 			// create OpenGL 3 render context
 			m_glContextHandle = wglCreateContextAttribsARB( deviceContext, 0, attributes);
 
@@ -122,12 +122,32 @@ namespace Indy
 			m_glContextHandle = tempContext;
 		}
 
-		if( currentBound != NULL)
-			currentBound->Bind();
+
+		Bind();
+		
+		if( HasGLError())
+			printf("OpenGL error after wglCreateContextAttribsARB \n");
 
 		glGetIntegerv(GL_MAJOR_VERSION, (GLint*)&m_openGLInfo.MajorVersion);
 		glGetIntegerv(GL_MINOR_VERSION, (GLint*)&m_openGLInfo.MinorVersion);
 
+		
+		if( HasGLError())
+			printf("OpenGL error after glGetIntegerv \n");
+
+		// initialize glew
+		glewExperimental = TRUE;
+		GLenum error = glewInit();
+		if (error != GLEW_OK)
+			fprintf(stderr, "Error: %s\n", glewGetErrorString(error));
+		fprintf(stdout, "Status: Using GLEW %s\n", glewGetString(GLEW_VERSION));
+		
+		m_versionString		= (char*)glGetString(GL_VERSION);
+		m_extensionsString	= (char*)glGetString(GL_EXTENSIONS);
+		m_vendorString		= (char*)glGetString(GL_VENDOR);
+		m_rendererString	= (char*)glGetString(GL_RENDERER);
+		
+		Unbind();
 
 		return true;
 	}
@@ -146,6 +166,7 @@ namespace Indy
 			BREAKPOINT(wglMakeCurrent gave error!);
 
 		m_currentGLContextBound = this;
+
 	}
 
 	void GLContextWin32::Unbind( void)

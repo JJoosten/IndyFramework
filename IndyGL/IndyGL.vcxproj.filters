@@ -84,6 +84,9 @@
     <ClInclude Include="src\Geometry\VertexData.h">
       <Filter>src\Geometry</Filter>
     </ClInclude>
+    <ClInclude Include="src\Buffers\FrameBuffer.h">
+      <Filter>src\Buffers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Window\Win32\WindowWin32.cpp">
@@ -124,6 +127,9 @@
     </ClCompile>
     <ClCompile Include="src\Camera\Camera.cpp">
       <Filter>src\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Buffers\FrameBuffer.cpp">
+      <Filter>src\Buffers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

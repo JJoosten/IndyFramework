@@ -15,6 +15,7 @@ namespace Indy
 	class VertexAttributeBuffer;
 	class UniformBuffer;
 	class VertexArrayObject;
+	class FrameBuffer;
 	class Game : public NonCopyable
 	{
 
@@ -46,5 +47,6 @@ namespace Indy
 		VertexAttributeBuffer*	m_planeVertices;
 		UniformBuffer*			m_cameraDataUBO;
 		VertexArrayObject*		m_vertexArrayObject;
+		FrameBuffer*			m_frameBuffer;
 	};
 }

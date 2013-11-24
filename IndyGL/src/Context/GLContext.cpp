@@ -16,6 +16,10 @@ namespace Indy
 		:
 	m_openGLInfo(openGLInfo)
 	,m_handle((unsigned int)this)
+	,m_rendererString(NULL)
+	,m_vendorString(NULL)
+	,m_versionString(NULL)
+	,m_extensionsString(NULL)
 	{
 		m_contexts.push_back( this);
 	}
@@ -84,6 +88,15 @@ namespace Indy
 	}
 
 	
+	void GLContext::SetDepthFunc(GLenum depthFunc /* = GL_LESS */) const
+	{
+		if ( !isThisTheCurrentGLContext())
+			BREAKPOINT(DisableDepthWrite is called through context that is currently not bound!);
+		
+		glDepthFunc(depthFunc);
+	}
+
+	
 	void GLContext::EnableCulling( void) const
 	{
 		Enable(GL_CULL_FACE);
@@ -147,6 +160,26 @@ namespace Indy
 		glClear( buffersToClear);
 	}
 
+	
+	const char* const GLContext::GetRenderer( void) const
+	{
+		return m_rendererString;
+	}
+
+	const char* const GLContext::GetVendor( void) const
+	{
+		return m_vendorString;
+	}
+
+	const char* const GLContext::GetVersion( void) const
+	{
+		return m_versionString;
+	}
+
+	const char* const GLContext::GetExtensions( void) const
+	{
+		return m_extensionsString;
+	}
 
 	bool GLContext::HasGLError( void) const
 	{

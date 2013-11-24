@@ -20,15 +20,6 @@ extern "C"
 	_declspec(dllexport) DWORD NvOptimusEnablement = 0x00000001;
 }
 
-
-void initializeGlew( void)
-{
-	GLenum error = glewInit();
-	if (error != GLEW_OK)
-		fprintf(stderr, "Error: %s\n", glewGetErrorString(error));
-	fprintf(stdout, "Status: Using GLEW %s\n", glewGetString(GLEW_VERSION));
-}
-
 int main( int argc, char** argv)
 {
 	char* applicationPath = argv[0];
@@ -54,7 +45,7 @@ int main( int argc, char** argv)
 	exit(0);
 #endif
 	window->Create( resolutionX, resolutionY, false, "Indy Compute Shader Test", 32);
-
+	
 	Indy::OpenGLInfo openGLInfo;
 	openGLInfo.MajorVersion = 3;
 	openGLInfo.MinorVersion = 1;
@@ -68,7 +59,24 @@ int main( int argc, char** argv)
 #endif
 	glContext->Bind();
 	
-	initializeGlew();
+	printf("Vendor %s \n", glContext->GetVendor());
+	printf("Version %s \n", glContext->GetVersion());
+	printf("Renderer %s \n", glContext->GetRenderer());
+
+#ifdef _DEBUG
+	const char* const extensions = glContext->GetExtensions();
+	if(extensions != NULL)
+	{
+		const unsigned int stringLength = strlen(extensions);
+		for( unsigned int i = 0; i < stringLength; ++i)
+		{
+			if(extensions[i] != ' ')
+				printf("%c", extensions[i]);
+			else
+				printf("\n");
+		}
+	}
+#endif
 
 	Indy::Timer	renderTimer;
 	Indy::Timer updateTimer;

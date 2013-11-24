@@ -59,20 +59,23 @@ namespace Indy
 
 	void Texture2D::Create( const unsigned int width, 
 							const unsigned int height, 
-							const unsigned char* textureData, 
+							const unsigned char* const textureData, 
 							const unsigned char numComponents, 
 							const unsigned char componentSizeInBytes)
 	{
-		m_isLocalDataAvailable = true;
+		m_isLocalDataAvailable = textureData != NULL? true : false;
+
 		m_width = width;
 		m_height = height;
 		m_numComponents = numComponents;
 		m_componentSizeInBytes = componentSizeInBytes;
-
-		m_textureData = new unsigned char[width * height * numComponents * componentSizeInBytes];
-
+		
 		if(textureData != NULL)
+		{
+			m_textureData = new unsigned char[width * height * numComponents * componentSizeInBytes];
+
 			memcpy( m_textureData, textureData, m_width * m_height * m_componentSizeInBytes * m_numComponents);
+		}
 	}
 
 	void Texture2D::Destroy( void)
@@ -86,9 +89,6 @@ namespace Indy
 
 	void Texture2D::GenerateGPUTexture( const bool generateMipMaps /*= true*/)
 	{
-		if( !m_isLocalDataAvailable)
-			BREAKPOINT(Local texture data is not available!);
-
 		// generate texture ID
 		glGenTextures( 1, &m_textureID);
 
@@ -102,6 +102,10 @@ namespace Indy
 			glTexParameteri( GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE);
 
 		// TODO: make the next block better adjustable by external parameters to override auto select settings
+		
+		// select format from RGBA, RGB or RED
+		GLenum format = m_numComponents == 4 ? GL_RGBA : GL_RGB;
+		format = m_numComponents == 1 ? GL_RED : format;
 
 		// select internal format
 		GLenum type = GL_UNSIGNED_BYTE;
@@ -120,6 +124,11 @@ namespace Indy
 			internalFormat = m_numComponents == 1 ? GL_R16F : internalFormat;
 			type = GL_FLOAT;
 		break;
+		case 3:
+			internalFormat = GL_DEPTH_COMPONENT24;
+			format = GL_DEPTH_COMPONENT;
+			type = GL_UNSIGNED_BYTE;
+		break;
 		case 4:
 			// floating point buffer
 			internalFormat = m_numComponents == 4 ? GL_RGBA32F : GL_RGB32F;
@@ -127,11 +136,6 @@ namespace Indy
 			type = GL_FLOAT;
 		break;
 		}
-
-		// select format from RGBA, RGB or RED
-		GLenum format = m_numComponents == 4 ? GL_RGBA : GL_RGB;
-		format = m_numComponents == 1 ? GL_RED : format;
-
 
 		glTexImage2D( GL_TEXTURE_2D, 0, internalFormat, (GLsizei)m_width, (GLsizei)m_height, 0, format, type, (GLvoid*)m_textureData);
 
@@ -200,7 +204,6 @@ namespace Indy
 			glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, maxAnisotropic);
 		}
 		*/
-
 		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, minSampler );
 		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, magSampler );
 	}
@@ -228,7 +231,11 @@ namespace Indy
 		if( !m_isOnGPU)
 			BREAKPOINT(Texture is not on GPU);
 
-				// select internal format
+		// select format from RGBA, RGB or RED
+		GLenum format = m_numComponents == 4 ? GL_RGBA : GL_RGB;
+		format = m_numComponents == 1 ? GL_RED : format;
+
+		// select internal format
 		GLenum type = GL_UNSIGNED_BYTE;
 		GLint internalFormat = 0;
 		switch(m_componentSizeInBytes)
@@ -245,6 +252,11 @@ namespace Indy
 			internalFormat = m_numComponents == 1 ? GL_R16F : internalFormat;
 			type = GL_FLOAT;
 		break;
+		case 3:
+			internalFormat = GL_DEPTH_COMPONENT24;
+			format = GL_DEPTH_COMPONENT;
+			type = GL_UNSIGNED_BYTE;
+		break;
 		case 4:
 			// floating point buffer
 			internalFormat = m_numComponents == 4 ? GL_RGBA32F : GL_RGB32F;
@@ -252,10 +264,6 @@ namespace Indy
 			type = GL_FLOAT;
 		break;
 		}
-
-		// select format from RGBA, RGB or RED
-		GLenum format = m_numComponents == 4 ? GL_RGBA : GL_RGB;
-		format = m_numComponents == 1 ? GL_RED : m_numComponents;
 
 		Bind();
 		glTexSubImage2D(GL_TEXTURE_2D, 0, (GLint)xOffset, (GLint)yOffset, (GLsizei)width, (GLsizei)height, format, type, (GLvoid*)data );
