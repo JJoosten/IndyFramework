@@ -88,7 +88,7 @@ namespace Indy
 	}
 
 	
-	void GLContext::SetDepthFunc(GLenum depthFunc /* = GL_LESS */) const
+	void GLContext::SetDepthFunc( const DepthFunc::DepthFunc depthFunc /*= DepthFunc::LESS*/) const
 	{
 		if ( !isThisTheCurrentGLContext())
 			BREAKPOINT(DisableDepthWrite is called through context that is currently not bound!);
@@ -107,7 +107,7 @@ namespace Indy
 		Disable(GL_CULL_FACE);
 	}
 
-	void GLContext::SetCullFace( const GLenum cullFace) const
+	void GLContext::SetCullFace( const CullFace::CullFace cullFace /*= CullFace::BACK*/) const
 	{
 		if ( !isThisTheCurrentGLContext())
 			BREAKPOINT(SetCullFace is called through context that is currently not bound!);
@@ -126,12 +126,13 @@ namespace Indy
 		Disable(GL_BLEND);
 	}
 
-	void GLContext::SetBlendFunc( const GLenum source, const GLenum dest) const
+	void GLContext::SetBlendFunc( const BlendFunc::BlendFunc source /*= BlendFunc::SOURCE_ALPHA*/, 
+								  const BlendFunc::BlendFunc destination /*= BlendFunc::ONE_MINUS_SOURCE_ALPHA*/) const
 	{	
 		if ( !isThisTheCurrentGLContext())
 			BREAKPOINT(SetBlendFunc is called through context that is currently not bound!);
 
-		glBlendFunc(source, dest);
+		glBlendFunc(source, destination);
 	}
 
 
@@ -146,7 +147,7 @@ namespace Indy
 	
 
 	void GLContext::ClearBuffers( const GLulong color /*= 0x0*/, 
-								  const GLbitfield buffersToClear /*= GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT*/) const
+								  const ClearTargets::ClearTarget clearTargets /*= ClearTargets::COLOR_AND_DEPTH_BUFFER*/) const
 	{
 		if ( !isThisTheCurrentGLContext())
 			BREAKPOINT(Clear is called through context that is currently not bound!);
@@ -157,7 +158,7 @@ namespace Indy
 		GLclampf a = (GLclampf)((color) && 0xff) / 255.0f;
 
 		glClearColor( r, g, b, a);
-		glClear( buffersToClear);
+		glClear( clearTargets);
 	}
 
 	

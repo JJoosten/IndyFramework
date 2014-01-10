@@ -2,6 +2,8 @@
 
 #pragma once
 
+#include "FrameBufferEnums.h"
+
 #include "GL/glew.h"
 #include <IndyCore/Utilities/NonCopyable.h>
 
@@ -17,17 +19,17 @@ namespace Indy
 
 		void Create( const unsigned int width, 
 					 const unsigned int height, 
-					 const unsigned int numRTs = 1,
-					 const bool useDepthBuffer = true, 
-					 const bool useMipMaps = false);
+					 const NumRenderTargets::NumRenderTargets numRTs = NumRenderTargets::ONE,
+					 const FrameBufferDepth::FrameBufferDepthBuffer depthBufferEnabled = FrameBufferDepth::ENABLED, 
+					 const FrameBufferMipMaps::FrameBufferMipMapping mipMappingEnabled = FrameBufferMipMaps::DISABLED);
 		void Destroy( void);
 
 
 		void Bind( void) const;
 		void Unbind( void) const;
 
-		void BindRTAsTexture( const unsigned int rtIndex = 0) const;
-		void UnbindRTAsTexture( const unsigned int rtIndex = 0) const;
+		void BindRTAsTexture( const RenderTargets::RenderTarget rtIndex = RenderTargets::RT0) const;
+		void UnbindRTAsTexture( void) const;
 
 		void BindDepthBufferAsTexture( void) const;
 		void UnbindDepthBufferAsTexture( void) const;
@@ -40,18 +42,18 @@ namespace Indy
 
 		unsigned int GetNumRenderTargets( void) const { return m_numRTs; }
 
-		bool IsUsingMipMaps( void) const { return m_isUsingMipMaps; }
+		bool IsUsingMipMaps( void) const { return (bool)m_mipMappingEnabled; }
 
-		bool HasDepthBuffer( void) const { return m_hasDepthBuffer; }
+		bool HasDepthBuffer( void) const { return (bool)m_depthBufferEnabled; }
 
 	private:
-		GLuint			m_framebufferID;
-		Texture2D*		m_renderTargets;
-		Texture2D*		m_depthBuffer;
-		unsigned int	m_width;
-		unsigned int	m_height;
-		unsigned int	m_numRTs;
-		bool			m_isUsingMipMaps;
-		bool			m_hasDepthBuffer;
+		GLuint								m_framebufferID;
+		Texture2D*							m_renderTargets;
+		Texture2D*							m_depthBuffer;
+		unsigned int						m_width;
+		unsigned int						m_height;
+		NumRenderTargets::NumRenderTargets			m_numRTs;
+		FrameBufferDepth::FrameBufferDepthBuffer	m_depthBufferEnabled;
+		FrameBufferMipMaps::FrameBufferMipMapping	m_mipMappingEnabled;
 	};
 }

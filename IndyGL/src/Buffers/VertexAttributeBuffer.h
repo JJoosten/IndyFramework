@@ -2,6 +2,8 @@
 
 #pragma once
 
+#include "DrawModeEnums.h"
+
 #include "GL/glew.h"
 #include <IndyCore/Utilities/NonCopyable.h>
 
@@ -20,9 +22,9 @@ namespace Indy
 		void Create( const GLuint attributeBindLocation, 
 					 const GLuint numAttributes, 
 					 const GLuint numAttributeChannels, 
-					 GLvoid* const attributeData, 
+					 const GLvoid* const attributeData, 
 					 const GLuint attributeSizeInBytes,
-					 const GLenum usage = GL_STATIC_DRAW );
+					 const BufferUsage::BufferUse usage = BufferUsage::STATIC_DRAW );
 
 		void Destroy( void);
 

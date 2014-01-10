@@ -48,3 +48,14 @@ void Indy::Camera::GetForward( float& xOUT, float& yOUT, float& zOUT) const
 	yOUT = row2.Y;
 	zOUT = row2.Z; 
 };
+
+
+const float* const Indy::Camera::GetViewMatrix( void) const 
+{ 
+	return m_viewMatrix.GetReadOnlyData();
+}
+
+const float* const Indy::Camera::GetProjectionMatrix( void) const 
+{ 
+	return m_projectionMatrix.GetReadOnlyData();
+}

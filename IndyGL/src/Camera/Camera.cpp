@@ -118,7 +118,7 @@ namespace Indy
 		float xRelativeX = 0;
 		float yRelativeX = 0; 
 		float zRelativeX = 0;
-		this->GetForward( xRelativeX, yRelativeX, zRelativeX);
+		this->GetRight( xRelativeX, yRelativeX, zRelativeX);
 
 		m_position.X += xRelativeX * distance;
 		m_position.Y += yRelativeX * distance;
@@ -132,7 +132,7 @@ namespace Indy
 		float xRelativeY = 0;
 		float yRelativeY = 0; 
 		float zRelativeY = 0;
-		this->GetForward( xRelativeY, yRelativeY, zRelativeY);
+		this->GetUp( xRelativeY, yRelativeY, zRelativeY);
 
 		m_position.X += xRelativeY * distance;
 		m_position.Y += yRelativeY * distance;

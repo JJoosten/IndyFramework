@@ -37,6 +37,9 @@
     <Filter Include="src\Geometry">
       <UniqueIdentifier>{026c47d2-91ff-4509-95b9-b21e1052dd21}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Culling">
+      <UniqueIdentifier>{9764135e-88f6-4da3-ad05-4f9519d74ef5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Window\Window.h">
@@ -86,6 +89,21 @@
     </ClInclude>
     <ClInclude Include="src\Buffers\FrameBuffer.h">
       <Filter>src\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Buffers\FrameBufferEnums.h">
+      <Filter>src\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Buffers\DrawModeEnums.h">
+      <Filter>src\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Buffers\VertexArrayObjectEnums.h">
+      <Filter>src\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Context\GLContextEnums.h">
+      <Filter>src\Context</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Textures\TextureEnums.h">
+      <Filter>src\Textures</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -9,11 +9,11 @@ namespace Indy
 	m_framebufferID(0)
 	,m_width(0)
 	,m_height(0)
-	,m_numRTs(0)
+	,m_numRTs(NumRenderTargets::ONE)
 	,m_renderTargets(NULL)
 	,m_depthBuffer(NULL)
-	,m_isUsingMipMaps(false)
-	,m_hasDepthBuffer(false)
+	,m_mipMappingEnabled(FrameBufferMipMaps::DISABLED)
+	,m_depthBufferEnabled(FrameBufferDepth::DISABLED)
 	{
 
 	}
@@ -26,41 +26,39 @@ namespace Indy
 	
 	void FrameBuffer::Create( const unsigned int width, 
 							  const unsigned int height, 
-							  const unsigned int numRTs		/* = 1 */,
-							  const bool useDepthBuffer     /* = true */,
-							  const bool useMipMaps			/* = false */)
+							  const NumRenderTargets::NumRenderTargets numRTs /*= NumRenderTargets::ONE*/,
+							  const FrameBufferDepth::FrameBufferDepthBuffer depthBufferEnabled /*= FrameBufferDepth::ENABLED*/, 
+							  const FrameBufferMipMaps::FrameBufferMipMapping mipMappingEnabled /*= FrameBufferMipMaps::DISABLED*/)
 	{
 		m_width = width;
 		m_height = height;
-		m_isUsingMipMaps = useMipMaps;
 		m_numRTs = numRTs;
-		m_hasDepthBuffer = useDepthBuffer;
+		m_mipMappingEnabled = mipMappingEnabled;
+		m_depthBufferEnabled = depthBufferEnabled;
 
 		
 		glGenFramebuffers(1, &m_framebufferID);
 		Bind();
 		
+		TextureCreateMipMaps::TextureCreateMipMap textureMipMappingEnabled = TextureCreateMipMaps::NONE;
+		if( textureMipMappingEnabled == FrameBufferMipMaps::ENABLED)
+			textureMipMappingEnabled = TextureCreateMipMaps::ON_GPU;
+
 		// setup render targets
 		m_renderTargets = new Texture2D[numRTs];
-		for( unsigned int i = 0; i < m_numRTs; ++i)
+		for( int i = 0; i < m_numRTs; ++i)
 		{
-			m_renderTargets[i].Create( m_width, m_height, NULL, 4, 1);
-			m_renderTargets[i].GenerateGPUTexture(m_isUsingMipMaps);
-			m_renderTargets[i].Bind();
-			m_renderTargets[i].SetSamplerFilter(GL_LINEAR, GL_LINEAR);
-			m_renderTargets[i].Unbind();
+			m_renderTargets[i].Create( m_width, m_height, TextureFormats::RGBA, TextureInternalFormats::RGBA8, TextureStorageLocations::GPU_MEMORY, textureMipMappingEnabled);
+			m_renderTargets[i].SetSamplerFilter(TextureMinFilters::LINEAR, TextureMagFilters::LINEAR);
 			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + i, GL_TEXTURE_2D, m_renderTargets[i].GetTextureID(), 0);
 		}
 
-		if(m_hasDepthBuffer)
+		if(m_depthBufferEnabled == FrameBufferDepth::ENABLED)
 		{
 			m_depthBuffer = new Texture2D();
-			m_depthBuffer->Create( m_width, m_height, NULL, 1, 3); // 24 bit depth texture
-			m_depthBuffer->GenerateGPUTexture(false);
-			m_depthBuffer->Bind();
-			m_depthBuffer->SetSamplerFilter(GL_LINEAR, GL_LINEAR);
-			m_depthBuffer->SetTextureWrapMode( GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE);
-			m_depthBuffer->Unbind();
+			m_depthBuffer->Create( m_width, m_height, TextureFormats::DEPTH, TextureInternalFormats::DEPTH, TextureStorageLocations::GPU_MEMORY, textureMipMappingEnabled);
+			m_depthBuffer->SetSamplerFilter(TextureMinFilters::LINEAR, TextureMagFilters::LINEAR);
+			m_depthBuffer->SetTextureWrapMode( TextureWrapModes::CLAMP_TO_EDGE, TextureWrapModes::CLAMP_TO_EDGE);
 			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, m_depthBuffer->GetTextureID(), 0);
 		}
 
@@ -69,11 +67,11 @@ namespace Indy
 
 	void FrameBuffer::Destroy( void)
 	{
-		for( unsigned int i = 0; i < m_numRTs; ++i)
+		for( int i = 0; i < m_numRTs; ++i)
 			m_renderTargets[i].Destroy();
 		delete[] m_renderTargets;
 
-		if(m_hasDepthBuffer)
+		if(m_depthBufferEnabled == FrameBufferDepth::ENABLED)
 		{
 			m_depthBuffer->Destroy();
 			delete m_depthBuffer;
@@ -84,9 +82,9 @@ namespace Indy
 
 		m_width = 0;
 		m_height = 0;
-		m_numRTs = 0;
-		m_isUsingMipMaps = false;
-		m_hasDepthBuffer = false;
+		m_numRTs = NumRenderTargets::ONE;
+		m_mipMappingEnabled = FrameBufferMipMaps::DISABLED;
+		m_depthBufferEnabled = FrameBufferDepth::DISABLED;
 	}
 
 
@@ -97,29 +95,31 @@ namespace Indy
 
 	void FrameBuffer::Unbind( void) const
 	{
+		if(m_depthBufferEnabled == FrameBufferDepth::ENABLED)
+		{
+			for( int i = 0; i < m_numRTs; ++i)
+				m_renderTargets[i].UpdateMipMaps();
+
+			if(m_depthBuffer != NULL)
+				m_depthBuffer->UpdateMipMaps();
+		}
+		
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	}
 
-	void FrameBuffer::BindRTAsTexture( const unsigned int rtIndex /* = 0 */) const
+	void FrameBuffer::BindRTAsTexture( const RenderTargets::RenderTarget rtIndex /*= RenderTargets::RT0*/) const
 	{
-		if(rtIndex >= m_numRTs)
-			BREAKPOINT(rtIndex is bigger then numRenderTargets);
-
 		m_renderTargets[rtIndex].Bind();
-
 	}
 
-	void FrameBuffer::UnbindRTAsTexture( const unsigned int rtIndex /* = 0 */) const
+	void FrameBuffer::UnbindRTAsTexture( void) const
 	{
-		if(rtIndex >= m_numRTs)
-			BREAKPOINT(rtIndex is bigger then numRenderTargets);
-
-		m_renderTargets[rtIndex].Unbind();
+		glBindTexture( GL_TEXTURE_2D, 0);
 	}
 
 	void FrameBuffer::BindDepthBufferAsTexture( void) const
 	{
-		if(!m_hasDepthBuffer)
+		if(m_depthBufferEnabled == FrameBufferDepth::DISABLED)
 			BREAKPOINT(This framebuffer has no depthbuffer);
 
 		m_depthBuffer->Bind();
@@ -127,7 +127,7 @@ namespace Indy
 
 	void FrameBuffer::UnbindDepthBufferAsTexture( void) const
 	{
-		if(!m_hasDepthBuffer)
+		if(m_depthBufferEnabled == FrameBufferDepth::DISABLED)
 			BREAKPOINT(This framebuffer has no depthbuffer);
 
 		m_depthBuffer->Unbind();

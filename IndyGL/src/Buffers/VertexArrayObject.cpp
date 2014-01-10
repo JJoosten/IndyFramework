@@ -43,7 +43,7 @@ namespace Indy
 												    const GLuint index, 
 												    const GLint size, 
 												    const GLenum type, 
-												    const GLboolean normalized, 
+													const NormalizeFixedPointValues::NormalizeFixedPointValues normalized /*= NormalizeFixedPointValues::FALSE*/,
 												    const GLsizei stride) const
 	{
 		buffer->Bind();
@@ -54,7 +54,7 @@ namespace Indy
 	void VertexArrayObject::VertexAttributePointer( const GLuint index, 
 												    const GLint size, 
 												    const GLenum type, 
-												    const GLboolean normalized, 
+													const NormalizeFixedPointValues::NormalizeFixedPointValues normalized /*= NormalizeFixedPointValues::FALSE*/,
 												    const GLsizei stride, 
 												    const GLvoid* pointer) const
 	{

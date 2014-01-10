@@ -2,61 +2,71 @@
 
 #pragma once
 
-#include "GL/glew.h"
+//#include "GL/glew.h" included in TextureEnums.h
+#include "TextureEnums.h"
+
+#include <IndyCore/Utilities/NonCopyable.h>
 
 namespace Indy
 {
-	class Texture2D
+	class Texture2D : public NonCopyable
 	{
 
 	public:
 		Texture2D( void);
-		Texture2D( const Texture2D& cpyCtor);
 		~Texture2D( void);
 
-		const Texture2D& operator=( const Texture2D& rvalue);
 
+		void Create( const char* const textureFile,
+					 TextureStorageLocations::TextureStorageLocation storageLocation,
+					 TextureCreateMipMaps::TextureCreateMipMap createMipMaps);
 
-		void Create( const char* const textureFile);
+		void Create( const unsigned int width, 
+					 const unsigned int height, 
+					 TextureFormats::TextureFormat format,
+					 TextureInternalFormats::TextureInternalFormat internalFormat,
+					 TextureStorageLocations::TextureStorageLocation storageLocation,
+					 TextureCreateMipMaps::TextureCreateMipMap createMipMaps);		     
 
 		void Create( const unsigned int width, 
 					 const unsigned int height, 
 				     const unsigned char* const textureData, 
-					 const unsigned char numComponents,
-				     const unsigned char componentSizeInBytes);
+					 TextureFormats::TextureFormat format,
+					 TextureInternalFormats::TextureInternalFormat internalFormat,
+					 TextureStorageLocations::TextureStorageLocation storageLocation,
+					 TextureCreateMipMaps::TextureCreateMipMap createMipMaps);
 		
 		void Destroy( void);
 
-		void GenerateGPUTexture( const bool generateMipMaps = true);
-		
-		void DestroyGPUTexture( void);
+		Texture2D* MakeCopy( void) const;
 
-		void DestroyLocalTexture( void);
 
-		
+		void UpdateTexture( const unsigned int xOffset, const unsigned int yOffset, 
+							const unsigned int width, const unsigned int height, 
+							const char* const data);
+
+		void UpdateMipMaps( void);
+
 		void Bind( void) const;
 
 		void Unbind( void) const;
 
 
-		void SetTextureWrapMode( const GLint wrapModeS = GL_REPEAT, 
-								 const GLint wrapModeT = GL_REPEAT);
+		void SetTextureWrapMode( const TextureWrapModes::TextureWrapMode wrapModeS = TextureWrapModes::REPEAT, 
+								 const TextureWrapModes::TextureWrapMode wrapModeT = TextureWrapModes::REPEAT);
 
-		void SetSamplerFilter( const GLint minSampler = GL_NEAREST_MIPMAP_LINEAR, 
-							   const GLint magSampler = GL_LINEAR);
+		void SetSamplerFilter( const TextureMinFilters::TextureMinFilter minSampler = TextureMinFilters::NEAREST_MIPMAP_LINEAR, 
+							   const TextureMagFilters::TextureMagFilter magSampler = TextureMagFilters::LINEAR);
 
 		void SetTextureBorderColor( const GLuint color = 0x0);
 
 
-		void UpdateSubRegion( const unsigned int xOffset, const unsigned int yOffset, 
-							  const unsigned int width, const unsigned int height, 
-							  const char* const data);
-
-
 		/* --- Getters & Setters --- */
-		bool IsOnGPU( void) const { return m_isOnGPU; }
+		bool IsOnGPU( void) const { return ((m_storageLocation & TextureStorageLocations::GPU_MEMORY) == TextureStorageLocations::GPU_MEMORY); }
 		
-		bool IsLocalDataAvailable( void) const { return m_isLocalDataAvailable; }
+		bool IsOnMainMemory( void) const { return ((m_storageLocation & TextureStorageLocations::MAIN_MEMORY) == TextureStorageLocations::MAIN_MEMORY); }
+
+		bool HasGPUMipMaps( void) const { return (m_textureCreateMipMaps & TextureCreateMipMaps::ON_GPU) == TextureCreateMipMaps::ON_GPU; }
 
 		unsigned int GetTextureID( void) const { return m_textureID; }
 
@@ -64,27 +74,43 @@ namespace Indy
 		
 		unsigned int GetHeight( void) const { return m_width; }
 
-		unsigned int GetNumComponents( void) const { return m_numComponents; }
+		unsigned int GetTexelSizeInBytes( void) const { return getTexelSizeInBytesFromInternalFormat(m_internalFormat); }
 
-		unsigned char GetComponentSizeInBytes( void) const { return m_componentSizeInBytes; }
+		unsigned int GetNumChannels( void) const { return getNumComponentsFromFormat(m_format); }
 
 		const void* const GetReadOnlyTextureData( void) const { return m_textureData; }
+		
+		TextureStorageLocations::TextureStorageLocation GetStorageLocation( void) const { return m_storageLocation; }
+
+		TextureCreateMipMaps::TextureCreateMipMap HasMipMaps( void) const { return m_textureCreateMipMaps; }
 
 
 	private:
 		void loadTextureData( const char* const textureFile);
 
+		void generateGPUTexture( void);
+		
+		void destroyGPUTexture( void);
+
+		void destroyMainMemoryTexture( void);
+
+		unsigned int getNumComponentsFromFormat( const TextureFormats::TextureFormat format) const;
+
+		unsigned int getTexelSizeInBytesFromInternalFormat( const TextureInternalFormats::TextureInternalFormat internalFormat) const;
+
+		TextureTypes::TextureType getTextureTypeFromInternalFormat( const TextureInternalFormats::TextureInternalFormat internalFormat) const;
+
 
 	private:
-		unsigned char*	m_textureData;
-		unsigned int	m_textureID;
-		unsigned int	m_width;
-		unsigned int	m_height;
-		unsigned char	m_numComponents;
-		unsigned char	m_componentSizeInBytes;
-		bool			m_isOnGPU;
-		bool			m_isLocalDataAvailable;
-		bool			m_hasMipMaps;
-		bool			m_isLoadedFromImage;
+		unsigned char*									m_textureData;
+		unsigned int									m_textureID;
+		unsigned int									m_width;
+		unsigned int									m_height;
+		TextureTypes::TextureType						m_type;
+		TextureFormats::TextureFormat					m_format;
+		TextureInternalFormats::TextureInternalFormat	m_internalFormat;
+		TextureStorageLocations::TextureStorageLocation m_storageLocation;
+		TextureCreateMipMaps::TextureCreateMipMap		m_textureCreateMipMaps;
+		bool											m_isLoadedFromImage;
 	};
 }

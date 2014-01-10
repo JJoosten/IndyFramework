@@ -30,9 +30,9 @@ namespace Indy
 	void VertexAttributeBuffer::Create( const GLuint attributeBindLocation, 
 										const GLuint numAttributes, 
 										const GLuint numAttributeChannels, 
-										GLvoid* const attributeData, 
+										const GLvoid* const attributeData, 
 										const GLuint attributeSizeInBytes,
-										const GLenum usage /* = GL_STATIC_DRAW */)
+										const BufferUsage::BufferUse usage /*= BufferUsage::STATIC_DRAW*/)
 	{
 		if(m_vboID != 0)
 			BREAKPOINT(This AttributeBuffer is already in use!);
@@ -40,7 +40,9 @@ namespace Indy
 		m_attributeBindLocation = attributeBindLocation;
 		m_numAttributes = numAttributes;
 		m_numAttributeChannels = numAttributeChannels;
-		m_attributeData = attributeData;
+		m_attributeData = new char[attributeSizeInBytes * numAttributes *  numAttributeChannels];
+		memcpy( m_attributeData, attributeData, attributeSizeInBytes * numAttributes *  numAttributeChannels);
+
 		m_attributeSizeInBytes = attributeSizeInBytes;
 
 		if( m_numAttributes == 0)

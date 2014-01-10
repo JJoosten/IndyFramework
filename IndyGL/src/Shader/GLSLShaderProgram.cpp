@@ -215,7 +215,7 @@ namespace Indy
 
 	void GLSLShaderProgram::SetUniform4x4f( const GLint location, const GLfloat* value, const GLboolean transpose /* = GL_FALSE */) const
 	{
-		glUniformMatrix4fv( location, 1, 0, value);
+		glUniformMatrix4fv( location, 1, transpose, value);
 	}
 
 

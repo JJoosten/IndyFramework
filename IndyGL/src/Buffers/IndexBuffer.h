@@ -2,6 +2,8 @@
 
 #pragma once
 
+#include "DrawModeEnums.h"
+
 #include "GL/glew.h"
 #include <IndyCore/Utilities/NonCopyable.h>
 
@@ -16,9 +18,9 @@ namespace Indy
 
 		void Create( const GLuint numIndices, 
 					 const GLuint sizeOfElementInBytes, 
-					 void* const indices, 
-					 const GLenum usage = GL_STATIC_DRAW,
-					 const GLenum drawMode = GL_TRIANGLES);
+					 const void* const indices, 
+					 const BufferUsage::BufferUse usage = BufferUsage::STATIC_DRAW,
+					 const DrawModes::DrawMode drawMode = DrawModes::TRIANGLES);
 
 		void Destroy( void);
 
@@ -32,7 +34,9 @@ namespace Indy
 
 		GLuint GetNumIndices( void) const { return m_numIndices; }
 
-		GLenum GetDrawMode( void) const { return m_drawMode; }
+		DrawModes::DrawMode GetDrawMode( void) const { return m_drawMode; }
+
+		GLuint GetSizeOfElementInBytes( void) const { return m_sizeOfElementInBytes; }
 
 		const GLvoid* const GetReadOnlyIndexData( void) const { return m_indices; }
 
@@ -41,6 +45,6 @@ namespace Indy
 		GLuint	m_numIndices;
 		GLuint  m_sizeOfElementInBytes;
 		GLvoid* m_indices;
-		GLenum  m_drawMode;
+		DrawModes::DrawMode  m_drawMode;
 	};
 }

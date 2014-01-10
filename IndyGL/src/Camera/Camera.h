@@ -80,6 +80,10 @@ namespace Indy
 		inline void GetRight( float& xOUT, float& yOUT, float& zOUT) const;
 		inline void GetForward( float& xOUT, float& yOUT, float& zOUT) const;
 
+		inline const float* const GetViewMatrix( void) const;
+		inline const float* const GetProjectionMatrix( void) const;
+
+
 	private:
 		void computeViewMatrix( void);
 

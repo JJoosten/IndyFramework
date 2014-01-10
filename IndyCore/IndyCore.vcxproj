@@ -12,8 +12,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\CoreDefines.h" />
+    <ClInclude Include="src\Debug\Assert.h" />
     <ClInclude Include="src\Input\Keyboard.h" />
     <ClInclude Include="src\Input\KeyboardKeys.h" />
+    <ClInclude Include="src\IO\IO.h" />
     <ClInclude Include="src\Math\Matrix4.h" />
     <ClInclude Include="src\Math\Vector3.h" />
     <ClInclude Include="src\Time\Timer.h" />
@@ -22,9 +24,12 @@
     <ClInclude Include="src\Utilities\NonCopyable.h" />
     <ClInclude Include="src\Utilities\Random.h" />
     <ClInclude Include="src\Utilities\Singleton.h" />
+    <ClInclude Include="src\Utilities\UtilityDefines.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Debug\Assert.cpp" />
     <ClCompile Include="src\Input\Keyboard.cpp" />
+    <ClCompile Include="src\IO\IO.cpp" />
     <ClCompile Include="src\Time\Timer.cpp" />
     <ClCompile Include="src\Utilities\Hash.cpp" />
     <ClCompile Include="src\Utilities\Random.cpp" />

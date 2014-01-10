@@ -37,7 +37,7 @@ namespace Indy
 
 		ShaderSourceData sourceData = GLSLShaderPreprocessor( sourceFile);
 
-		if( sourceData.Source == NULL)
+		if( !sourceData.WasSourceFound)
 			return false;
 
 		m_shaderSourceSizeInBytes = sourceData.SourceSizeInBytes;

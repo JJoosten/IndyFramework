@@ -1,0 +1,71 @@
+#pragma once
+
+#include "GL/glew.h"
+
+namespace Indy
+{
+	namespace DepthFunc
+	{
+		enum DepthFunc
+		{
+			NEVER         = GL_NEVER,
+			LESS          = GL_LESS,
+			EQUAL         = GL_EQUAL,
+			LEQUAL        = GL_LEQUAL,
+			GREATER       = GL_GREATER,
+			NOT_EQUAL     = GL_NOTEQUAL,
+			GREATER_EQUAL = GL_GEQUAL,
+			ALWAYS        = GL_ALWAYS
+		};
+	}
+
+	namespace CullFace
+	{
+		enum CullFace
+		{
+			BACK           = GL_BACK,
+			FRONT          = GL_FRONT,
+			FRONT_AND_BACK = GL_FRONT_AND_BACK
+		};
+	}
+
+	namespace BlendFunc
+	{
+		enum BlendFunc
+		{
+			ZERO                        = GL_ZERO,
+			ONE                         = GL_ONE,
+			SOURCE_COLOR                = GL_SRC_COLOR,
+			ONE_MINUS_SOURCE_COLOR      = GL_ONE_MINUS_SRC_COLOR,
+			DESTINATION_COLOR           = GL_DST_COLOR,
+			ONE_MINUS_DESTINATION_COLOR = GL_ONE_MINUS_DST_COLOR,
+			SOURCE_ALPHA                = GL_SRC_ALPHA,
+			ONE_MINUS_SOURCE_ALPHA      = GL_ONE_MINUS_SRC_ALPHA,
+			DESTINATION_ALPHA           = GL_DST_ALPHA,
+			ONE_MINUS_DESTINATION_ALPHA = GL_ONE_MINUS_DST_ALPHA,
+			CONSTANT_COLOR              = GL_CONSTANT_COLOR,
+			ONE_MINUS_CONSTANT_COLOR    = GL_ONE_MINUS_CONSTANT_COLOR,
+			CONSTANT_ALPHA              = GL_CONSTANT_ALPHA,
+			ONE_MINUS_CONSTANT_ALPHA    = GL_ONE_MINUS_CONSTANT_ALPHA,
+			SOURCE_ALPHA_SATURATE       = GL_SRC_ALPHA_SATURATE,
+			SOURCE1_COLOR               = GL_SRC1_COLOR,
+			ONE_MINUS_SOURCE1_COLOR     = GL_ONE_MINUS_SRC1_COLOR,
+			SOURCE1_ALPHA               = GL_SRC1_ALPHA,
+			ONE_MINUS_SOURCE1_ALPHA     = GL_ONE_MINUS_SRC1_ALPHA
+		};
+	}
+
+	namespace ClearTargets
+	{
+		enum ClearTarget
+		{
+			COLOR_BUFFER               = GL_COLOR_BUFFER_BIT,
+			DEPTH_BUFFER               = GL_DEPTH_BUFFER_BIT,
+			STENCIL_BUFFER             = GL_STENCIL_BUFFER_BIT,
+			COLOR_AND_DEPTH_BUFFER     = COLOR_BUFFER | DEPTH_BUFFER,
+			COLOR_STENCIL_BUFFER       = COLOR_BUFFER | STENCIL_BUFFER,
+			COLOR_DEPTH_STENCIL_BUFFER = COLOR_AND_DEPTH_BUFFER | STENCIL_BUFFER,
+			DEPTH_STENCIL_BUFFER       = DEPTH_BUFFER | STENCIL_BUFFER
+		};
+	}
+}

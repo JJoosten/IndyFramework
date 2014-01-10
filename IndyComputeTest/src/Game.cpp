@@ -15,7 +15,6 @@
 #include <IndyGL/Buffers/VertexArrayObject.h>
 #include <IndyGL/Buffers/FrameBuffer.h>
 
-
 #include <stdio.h>
 
 #include <glm/glm.hpp>
@@ -53,7 +52,7 @@ namespace Indy
 		loadCamera();
 
 		m_frameBuffer = new FrameBuffer();
-		m_frameBuffer->Create( 1280, 720, 1);
+		m_frameBuffer->Create( 1280, 720, NumRenderTargets::ONE, FrameBufferDepth::DISABLED);
 	}
 
 	Game::~Game( void)
@@ -109,7 +108,7 @@ namespace Indy
 	void Game::DrawFrame( const double deltaTimeSec)
 	{
 		// set clear color to black and clear depth and color buffer 
-		m_glContext->ClearBuffers( 0x0, GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		m_glContext->ClearBuffers( 0x0, ClearTargets::COLOR_AND_DEPTH_BUFFER);
 
 
 		// draw in frame buffer
@@ -221,20 +220,10 @@ namespace Indy
 
 	void Game::loadTexture( void)
 	{
-		// enable textures
-		glActiveTexture(GL_TEXTURE0);
-
 		// load texture to adjust in compute shader
-		float* texData = new float[m_window->GetWidth() * m_window->GetHeight() * 4];
-		memset( texData, 0, m_window->GetWidth() * m_window->GetHeight() * 4);
 		m_texture = new Texture2D();
-		m_texture->Create( m_window->GetWidth(), m_window->GetHeight(), (unsigned char*)texData, 4, sizeof(float));
-		m_texture->GenerateGPUTexture(false);
-		m_texture->DestroyLocalTexture();
-		m_texture->Bind();
-		m_texture->SetSamplerFilter(GL_NEAREST, GL_NEAREST);
-		m_texture->Unbind();
-		delete texData;
+		m_texture->Create( m_window->GetWidth(), m_window->GetHeight(), TextureFormats::RGBA, TextureInternalFormats::RGBA32F, TextureStorageLocations::GPU_MEMORY, TextureCreateMipMaps::ON_GPU);
+		m_texture->SetSamplerFilter(TextureMinFilters::LINEAR, TextureMagFilters::LINEAR);
 		
 		m_computeShaderProgram->SetUniformi( "Texture", 0);
 
@@ -259,7 +248,7 @@ namespace Indy
 		m_vertexArrayObject = new VertexArrayObject();
 			
 		// index 0, size of 2 (2 attributes xy), type float, not normalized, 0 offset and 0 data due to binding of m_planeVertices
-		m_vertexArrayObject->VertexAttributePointer( m_planeVertices, 0, 2, GL_FLOAT, GL_FALSE, 0);
+		m_vertexArrayObject->VertexAttributePointer( m_planeVertices, 0, 2, GL_FLOAT, NormalizeFixedPointValues::TRUE, 0);
 	}
 
 	void Game::loadCamera( void)

@@ -13,18 +13,23 @@
   <ItemGroup>
     <ClInclude Include="lib\stb_image\include\stb_image\stb_image.h" />
     <ClInclude Include="src\Buffers\FrameBuffer.h" />
+    <ClInclude Include="src\Buffers\FrameBufferEnums.h" />
     <ClInclude Include="src\Buffers\IndexBuffer.h" />
+    <ClInclude Include="src\Buffers\DrawModeEnums.h" />
     <ClInclude Include="src\Buffers\UniformBuffer.h" />
+    <ClInclude Include="src\Buffers\VertexArrayObjectEnums.h" />
     <ClInclude Include="src\Buffers\VertexArrayObject.h" />
     <ClInclude Include="src\Buffers\VertexAttributeBuffer.h" />
     <ClInclude Include="src\Camera\Camera.h" />
     <ClInclude Include="src\Context\GLContext.h" />
+    <ClInclude Include="src\Context\GLContextEnums.h" />
     <ClInclude Include="src\Context\Win32\GLContextWin32.h" />
     <ClInclude Include="src\Geometry\VertexData.h" />
     <ClInclude Include="src\Shader\GLSLShader.h" />
     <ClInclude Include="src\Shader\GLSLShaderPreprocessor.h" />
     <ClInclude Include="src\Shader\GLSLShaderProgram.h" />
     <ClInclude Include="src\Textures\Texture2D.h" />
+    <ClInclude Include="src\Textures\TextureEnums.h" />
     <ClInclude Include="src\Window\Win32\WindowWin32.h" />
     <ClInclude Include="src\Window\Window.h" />
   </ItemGroup>

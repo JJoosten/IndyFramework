@@ -2,14 +2,16 @@
 
 #pragma once
 
+#include "VertexArrayObjectEnums.h"
+
 #include "GL/glew.h"
 
 #include <IndyCore/Utilities/NonCopyable.h>
 
 namespace Indy
 {
-	class VertexAttributeBuffer;
 	class IndexBuffer;
+	class VertexAttributeBuffer;
 	class VertexArrayObject : public NonCopyable
 	{
 	public:
@@ -25,13 +27,13 @@ namespace Indy
 									 const GLuint index, 
 									 const GLint size, 
 									 const GLenum type,
-									 const GLboolean normalized,
+									 const NormalizeFixedPointValues::NormalizeFixedPointValues normalized,
 									 const GLsizei stride) const;
 
 		void VertexAttributePointer( const GLuint index, 
 									 const GLint size, 
 									 const GLenum type,
-									 const GLboolean normalized,
+									 const NormalizeFixedPointValues::NormalizeFixedPointValues normalized,
 									 const GLsizei stride, 
 									 const GLvoid* pointer) const;
 

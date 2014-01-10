@@ -2,6 +2,8 @@
 
 #pragma once
 
+#include "GLContextEnums.h"
+
 #include <vector>
 
 #include <IndyCore/Utilities/NonCopyable.h>
@@ -37,24 +39,24 @@ namespace Indy
 		void DisableDepthBuffer( void) const;
 		void EnableDepthWrite( void) const;
 		void DisableDepthWrite( void) const;
-		void SetDepthFunc(GLenum depthFunc = GL_LESS) const;
+		void SetDepthFunc( const DepthFunc::DepthFunc depthFunc = DepthFunc::LESS) const;
 
 		void EnableCulling( void) const;
 		void DisableCulling( void) const;
-		void SetCullFace( const GLenum cullFace = GL_BACK) const;
+		void SetCullFace( const CullFace::CullFace cullFace = CullFace::BACK) const;
 
 
 		void EnableAlphaBlending( void) const;
 		void DisableAlphaBlending( void) const;
-		void SetBlendFunc( const GLenum source = GL_SRC_ALPHA, 
-						   const GLenum dest = GL_ONE_MINUS_SRC_ALPHA) const;
+		void SetBlendFunc( const BlendFunc::BlendFunc source = BlendFunc::SOURCE_ALPHA, 
+						   const BlendFunc::BlendFunc destination = BlendFunc::ONE_MINUS_SOURCE_ALPHA) const;
 
 
 		void ResizeViewport( const GLint x, const GLint y, 
 							 const GLsizei width, const GLsizei height) const;
 
 		void ClearBuffers( const GLulong color = 0x0, 
-						   const GLbitfield buffersToClear = GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT) const;
+						   const ClearTargets::ClearTarget clearTargets = ClearTargets::COLOR_AND_DEPTH_BUFFER) const;
 
 		const char* const GetRenderer( void) const;
 		const char* const GetVendor( void) const;

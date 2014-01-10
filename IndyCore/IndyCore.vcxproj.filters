@@ -16,6 +16,12 @@
     <Filter Include="src\Math">
       <UniqueIdentifier>{a14ddeb4-c108-4382-8890-af1570f86401}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\IO">
+      <UniqueIdentifier>{a117397f-03e5-4d0f-b643-f94be5eb707b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Debug">
+      <UniqueIdentifier>{40681d99-2e44-4168-846c-6d7f6357a1a5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\CoreDefines.h">
@@ -51,6 +57,15 @@
     <ClInclude Include="src\Math\Matrix4.h">
       <Filter>src\Math</Filter>
     </ClInclude>
+    <ClInclude Include="src\IO\IO.h">
+      <Filter>src\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Debug\Assert.h">
+      <Filter>src\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Utilities\UtilityDefines.h">
+      <Filter>src\Utilities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Input\Keyboard.cpp">
@@ -64,6 +79,12 @@
     </ClCompile>
     <ClCompile Include="src\Utilities\Random.cpp">
       <Filter>src\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\IO\IO.cpp">
+      <Filter>src\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Debug\Assert.cpp">
+      <Filter>src\Debug</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
