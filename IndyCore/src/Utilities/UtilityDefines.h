@@ -1,7 +1,5 @@
 #pragma once
 
-// based on http://molecularmusings.wordpress.com/2011/07/12/a-plethora-of-macros/
-
 #define STRINGIFY_HELPER_ARG1(value)	#value
 #define STRINGIFY(value)				STRINGIFY_HELPER_ARG1(value)
 

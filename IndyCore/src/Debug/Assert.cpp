@@ -79,12 +79,6 @@ namespace Indy
 		return *this;
 	}
 
-	Assert& Assert::Variable( const char* const varName, const char* var)
-	{
-		printf("%s %s\n", varName, var);
-		return *this;
-	}
-
 	Assert& Assert::Variable( const char* const varName, char* var)
 	{
 		printf("%s %s\n", varName, var);
@@ -92,12 +86,6 @@ namespace Indy
 	}
 	
 	Assert& Assert::Variable( const char* const varName, void* var)
-	{
-		printf("%s %p\n", varName, var);
-		return *this;
-	}
-	
-	Assert& Assert::Variable( const char* const varName, const void* var)
 	{
 		printf("%s %p\n", varName, var);
 		return *this;
