@@ -105,6 +105,9 @@
     <ClInclude Include="src\Textures\TextureEnums.h">
       <Filter>src\Textures</Filter>
     </ClInclude>
+    <ClInclude Include="src\Buffers\StorageBuffer.h">
+      <Filter>src\Buffers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Window\Win32\WindowWin32.cpp">
@@ -147,6 +150,9 @@
       <Filter>src\Camera</Filter>
     </ClCompile>
     <ClCompile Include="src\Buffers\FrameBuffer.cpp">
+      <Filter>src\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Buffers\StorageBuffer.cpp">
       <Filter>src\Buffers</Filter>
     </ClCompile>
   </ItemGroup>

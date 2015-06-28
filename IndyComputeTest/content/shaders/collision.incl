@@ -17,7 +17,7 @@
  };
 
  // intersection function referenced from page 178 realtime collision detection by Christer Ericson
-const IntersectionData IntersectWithSphere( Sphere sphere, vec3 rayOrigin, vec3 rayDir)
+IntersectionData IntersectWithSphere( Sphere sphere, vec3 rayOrigin, vec3 rayDir)
 {
 	IntersectionData intersectionData;
 	intersectionData.result = INTERSECT_RESULTS_NONE;

@@ -48,6 +48,7 @@ namespace Indy
 
 		GLint GetShaderSourceSizeInBytes( void) const { return m_shaderSourceSizeInBytes; }
 
+		static bool ComputeShaderSupportAvailable(void) { return GLEW_ARB_compute_shader; }
 
 	private:
 		// used to keep track of shaders in shader programs

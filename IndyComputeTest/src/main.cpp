@@ -47,8 +47,8 @@ int main( int argc, char** argv)
 	window->Create( resolutionX, resolutionY, false, "Indy Compute Shader Test", 32);
 	
 	Indy::OpenGLInfo openGLInfo;
-	openGLInfo.MajorVersion = 3;
-	openGLInfo.MinorVersion = 1;
+	openGLInfo.MajorVersion = 4;
+	openGLInfo.MinorVersion = 3;
 	Indy::GLContext* glContext = NULL;
 #ifdef WIN32
 	Indy::WindowInputWin32* win32Window = (Indy::WindowInputWin32*)window;

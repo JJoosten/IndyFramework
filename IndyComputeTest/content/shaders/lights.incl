@@ -10,7 +10,7 @@ struct Light
 	float4 color;		// Intensity can be retrieved from GetIntensityFromLight function
 };
 
-const float GetIntensityFromLight( Color color)
+float GetIntensityFromLight( Color color)
 {
 	return sqrt( dot( color, color));	
 }

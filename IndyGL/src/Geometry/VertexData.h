@@ -2,6 +2,8 @@
 
 #pragma once
 
+#include <IndyCore\Math\Vector3.h>
+
 namespace Indy
 {
 	struct VertexPos1
@@ -14,9 +16,14 @@ namespace Indy
 		float PosY;
 	};
 
-	struct VertexPos3 : public VertexPos2
+	struct VertexPos3
 	{
-		float PosZ;
+		Vector3f Pos;
+	};
+
+	struct VertexPos3Norm : public VertexPos3
+	{
+		Vector3f Norm;
 	};
 	
 	struct VertexPos2UV : public VertexPos2
@@ -25,7 +32,7 @@ namespace Indy
 		float V;
 	};
 
-	struct VertexPos3UV : public VertexPos3
+	struct VertexPos3UV
 	{
 		float U;
 		float V;

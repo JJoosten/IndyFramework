@@ -16,16 +16,28 @@
     <Filter Include="content\shaders\raytrace[filter]">
       <UniqueIdentifier>{de8375ca-d8ab-4614-9d45-ffd4b6ef2705}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Ocean">
+      <UniqueIdentifier>{90549ccd-9ba9-4186-a869-71b29e933087}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="content\shaders\ocean[filter]">
+      <UniqueIdentifier>{1e10ade8-4a81-463f-a628-9f35a656f518}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\WindowInputWin32.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
     <ClCompile Include="src\Game.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\WindowInputWin32.cpp">
+    <ClCompile Include="src\GameOceanSim.inl">
       <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Ocean\Ocean.cpp">
+      <Filter>src\Ocean</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -37,6 +49,9 @@
     </ClInclude>
     <ClInclude Include="src\Paths.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ocean\Ocean.h">
+      <Filter>src\Ocean</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -60,6 +75,21 @@
     </None>
     <None Include="content\shaders\lights.incl">
       <Filter>content\shaders\raytrace[filter]</Filter>
+    </None>
+    <None Include="src\GameRaytracing.inl">
+      <Filter>src</Filter>
+    </None>
+    <None Include="src\GameReference.inl">
+      <Filter>src</Filter>
+    </None>
+    <None Include="content\shaders\ocean.comp">
+      <Filter>content\shaders\ocean[filter]</Filter>
+    </None>
+    <None Include="content\shaders\ocean.frag">
+      <Filter>content\shaders\ocean[filter]</Filter>
+    </None>
+    <None Include="content\shaders\ocean.vert">
+      <Filter>content\shaders\ocean[filter]</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

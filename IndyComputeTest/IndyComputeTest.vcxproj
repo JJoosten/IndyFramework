@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -19,13 +19,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v110</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v110</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
@@ -120,11 +120,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Game.cpp" />
+    <ClCompile Include="src\GameOceanSim.inl" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Ocean\Ocean.cpp" />
     <ClCompile Include="src\WindowInputWin32.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Game.h" />
+    <ClInclude Include="src\Ocean\Ocean.h" />
     <ClInclude Include="src\Paths.h" />
     <ClInclude Include="src\WindowInputWin32.h" />
   </ItemGroup>
@@ -145,6 +148,9 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </None>
+    <None Include="content\shaders\ocean.frag" />
+    <None Include="content\shaders\ocean.vert" />
+    <None Include="content\shaders\ocean.comp" />
     <None Include="content\shaders\raytracer.comp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
@@ -173,6 +179,8 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">forcerun</Outputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">copy IndyGL to Project</Message>
     </CustomBuild>
+    <None Include="src\GameRaytracing.inl" />
+    <None Include="src\GameReference.inl" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\IndyCore\IndyCore.vcxproj">

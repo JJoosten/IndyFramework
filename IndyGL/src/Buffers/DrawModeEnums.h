@@ -28,7 +28,8 @@ namespace Indy
 		enum BufferUse
 		{
 			STATIC_DRAW  = GL_STATIC_DRAW,
-			DYNAMIC_DRAW = GL_DYNAMIC_DRAW
+			DYNAMIC_DRAW = GL_DYNAMIC_DRAW,
+			DYNAMIC_COPY = GL_DYNAMIC_COPY
 		};
 	}
 }
