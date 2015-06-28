@@ -54,9 +54,20 @@ void Indy::Ocean::UpdateFrame(const double deltaTimeSec)
 	{
 		m_computeVertexTransformProgram->Bind();
 
+		// send the delta time to ensure frame sync
+		m_computeVertexTransformProgram->SetUniformf("DeltaTimeSec", deltaTimeSec);
+
 		m_vertices->Bind();
 
-		glDispatchCompute(2, 2, 1);
+		unsigned int workGroupSize = 32;
+
+		// calculate num vertices to transform
+		unsigned int arraySize = m_vertices->GetArraySize();
+
+		// distribute work in quads
+		int sqr = (int)ceil(std::sqrtf((float)arraySize));
+
+		glDispatchCompute(sqr / workGroupSize, sqr / workGroupSize, 1);
 
 		m_vertices->Unbind();
 
@@ -126,7 +137,7 @@ void Indy::Ocean::createOceanMesh()
 
 	const unsigned int numVerticesOnEdge = 64;
 	const unsigned int numVertices = numVerticesOnEdge * numVerticesOnEdge;
-	VertexPos3Norm vertices[numVertices]; // test 64*64 vertices
+	OceanVertex vertices[numVertices]; // test 64*64 vertices
 	
 	// spread the vertices
 	for (unsigned int y = 0; y < numVerticesOnEdge; ++y)
@@ -139,13 +150,13 @@ void Indy::Ocean::createOceanMesh()
 	}
 
 	m_vertices = new StorageBuffer();
-	m_vertices->Create(vertices, sizeof(VertexPos3Norm), numVertices);
+	m_vertices->Create(vertices, sizeof(OceanVertex), numVertices);
 
-	char* offsetInBytes = (char*)sizeof(Indy::Vector3f);
+	char* offsetInBytes = (char*)sizeof(OceanVertex);
 
 	glBindBuffer(GL_ARRAY_BUFFER, m_vertices->GetID());
-	m_vao->VertexAttributePointer(0, 3, GL_FLOAT, Indy::NormalizeFixedPointValues::FALSE, sizeof(Indy::VertexPos3Norm), 0);
-	m_vao->VertexAttributePointer(1, 3, GL_FLOAT, Indy::NormalizeFixedPointValues::FALSE, sizeof(Indy::VertexPos3Norm), offsetInBytes);
+	m_vao->VertexAttributePointer(0, 3, GL_FLOAT, Indy::NormalizeFixedPointValues::FALSE, sizeof(OceanVertex), 0);
+	m_vao->VertexAttributePointer(1, 3, GL_FLOAT, Indy::NormalizeFixedPointValues::FALSE, sizeof(OceanVertex), offsetInBytes);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	m_vertices->SetShaderLayoutIndex(0);

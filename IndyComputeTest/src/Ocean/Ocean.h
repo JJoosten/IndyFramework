@@ -1,5 +1,7 @@
 #pragma once
 
+#include <IndyCore\Math\Vector3.h>
+
 namespace Indy
 {
 	class VertexArrayObject;
@@ -10,6 +12,14 @@ namespace Indy
 
 	class Ocean
 	{
+		struct OceanVertex
+		{
+			Vector3f Pos;
+			float _padding;
+			Vector3f Norm;
+			float _padding2;
+		};
+
 	public:
 		Ocean();
 		~Ocean();
