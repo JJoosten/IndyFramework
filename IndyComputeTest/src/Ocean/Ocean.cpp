@@ -9,6 +9,8 @@
 #include <IndyGL\Buffers\StorageBuffer.h>
 #include <IndyGL\Geometry\VertexData.h>
 
+#include "../../content/SharedDefines.defines"
+
 Indy::Ocean::Ocean()
 	:
 m_vertices(NULL)
@@ -59,15 +61,13 @@ void Indy::Ocean::UpdateFrame(const double deltaTimeSec)
 
 		m_vertices->Bind();
 
-		unsigned int workGroupSize = 32;
-
 		// calculate num vertices to transform
 		unsigned int arraySize = m_vertices->GetArraySize();
 
 		// distribute work in quads
 		int sqr = (int)ceil(std::sqrtf((float)arraySize));
 
-		glDispatchCompute(sqr / workGroupSize, sqr / workGroupSize, 1);
+		glDispatchCompute(sqr / WORK_GROUP_SIZE, sqr / WORK_GROUP_SIZE, 1);
 
 		m_vertices->Unbind();
 

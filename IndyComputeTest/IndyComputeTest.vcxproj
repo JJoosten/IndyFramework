@@ -179,6 +179,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">forcerun</Outputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">copy IndyGL to Project</Message>
     </CustomBuild>
+    <None Include="content\SharedDefines.defines" />
     <None Include="src\GameRaytracing.inl" />
     <None Include="src\GameReference.inl" />
   </ItemGroup>

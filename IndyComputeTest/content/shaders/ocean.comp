@@ -5,8 +5,21 @@
 #extension GL_ARB_explicit_uniform_location : require
 #extension GL_ARB_shader_storage_buffer_object : require
 
+#include "../SharedDefines.defines" // holds WORK_GROUP_SIZE
+
+#define PI 3.1415926535897932384626433832795
+
+#define W0 2.0f * PI / 200.0f
+
 // uniforms
+uniform vec2 W = vec2(1.0f,1.0f); // wind in m/s
+uniform float G = 9.81; // GRAVITY CONSTANT
+uniform float A = 1.0; // phillips spectrum
 uniform float DeltaTimeSec;
+uniform float Length = 1.0f;
+uniform int N = 64; // dimension
+
+#define Complex vec2
 
 // structs for shader storage buffer objects or uniform buffers
 struct VertexData
@@ -15,15 +28,98 @@ struct VertexData
 	vec4 norm;
 };
 
+struct H0Vars
+{
+	vec4 ab_a_b;
+};
+
 // shader storage buffer objects (SSBO)
 layout(std430, binding = 0) buffer oceanVerticesSSBO
 {
 	VertexData vertices [];
 };
 
+layout(std430, binding = 1) buffer oceanRandNumbersSSBO
+{
+	Complex randNumbers[];
+};
+
+layout(std430, binding = 2) buffer oceanComplexNumbers
+{
+	H0Vars hvars[];
+};
+
+// we have 16kb per thread group == 16 bytes per thread on 32x32 incovations
+shared uint indices[WORK_GROUP_SIZE * WORK_GROUP_SIZE]; // after this usage we still have 12 bytes per thread
+
+// ------ FUNCTIONS -------
+float dispersion(int nPrime, int mPrime)
+{
+	float kx = PI * (2 * nPrime - N) / Length;
+	float kz = PI * (2 * mPrime - N) / Length;
+    return floor(sqrt(G * sqrt(dot(kx,kz))) / W0) * W0;
+}
+
+float phillipsSpectrum(int nPrime, int mPrime)
+{
+	// TODO: save as shared memory as we can use it in the dispersion term
+	vec2 k = vec2(PI * (2 * nPrime - N) / Length, PI * (2 * mPrime - N) / Length);
+	
+	float kLength = length(k);
+
+	if(kLength < 0.00001) return 0.0;
+
+	float kLengthPow2 = kLength * kLength;
+	float kLengthPow4 = kLengthPow2 * kLengthPow2;
+	
+	float wLength = length(W);
+	float kDotW = dot((k / kLength), (W / wLength));
+	float kDotWPow2 = kDotW * kDotW;
+	float L = wLength * wLength / G;
+	float LPow2 = L * L;
+
+	float dampening = 0.001;
+	float DampeningLPow2 = LPow2 * dampening * dampening;
+
+	return A * exp(-1.0 / (kLengthPow2 * LPow2)) / kLengthPow4 * kDotWPow2 * exp(-kLengthPow2 * LPow2);
+}
+
+Complex hTilde0(int nPrime, int mPrime)
+{
+	// random gaussian var on gpu
+	uint index = indices[gl_LocalInvocationIndex];
+	Complex gaussianRand = randNumbers[index];
+	
+	float phillipsVal = sqrt(phillips(nPrime,mPrime) / 2.0);
+
+	gaussianRand.a *= phillipsVal;
+	gaussianRand.b *= phillipsVal;
+
+	return r;
+}
+
+Complex hTilde(int nPrime, int mPrime)
+{
+	uint index = indices[gl_LocalInvocationIndex];
+	
+	Complex hTildeZero(hvars[index].ab_a_b.x, hvars[index].ab_a_b.y);
+	Complex hTildeZeromkconj(hvars[index].ab_a_b.z, hvars[index].ab_a_b.w);
+	
+    float omegat = dispersion(nPrime, mPrime) * t;
+
+	float co = cos(omegat);
+    float si = sin(omegat);
+ 
+    Complex c0(co,  si);
+    Complex c1(co, -si);
+	
+	Complex res = hTildeZero * c0 + hTildeZeromkconj * c1;
+ 
+    return res;
+}
 
 // fft kernel to compute new ocean height, we output an updated vertex buffer
-layout (local_size_x = 32, local_size_y = 32, local_size_z = 1) in;
+layout (local_size_x = WORK_GROUP_SIZE, local_size_y = WORK_GROUP_SIZE, local_size_z = 1) in;
 void main() 
 {
 	/* Compute Shader Input From OpenGL 
@@ -37,6 +133,11 @@ void main()
 	gl_GlobalInvocationID (uvec3)
 	gl_LocalInvocationIndex (uint) */
 
-	//
-	vertices[gl_GlobalInvocationID.y * gl_NumWorkGroups.x * gl_WorkGroupSize.x + gl_GlobalInvocationID.x].pos.y += (10.0f * DeltaTimeSec);
+	uint index = gl_GlobalInvocationID.y * gl_NumWorkGroups.x * gl_WorkGroupSize.x + gl_GlobalInvocationID.x;
+
+	indices[gl_LocalInvocationIndex] = index;
+
+
+	// test
+	vertices[index].pos.y += (10.0f * DeltaTimeSec);
 }
