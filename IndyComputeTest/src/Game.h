@@ -6,12 +6,13 @@
 
 namespace Indy
 {
+	class Keyboard;
 	class GLContext;
 	class Window;
 	class GameBlueprint : public NonCopyable
 	{
 	public:
-		virtual void Create(GLContext* const openGLContext, Window* const window) = 0;
+		virtual void Create(GLContext* const openGLContext, Window* const window, Keyboard* const keyboard) = 0;
 		virtual void Destroy(void) = 0;
 		virtual void UpdateFrame(const double deltaTimeSec) = 0;
 		virtual void DrawFrame(const double deltaTimeSec) = 0;
@@ -22,7 +23,7 @@ namespace Indy
 	{
 
 	public:
-		Game( GLContext* const openGLContext, Window* const window);
+		Game( GLContext* const openGLContext, Window* const window, Keyboard* const keyboard);
 		~Game( void);
 
 		void UpdateFrame( const double deltaTimeSec);

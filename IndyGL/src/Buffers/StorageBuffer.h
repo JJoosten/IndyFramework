@@ -28,6 +28,7 @@ namespace Indy
 		void ReSend( const GLuint numElementsToSend,
 					 const GLuint numElementsOffset = 0);
 
+		void PullFromGPU();
 
 		void Bind(void) const;
 		void Unbind(void) const;

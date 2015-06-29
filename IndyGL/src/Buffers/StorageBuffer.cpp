@@ -88,6 +88,17 @@ namespace Indy
 		Unbind();
 	}
 
+	void StorageBuffer::PullFromGPU()
+	{
+		Bind();
+
+		GLvoid* p = glMapBuffer(GL_SHADER_STORAGE_BUFFER, GL_WRITE_ONLY);
+		memcpy(m_data, p, m_totalBufferSizeInBytes);
+		glUnmapBuffer(GL_SHADER_STORAGE_BUFFER);
+
+		Unbind();
+	}
+
 	void StorageBuffer::SetShaderLayoutIndex(unsigned int index)
 	{
 		glBindBufferBase(GL_SHADER_STORAGE_BUFFER, index, m_bufferID);

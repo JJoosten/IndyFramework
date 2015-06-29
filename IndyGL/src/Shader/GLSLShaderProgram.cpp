@@ -239,4 +239,17 @@ namespace Indy
 	{
 		glUniform2iv( location, 1, value);
 	}
+
+
+	void GLSLShaderProgram::SetUniform2f(const GLchar* uniform, const GLfloat* value) const
+	{
+		SetUniform2f(GetUniformLocation(uniform), value);
+	}
+
+	void GLSLShaderProgram::SetUniform2f(const GLint location, const GLfloat* value) const
+	{
+		glUniform2fv(location, 1, value);
+	}
+
+
 }

@@ -84,7 +84,7 @@ int main( int argc, char** argv)
 	Indy::Timer gameClock;
 	gameClock.Start();
 
-	Indy::Game game( glContext, window);
+	Indy::Game game( glContext, window, &keyboard);
 
 	// start of loop
 	bool hasStopped = false;
@@ -115,6 +115,10 @@ int main( int argc, char** argv)
 		game.DrawFrame( frameTimeInSeconds);
 		renderTimer.Stop();
 		const double renderTimeInMS = renderTimer.GetMilliSeconds();
+
+		// lock to ~60fps
+		double totalUpdateRenderTime = updateTimerMS + renderTimeInMS;
+		if (totalUpdateRenderTime < 16.6f) Sleep(16.6f - totalUpdateRenderTime);
 
 		// check GL error
 		glContext->HasGLError();

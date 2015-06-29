@@ -12,6 +12,11 @@
 	#define DEGREES_TO_RADIANS(D)	(D * M_PI / 180.0)
 #endif
 
+#ifndef RADIANS_TO_DEGREES
+#define RADIANS_TO_DEGREES(R)	(R * 57.2957795131)
+#endif
+
+
 namespace Indy
 {
 	template<typename T>

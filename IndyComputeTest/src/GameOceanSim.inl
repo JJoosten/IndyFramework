@@ -7,6 +7,7 @@
 #include "Paths.h"
 
 #include <IndyCore/CoreDefines.h>
+#include <IndyCore/Input/Keyboard.h>
 #include <IndyGL/Camera/Camera.h>
 #include <IndyGL/Window/Window.h>
 #include <IndyGL/Context/GLContext.h>
@@ -43,17 +44,18 @@ namespace Indy
 
 		}
 
-		void Create(GLContext* const openGLContext, Window* const window)
+		void Create(GLContext* const openGLContext, Window* const window, Keyboard* const keyboard)
 		{
 			m_glContext = openGLContext;
 			m_window = window;
+			m_keyboard = keyboard;
 
 			// setup viewport
 			m_glContext->ResizeViewport(0, 0, m_window->GetWidth(), m_window->GetHeight());
 
 			loadCamera();
 
-			m_ocean = new Ocean();
+			m_ocean = new Ocean(64.0f, Vector2f(32.0f, 32.0f), 0.0005f);
 
 			m_frameBuffer = new FrameBuffer();
 			m_frameBuffer->Create(1280, 720, NumRenderTargets::ONE, FrameBufferDepth::DISABLED);
@@ -70,6 +72,27 @@ namespace Indy
 
 		void UpdateFrame(const double deltaTimeSec)
 		{
+			float speed = 10;
+			float rSpeed = 20;
+
+			// update camera
+			if (m_keyboard->IsKeyDown(KeyboardKeys::W))
+				m_camera->MoveOverRelativeZ(-speed * deltaTimeSec);
+			if (m_keyboard->IsKeyDown(KeyboardKeys::S))
+				m_camera->MoveOverRelativeZ(speed * deltaTimeSec);
+			if (m_keyboard->IsKeyDown(KeyboardKeys::A))
+				m_camera->MoveOverRelativeX(-speed * deltaTimeSec);
+			if (m_keyboard->IsKeyDown(KeyboardKeys::D))
+				m_camera->MoveOverRelativeX(speed * deltaTimeSec);
+			if (m_keyboard->IsKeyDown(KeyboardKeys::UP))
+				m_camera->Pitch(rSpeed * deltaTimeSec);
+			if (m_keyboard->IsKeyDown(KeyboardKeys::DOWN))
+				m_camera->Pitch(-rSpeed * deltaTimeSec);
+			if (m_keyboard->IsKeyDown(KeyboardKeys::LEFT))
+				m_camera->Yaw(-rSpeed * deltaTimeSec);
+			if (m_keyboard->IsKeyDown(KeyboardKeys::RIGHT))
+				m_camera->Yaw(rSpeed * deltaTimeSec);
+
 			m_ocean->UpdateFrame(deltaTimeSec);
 		}
 
@@ -86,13 +109,13 @@ namespace Indy
 	private:
 		void loadCamera(void)
 		{
-			float position[3] = {100,100,100};
-			float target[3] = {0,0,0};
-			float worldUp[3] = {0,1,0};
+			float pos[3] = { 0.0f, 5.0f, 0.0f };
+			float pitch = 60;
 
 			m_camera = new Camera();
 			m_camera->Init( 70.0f, (float)m_window->GetWidth() / (float)m_window->GetHeight(), 0.1f, 10000.0f);
-			m_camera->LookAt( position, target, worldUp);
+			m_camera->SetPosition(pos);
+			m_camera->Pitch(pitch);
 		}
 
 	private:
@@ -101,5 +124,6 @@ namespace Indy
 		Camera*					m_camera;
 		FrameBuffer*			m_frameBuffer;
 		Ocean*					m_ocean;
+		Keyboard*				m_keyboard;
 	};
 }

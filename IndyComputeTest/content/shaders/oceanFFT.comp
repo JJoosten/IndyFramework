@@ -80,17 +80,15 @@ float phillipsSpectrum(int nPrime, int mPrime)
 	float kLengthPow4 = kLengthPow2 * kLengthPow2;
 	
 	float wLength = length(W);
-
 	float kDotW = dot(k / kLength, W / wLength);
-	float kDotWPow2 = kDotW * kDotW;
-
+	float kDotWPow2 = kDotW * kDotW *  kDotW * kDotW *  kDotW * kDotW;
 	float L = wLength * wLength / G;
 	float LPow2 = L * L;
 
 	float dampening = 0.001;
 	float DampeningLPow2 = LPow2 * dampening * dampening;
 
-	return A * exp(-1.0 / (kLengthPow2 * LPow2)) / kLengthPow4 * kDotWPow2 * exp(-kLengthPow2 * DampeningLPow2);
+	return A * exp(-1.0 / (kLengthPow2 * LPow2)) / kLengthPow4 * kDotWPow2 * exp(-kLengthPow2 * LPow2);
 }
 
 Complex hTilde0(int nPrime, int mPrime)
@@ -107,7 +105,7 @@ Complex hTilde0(int nPrime, int mPrime)
 
 Complex hTilde(int nPrime, int mPrime)
 {
-	uint index = mPrime * N + nPrime;
+	uint index = mPrime * NUM_VERTICES_PER_EDGE + nPrime;
 	
 	Complex hTildeZero = Complex(hvars[index].x, hvars[index].y);
 	Complex hTildeZeromkconj = Complex(hvars[index].z, hvars[index].w);
@@ -140,21 +138,22 @@ ComplexVecNorm HDN(vec2 x)
 			float kx = 2.0 * PI * (n - N / 2.0) / Length;
 			
 			vec2 k = vec2(kx, kz);
+			float kLength = length(k);
 
 			float kDotX = dot(k,x);
 
 			Complex c = Complex(cos(kDotX), sin(kDotX));
 			Complex hTildeC = complexMul(hTilde(n,m),c);
 			
-			h = h + hTildeC;
+			Complex h = h + hTildeC;
 
 			norm = norm + vec3(-kx * hTildeC.y, 0.0, -kz * hTildeC.y);
-			
-			float kLength = length(k);
 
-			if(kLength < 0.000001) continue;
+			if(kLength < 0.000001) 
+				continue;
 
 			d = d + vec2(kx / kLength * hTildeC.y, kz / kLength * hTildeC.y);
+
 		}
 	}
 
@@ -185,46 +184,8 @@ void main()
 	gl_GlobalInvocationID (uvec3)
 	gl_LocalInvocationIndex (uint) */
 
-	float lambda = -1.0;
+	uint index = gl_GlobalInvocationID.y * gl_NumWorkGroups.x * gl_WorkGroupSize.x + gl_GlobalInvocationID.x;
 
-	uint index = gl_GlobalInvocationID.y * N + gl_GlobalInvocationID.x;
 
-    ComplexVecNorm hdn = HDN(vertices[index].pos.xz);
- 
-	// original x and z are stored in w component of pos and norm
-    vertices[index].pos.x = vertices[index].pos.w + lambda * hdn.D.x;
-    vertices[index].pos.y = hdn.H.x;
-    vertices[index].pos.z = vertices[index].norm.w + lambda * hdn.D.y;
- 
-    vertices[index].norm.x = hdn.N.x;
-    vertices[index].norm.y = hdn.N.y;
-    vertices[index].norm.z = hdn.N.z;
 
-	return;
-
-    if (index == 0)
-	{
-        vertices[(NUM_VERTICES_PER_EDGE - 1) + NUM_VERTICES_PER_EDGE * (NUM_VERTICES_PER_EDGE - 1)].pos.y = hdn.H.x;
-        vertices[(NUM_VERTICES_PER_EDGE - 1) + NUM_VERTICES_PER_EDGE * (NUM_VERTICES_PER_EDGE - 1)].pos.x = vertices[(NUM_VERTICES_PER_EDGE - 1) + NUM_VERTICES_PER_EDGE * (NUM_VERTICES_PER_EDGE - 1)].pos.w + lambda * hdn.D.x;
-        vertices[(NUM_VERTICES_PER_EDGE - 1) + NUM_VERTICES_PER_EDGE * (NUM_VERTICES_PER_EDGE - 1)].pos.z = vertices[(NUM_VERTICES_PER_EDGE - 1) + NUM_VERTICES_PER_EDGE * (NUM_VERTICES_PER_EDGE - 1)].norm.w + lambda * hdn.D.y;
-        vertices[(NUM_VERTICES_PER_EDGE - 1) + NUM_VERTICES_PER_EDGE * (NUM_VERTICES_PER_EDGE - 1)].norm.x = hdn.N.x;
-        vertices[(NUM_VERTICES_PER_EDGE - 1) + NUM_VERTICES_PER_EDGE * (NUM_VERTICES_PER_EDGE - 1)].norm.y = hdn.N.y;
-        vertices[(NUM_VERTICES_PER_EDGE - 1) + NUM_VERTICES_PER_EDGE * (NUM_VERTICES_PER_EDGE - 1)].norm.z = hdn.N.z;
-    }
-    if (gl_GlobalInvocationID.x == 0) {
-        vertices[index + NUM_VERTICES_PER_EDGE - 1].pos.y = hdn.H.x;
-        vertices[index + NUM_VERTICES_PER_EDGE - 1].pos.x = vertices[index + NUM_VERTICES_PER_EDGE - 1].pos.w + lambda * hdn.D.x;
-        vertices[index + NUM_VERTICES_PER_EDGE - 1].pos.z = vertices[index + NUM_VERTICES_PER_EDGE - 1].norm.w + lambda * hdn.D.y;
-        vertices[index + NUM_VERTICES_PER_EDGE - 1].norm.x = hdn.N.x;
-        vertices[index + NUM_VERTICES_PER_EDGE - 1].norm.y = hdn.N.y;
-        vertices[index + NUM_VERTICES_PER_EDGE - 1].norm.z = hdn.N.z;
-    }
-    if (gl_GlobalInvocationID.y == 0) {
-        vertices[index + NUM_VERTICES_PER_EDGE * (NUM_VERTICES_PER_EDGE - 1)].pos.y = hdn.H.x;
-        vertices[index + NUM_VERTICES_PER_EDGE * (NUM_VERTICES_PER_EDGE - 1)].pos.x = vertices[index + NUM_VERTICES_PER_EDGE * (NUM_VERTICES_PER_EDGE - 1)].pos.w + lambda*hdn.D.x;
-        vertices[index + NUM_VERTICES_PER_EDGE * (NUM_VERTICES_PER_EDGE - 1)].pos.z = vertices[index + NUM_VERTICES_PER_EDGE * (NUM_VERTICES_PER_EDGE - 1)].norm.w + lambda*hdn.D.y;
-        vertices[index + NUM_VERTICES_PER_EDGE * (NUM_VERTICES_PER_EDGE - 1)].norm.x = hdn.N.x;
-        vertices[index + NUM_VERTICES_PER_EDGE * (NUM_VERTICES_PER_EDGE - 1)].norm.y = hdn.N.y;
-        vertices[index + NUM_VERTICES_PER_EDGE * (NUM_VERTICES_PER_EDGE - 1)].norm.z = hdn.N.z;
-    }
 }

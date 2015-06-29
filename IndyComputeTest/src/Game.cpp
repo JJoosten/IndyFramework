@@ -5,6 +5,7 @@
 #include "Paths.h"
 
 #include <IndyCore/CoreDefines.h>
+#include <IndyCore/Input/Keyboard.h>
 #include <IndyGL/Window/Window.h>
 #include <IndyGL/Context/GLContext.h>
 
@@ -21,11 +22,11 @@
 
 namespace Indy
 {
-	Game::Game( GLContext* const openGLContext, Window* const window)
+	Game::Game(GLContext* const openGLContext, Window* const window, Keyboard* const keyboard)
 		:
 	m_game(new _imp_game())
 	{
-		m_game->Create(openGLContext, window);
+		m_game->Create(openGLContext, window, keyboard);
 	}
 
 	Game::~Game( void)

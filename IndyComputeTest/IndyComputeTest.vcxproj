@@ -151,6 +151,7 @@
     <None Include="content\shaders\ocean.frag" />
     <None Include="content\shaders\ocean.vert" />
     <None Include="content\shaders\ocean.comp" />
+    <None Include="content\shaders\oceanFFT.comp" />
     <None Include="content\shaders\raytracer.comp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>

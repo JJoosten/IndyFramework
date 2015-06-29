@@ -49,7 +49,10 @@ namespace Indy
 		void SetUniformi( const GLint location, const GLint value) const;
 		
 		void SetUniform2i( const GLchar* uniform, const GLint* value) const;
-		void SetUniform2i( const GLint location, const GLint* value) const;
+		void SetUniform2i(const GLint location, const GLint* value) const;
+
+		void SetUniform2f(const GLchar* uniform, const GLfloat* value) const;
+		void SetUniform2f(const GLint location, const GLfloat* value) const;
 
 
 		/* --- Getters & Setters --- */
