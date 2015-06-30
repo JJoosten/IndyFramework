@@ -118,7 +118,9 @@ int main( int argc, char** argv)
 
 		// lock to ~60fps
 		double totalUpdateRenderTime = updateTimerMS + renderTimeInMS;
-		if (totalUpdateRenderTime < 16.6f) Sleep(16.6f - totalUpdateRenderTime);
+		//if (totalUpdateRenderTime < 16.6f) Sleep(16.6f - totalUpdateRenderTime);
+
+		printf("~fps %f \n", 1000.0f / totalUpdateRenderTime);
 
 		// check GL error
 		glContext->HasGLError();

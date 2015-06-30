@@ -97,6 +97,9 @@
     <None Include="content\shaders\oceanFFT.comp">
       <Filter>content\shaders\ocean[filter]</Filter>
     </None>
+    <None Include="content\shaders\oceanSetup.comp">
+      <Filter>content\shaders\ocean[filter]</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="CopyGLLibToProject.bat" />

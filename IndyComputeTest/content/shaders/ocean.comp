@@ -9,13 +9,11 @@
 
 #define PI 3.1415926535897932384626433832795
 
-#define W0 2.0 * PI / 200.0
+#define W0 0.03141592654// 2.0 * PI / 200.0
 
 // uniforms
-uniform vec2 W; // wind in m/s
 uniform float G; // GRAVITY CONSTANT
-uniform float A; // phillips spectrum
-uniform float DeltaTimeSec;
+uniform float TimeSec;
 uniform float Length;
 uniform int N; // dimension
 
@@ -53,8 +51,6 @@ layout(std140, binding = SHADER_LAYOUT_INDEX_HVALUES) buffer oceanComplexNumbers
 
 // we have 32kb per thread group == 32 bytes per thread on 32x32 incovations
 
-
-
 // ------ FUNCTIONS -------
 Complex complexMul(Complex a, Complex b)
 {
@@ -68,51 +64,14 @@ float dispersion(int nPrime, int mPrime)
     return floor(sqrt(G * sqrt(kx * kx + kz * kz)) / W0) * W0;
 }
 
-float phillipsSpectrum(int nPrime, int mPrime)
-{
-	vec2 k = vec2(PI * (2 * nPrime - N) / Length, PI * (2 * mPrime - N) / Length);
-	
-	float kLength = length(k);
-	
-    if (kLength < 0.000001) return 0.0;
-
-	float kLengthPow2 = kLength * kLength;
-	float kLengthPow4 = kLengthPow2 * kLengthPow2;
-	
-	float wLength = length(W);
-
-	float kDotW = dot(k / kLength, W / wLength);
-	float kDotWPow2 = kDotW * kDotW;
-
-	float L = wLength * wLength / G;
-	float LPow2 = L * L;
-
-	float dampening = 0.001;
-	float DampeningLPow2 = LPow2 * dampening * dampening;
-
-	return A * exp(-1.0 / (kLengthPow2 * LPow2)) / kLengthPow4 * kDotWPow2 * exp(-kLengthPow2 * DampeningLPow2);
-}
-
-Complex hTilde0(int nPrime, int mPrime)
-{
-	// random gaussian var on gpu
-	uint index = mPrime * NUM_VERTICES_PER_EDGE + nPrime;
-
-	float phillipsVal = sqrt( phillipsSpectrum( nPrime, mPrime) / 2.0);
-
-	Complex gaussianRand = randNumbers[index] * phillipsVal;
-
-	return gaussianRand;
-}
-
 Complex hTilde(int nPrime, int mPrime)
 {
-	uint index = mPrime * N + nPrime;
+	int index = mPrime * N + nPrime;
 	
 	Complex hTildeZero = Complex(hvars[index].x, hvars[index].y);
 	Complex hTildeZeromkconj = Complex(hvars[index].z, hvars[index].w);
 	
-    float omegat = dispersion(nPrime, mPrime) * DeltaTimeSec;
+    float omegat = dispersion(nPrime, mPrime) * TimeSec;
 
 	float co = cos(omegat);
     float si = sin(omegat);
@@ -144,7 +103,7 @@ ComplexVecNorm HDN(vec2 x)
 			float kDotX = dot(k,x);
 
 			Complex c = Complex(cos(kDotX), sin(kDotX));
-			Complex hTildeC = complexMul(hTilde(n,m),c);
+			Complex hTildeC = complexMul( hTilde(n,m), c);
 			
 			h = h + hTildeC;
 
@@ -200,8 +159,7 @@ void main()
     vertices[index].norm.y = hdn.N.y;
     vertices[index].norm.z = hdn.N.z;
 
-	return;
-
+	/*
     if (index == 0)
 	{
         vertices[(NUM_VERTICES_PER_EDGE - 1) + NUM_VERTICES_PER_EDGE * (NUM_VERTICES_PER_EDGE - 1)].pos.y = hdn.H.x;
@@ -226,5 +184,5 @@ void main()
         vertices[index + NUM_VERTICES_PER_EDGE * (NUM_VERTICES_PER_EDGE - 1)].norm.x = hdn.N.x;
         vertices[index + NUM_VERTICES_PER_EDGE * (NUM_VERTICES_PER_EDGE - 1)].norm.y = hdn.N.y;
         vertices[index + NUM_VERTICES_PER_EDGE * (NUM_VERTICES_PER_EDGE - 1)].norm.z = hdn.N.z;
-    }
+    }*/
 }

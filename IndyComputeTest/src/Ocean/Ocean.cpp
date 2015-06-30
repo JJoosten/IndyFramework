@@ -1,6 +1,8 @@
 #include "Ocean.h"
 #include "../Paths.h"
 
+#include <time.h>
+
 #include <IndyCore\CoreDefines.h>
 #include <IndyGL\Camera\Camera.h>
 #include <IndyGL\Shader\GLSLShader.h>
@@ -32,6 +34,8 @@ m_vertices(NULL)
 	createhValues();
 
 	initializeShaders();
+
+	srand(time(NULL));
 }
 
 Indy::Ocean::~Ocean()
@@ -72,8 +76,8 @@ void Indy::Ocean::UpdateFrame(const double deltaTimeSec)
 
 	g_frame++;
 
-	if (g_frame != 120)
-		return;
+	//if (g_frame != 120)
+	//	return;
 
 	g_frame = 0;
 
@@ -82,7 +86,7 @@ void Indy::Ocean::UpdateFrame(const double deltaTimeSec)
 		m_computeVertexTransformProgram->Bind();
 
 		// send the delta time to ensure frame sync
-		m_computeVertexTransformProgram->SetUniformf("DeltaTimeSec", deltaTimeSec);
+		m_computeVertexTransformProgram->SetUniformf("TimeSec", time);
 		m_computeVertexTransformProgram->SetUniformi("N", NUM_VERTICES_PER_EDGE);
 		m_computeVertexTransformProgram->SetUniform2f("W", m_windVec.XY);
 		m_computeVertexTransformProgram->SetUniformf("G", 9.81f);
@@ -131,8 +135,6 @@ void Indy::Ocean::DrawFrame(const Indy::Camera& camera)
 	m_vao->Unbind();
 
 	m_shadingProgram->Unbind();
-
-	//m_vertices->PullFromGPU();
 }
 
 void Indy::Ocean::initializeShaders()
@@ -178,17 +180,18 @@ void Indy::Ocean::createOceanMesh()
 	m_vao = new VertexArrayObject();
 
 	const unsigned int numVertices = NUM_VERTICES_PER_EDGE * NUM_VERTICES_PER_EDGE;
-	OceanVertex vertices[numVertices]; // test 64*64 vertices
+	OceanVertex* vertices = new OceanVertex[numVertices]; // test 64*64 vertices
 
 	// spread the vertices
 	for (unsigned int y = 0; y < NUM_VERTICES_PER_EDGE; ++y)
 	{
+		float origZ = ((float)y - (float)NUM_VERTICES_PER_EDGE / 2.0f) * m_length / (float)NUM_VERTICES_PER_EDGE;
+
 		for (unsigned int x = 0; x < NUM_VERTICES_PER_EDGE; ++x)
 		{
-			const unsigned int index = y * NUM_VERTICES_PER_EDGE + x;
-
 			float origX = ((float)x - (float)NUM_VERTICES_PER_EDGE / 2.0f) * m_length / (float)NUM_VERTICES_PER_EDGE;
-			float origZ = ((float)y - (float)NUM_VERTICES_PER_EDGE / 2.0f) * m_length / (float)NUM_VERTICES_PER_EDGE;
+
+			const unsigned int index = y * NUM_VERTICES_PER_EDGE + x;
 
 			vertices[index].Pos = Vector3f(origX, 0, origZ);
 			vertices[index].OrigX = origX;
@@ -199,6 +202,8 @@ void Indy::Ocean::createOceanMesh()
 
 	m_vertices = new StorageBuffer();
 	m_vertices->Create(vertices, sizeof(OceanVertex), numVertices);
+
+	delete[] vertices;
 
 	char* offsetInBytes = (char*)sizeof(OceanVertex);
 
@@ -214,8 +219,8 @@ Indy::Vector2f GaussianRandomVariable()
 {
 	float x1, x2, w;
 	do {
-		x1 = 2.f * (float)rand() / RAND_MAX - 1.f;
-		x2 = 2.f * (float)rand() / RAND_MAX - 1.f;
+		x1 = 2.f * (float)rand() / (float)RAND_MAX - 1.f;
+		x2 = 2.f * (float)rand() / (float)RAND_MAX - 1.f;
 		w = x1 * x1 + x2 * x2;
 	} while (w >= 1.f);
 	w = sqrt((-2.f * log(w)) / w);
@@ -236,7 +241,7 @@ void Indy::Ocean::createRandomVariables()
 	m_randomValues = new StorageBuffer();
 
 	const unsigned int numRandomValues = NUM_VERTICES_PER_EDGE * NUM_VERTICES_PER_EDGE;
-	Vector2f randomNumbers[numRandomValues];
+	Vector2f* randomNumbers = new Vector2f[numRandomValues];
 
 	for (unsigned int y = 0; y < NUM_VERTICES_PER_EDGE; ++y)
 	{
@@ -248,6 +253,8 @@ void Indy::Ocean::createRandomVariables()
 
 	m_randomValues->Create(randomNumbers, sizeof(Vector2f), numRandomValues);
 	m_randomValues->SetShaderLayoutIndex(SHADER_LAYOUT_INDEX_RANDOM_VARS);
+
+	delete[] randomNumbers;
 }
 
 float dispersion(int n_prime, int m_prime) 
@@ -290,7 +297,7 @@ void Indy::Ocean::createhValues()
 	m_hValues = new StorageBuffer();
 
 	const unsigned int numHValues = NUM_VERTICES_PER_EDGE * NUM_VERTICES_PER_EDGE;
-	Vector2f hValues[numHValues * 2]; // we multiply by two to create vector 4s of vector 2s
+	Vector2f* hValues = new Vector2f[numHValues * 2]; // we multiply by two to create vector 4s of vector 2s
 	for ( int y = 0; y < NUM_VERTICES_PER_EDGE; ++y)
 	{
 		for ( int x = 0; x < NUM_VERTICES_PER_EDGE; ++x)
@@ -306,4 +313,6 @@ void Indy::Ocean::createhValues()
 
 	m_hValues->Create(hValues, sizeof(Vector2f) * 2, numHValues);
 	m_hValues->SetShaderLayoutIndex(SHADER_LAYOUT_INDEX_HVALUES);
+
+	delete[] hValues;
 }
