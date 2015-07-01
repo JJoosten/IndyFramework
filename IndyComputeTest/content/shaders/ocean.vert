@@ -21,7 +21,7 @@ void main(void)
 
 	out_Height = in_Pos.y;
 
-	vec3 lightVec = (ViewMat * vec4( vec3(0,1,0), 1)).xyz - posInViewSpace;
+	vec3 lightVec = (ViewMat * vec4( vec3(0,10,0), 1)).xyz - posInViewSpace;
 
 	out_LightDistFromPos = length(lightVec);
 

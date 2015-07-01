@@ -63,13 +63,6 @@ Complex complexMul(Complex a, Complex b)
 	return Complex(a.x * b.x - a.y * b.y, a.x * b.y + a.y * b.x);
 }
 
-float dispersion(int nPrime, int mPrime)
-{
-	float kx = PI * (2 * nPrime - N) / Length;
-	float kz = PI * (2 * mPrime - N) / Length;
-    return floor(sqrt(G * sqrt(kx * kx + kz * kz)) / W0) * W0;
-}
-
 Complex hTilde(int nPrime, int mPrime)
 {
 	int index = mPrime * N + nPrime;
@@ -78,7 +71,6 @@ Complex hTilde(int nPrime, int mPrime)
 	Complex hTildeZeromkconj = Complex(hvars[index].z, hvars[index].w);
 	
     float omegat = dispersions[index] * TimeSec;
-    //float omegat = dispersion(nPrime, mPrime) * TimeSec;
 
 	float co = cos(omegat);
     float si = sin(omegat);
@@ -93,7 +85,8 @@ Complex hTilde(int nPrime, int mPrime)
 }
 
 shared Complex hTildePreCache[WORK_GROUP_SIZE*WORK_GROUP_SIZE]; // 8KB
-shared float kCache[WORK_GROUP_SIZE * WORK_GROUP_SIZE]; // 4KB
+shared float kxCache[WORK_GROUP_SIZE * WORK_GROUP_SIZE]; // 4KB
+shared float kzCache[WORK_GROUP_SIZE * WORK_GROUP_SIZE]; // 4KB
 
 ComplexVecNorm HDN(vec2 x)
 {
@@ -110,41 +103,47 @@ ComplexVecNorm HDN(vec2 x)
 	int numSpans = N / WORK_GROUP_SIZE;
 	int index = localInvocationY * WORK_GROUP_SIZE + localInvocationX;
 	
-	for(int s = 0; s < numSpans; s++)
+	for(int a = 0; a < numSpans; a++)
 	{
-		hTildePreCache[index] = hTilde(localInvocationX + s * WORK_GROUP_SIZE, localInvocationY + s * WORK_GROUP_SIZE);
-		kCache[index] = pi2 * (localInvocationX + s * WORK_GROUP_SIZE - halfN) / Length;
-		
-		memoryBarrierShared();
-
-		for(int m = 0; m < WORK_GROUP_SIZE; m++)
+		for(int b = 0; b < numSpans; b++)
 		{
-			float kz = kCache[m];
+			// use shared memory to cache 
+			barrier();
 
-			for(int n = 0; n < WORK_GROUP_SIZE; n++)
+			hTildePreCache[index] = hTilde(localInvocationX + b * WORK_GROUP_SIZE, localInvocationY + a * WORK_GROUP_SIZE);
+			kzCache[index] = pi2 * (localInvocationY + a * WORK_GROUP_SIZE - halfN) / Length; 
+			kxCache[index] = pi2 * (localInvocationX + b * WORK_GROUP_SIZE - halfN) / Length;
+
+			barrier();
+
+			for(int m = 0; m < WORK_GROUP_SIZE; m++)
 			{
-				float kx = kCache[n];
-				
-				vec2 k = vec2(kx, kz);
-				
-				float kDotX = dot(k,x);
-				
-				Complex c = Complex(cos(kDotX), sin(kDotX));
-				Complex hTildeC = complexMul( hTildePreCache[m * WORK_GROUP_SIZE + n], c);
-				
-				h = h + hTildeC;
-
-				norm = norm + vec3(-kx * hTildeC.y, 0.0, -kz * hTildeC.y);
+				float kz = kzCache[m * WORK_GROUP_SIZE];
+				for(int n = 0; n < WORK_GROUP_SIZE; n++)
+				{
+					float kx = kxCache[n];
 			
-				float kLength = length(k);
+					vec2 k = vec2(kx, kz);
+
+					float kDotX = dot(k,x);
+
+					Complex c = Complex(cos(kDotX), sin(kDotX));
+					Complex hTildeC = complexMul( hTildePreCache[m * WORK_GROUP_SIZE + n], c);
 			
-				float mulKlength = 0.0;
-				if(kLength > 0.00001)
-					mulKlength = 1.0 / kLength;
+					h = h + hTildeC;
 
-				float hTildeCyMul = mulKlength * hTildeC.y;
+					norm = norm + vec3(-kx * hTildeC.y, 0.0, -kz * hTildeC.y);
+			
+					float kLength = length(k);
+			
+					float mulKlength = 0.0;
+					if(kLength > 0.00001)
+						mulKlength = 1.0 / kLength;
 
-				d = d + vec2(kx * hTildeCyMul, kz * hTildeCyMul);
+					float hTildeCyMul = mulKlength * hTildeC.y;
+
+					d = d + vec2(kx * hTildeCyMul, kz * hTildeCyMul);
+				}
 			}
 		}
 	}

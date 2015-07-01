@@ -110,7 +110,7 @@ int main( int argc, char** argv)
 		game.UpdateFrame( frameTimeInSeconds);
 		updateTimer.Stop();
 		const double updateTimerMS = updateTimer.GetMilliSeconds();
-
+		Sleep(60);
 		renderTimer.Start();
 		game.DrawFrame( frameTimeInSeconds);
 		renderTimer.Stop();

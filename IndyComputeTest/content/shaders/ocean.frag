@@ -17,21 +17,19 @@ void main(void)
 
     vec4 ambient  = vec4(0.0, 0.65, 0.75, 1.0);
     vec4 diffuse  = vec4(0.5, 0.65, 0.75, 1.0);
-    vec4 specular = vec4(1.0, 0.25, 0.0,  1.0);
+    vec4 specular = vec4(1.0);
  
     float ambientScale  = 0.30;
     float diffuseScale  = 0.30;
-    float specularScale = 1.80;
+    float specularScale = 0.2;
 
-	float d = dot(normal, light);
-    bool facing = d > 0.0;
+	float d = max(dot(normal, light),0);
 
     FragCol = ambient  * ambientScale +
-				diffuse  * diffuseScale * max(d, 0);
+				diffuse  * diffuseScale * d;
 
-	if(facing) 
-		FragCol += specular * specularScale * max(pow(dot(normal, h), 120.0), 0.0);
+	FragCol += d * specular * specularScale * max(pow(dot(normal, h), 120.0), 0.0);
 
-	FragCol += vec4(0,107.0/255.0,82.0/255.0,1) * max( 0, mix(0.0,0.03,in_Height));
+	FragCol += vec4(0,107.0/255.0,82.0/255.0,1) * max( 0, mix(0.0,0.05,in_Height));
 
 }

@@ -118,6 +118,7 @@ void Indy::Ocean::UpdateFrame(const double deltaTimeSec)
 void Indy::Ocean::DrawFrame(const Indy::Camera& camera)
 {
 	glMemoryBarrier(GL_SHADER_STORAGE_BARRIER_BIT);
+	glMemoryBarrier(GL_VERTEX_ATTRIB_ARRAY_BARRIER_BIT);
 
 	m_shadingProgram->Bind();
 
@@ -286,7 +287,7 @@ Indy::Vector2f GaussianRandomVariable()
 		x2 = 2.f * (float)rand() / (float)RAND_MAX - 1.f;
 		w = x1 * x1 + x2 * x2;
 	} while (w == 0.0 || w > 1.0f);
-	w = 1.0f;// sqrt(-2.f * log(w) / w);
+	w = sqrt(-2.f * log(w) / w);
 
 	return Indy::Vector2f(x1 * w, x2 * w);
 }
