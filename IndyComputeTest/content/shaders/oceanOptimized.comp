@@ -92,6 +92,9 @@ Complex hTilde(int nPrime, int mPrime)
     return res;
 }
 
+shared Complex hTildePreCache[WORK_GROUP_SIZE*WORK_GROUP_SIZE]; // 8KB
+shared float kCache[WORK_GROUP_SIZE * WORK_GROUP_SIZE]; // 4KB
+
 ComplexVecNorm HDN(vec2 x)
 {
 	Complex h = Complex(0.0,0.0);
@@ -100,34 +103,49 @@ ComplexVecNorm HDN(vec2 x)
 
 	float pi2 = 2.0 * PI;
 	float halfN = N / 2.0;
+	
+	int localInvocationX = int(gl_LocalInvocationID.x);
+	int localInvocationY = int(gl_LocalInvocationID.y);
 
-	for(int m = 0; m < N; m++)
+	int numSpans = N / WORK_GROUP_SIZE;
+	int index = localInvocationY * WORK_GROUP_SIZE + localInvocationX;
+	
+	for(int s = 0; s < numSpans; s++)
 	{
-		float kz = pi2 * (m - halfN) / Length;
-		for(int n = 0; n < N; n++)
+		hTildePreCache[index] = hTilde(localInvocationX + s * WORK_GROUP_SIZE, localInvocationY + s * WORK_GROUP_SIZE);
+		kCache[index] = pi2 * (localInvocationX + s * WORK_GROUP_SIZE - halfN) / Length;
+		
+		memoryBarrierShared();
+
+		for(int m = 0; m < WORK_GROUP_SIZE; m++)
 		{
-			float kx = pi2 * (n - halfN) / Length;
+			float kz = kCache[m];
+
+			for(int n = 0; n < WORK_GROUP_SIZE; n++)
+			{
+				float kx = kCache[n];
+				
+				vec2 k = vec2(kx, kz);
+				
+				float kDotX = dot(k,x);
+				
+				Complex c = Complex(cos(kDotX), sin(kDotX));
+				Complex hTildeC = complexMul( hTildePreCache[m * WORK_GROUP_SIZE + n], c);
+				
+				h = h + hTildeC;
+
+				norm = norm + vec3(-kx * hTildeC.y, 0.0, -kz * hTildeC.y);
 			
-			vec2 k = vec2(kx, kz);
-
-			float kDotX = dot(k,x);
-
-			Complex c = Complex(cos(kDotX), sin(kDotX));
-			Complex hTildeC = complexMul( hTilde(n,m), c);
+				float kLength = length(k);
 			
-			h = h + hTildeC;
+				float mulKlength = 0.0;
+				if(kLength > 0.00001)
+					mulKlength = 1.0 / kLength;
 
-			norm = norm + vec3(-kx * hTildeC.y, 0.0, -kz * hTildeC.y);
-			
-			float kLength = length(k);
-			
-			float mulKlength = 0.0;
-			if(kLength > 0.00001)
-				mulKlength = 1.0 / kLength;
+				float hTildeCyMul = mulKlength * hTildeC.y;
 
-			float hTildeCyMul = mulKlength * hTildeC.y;
-
-			d = d + vec2(kx * hTildeCyMul, kz * hTildeCyMul);
+				d = d + vec2(kx * hTildeCyMul, kz * hTildeCyMul);
+			}
 		}
 	}
 

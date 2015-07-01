@@ -94,10 +94,10 @@
     <None Include="content\SharedDefines.defines">
       <Filter>content</Filter>
     </None>
-    <None Include="content\shaders\oceanFFT.comp">
+    <None Include="content\shaders\oceanSetup.comp">
       <Filter>content\shaders\ocean[filter]</Filter>
     </None>
-    <None Include="content\shaders\oceanSetup.comp">
+    <None Include="content\shaders\oceanOptimized.comp">
       <Filter>content\shaders\ocean[filter]</Filter>
     </None>
   </ItemGroup>

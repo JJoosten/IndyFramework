@@ -10,7 +10,7 @@ namespace Indy
 	class StorageBuffer;
 	class GLSLShaderProgram;
 	class Camera;
-
+	class IndexBuffer;
 	class Ocean
 	{
 		struct OceanVertex
@@ -41,9 +41,13 @@ namespace Indy
 		StorageBuffer*			m_vertices;
 		StorageBuffer*			m_randomValues;
 		StorageBuffer*			m_hValues;
+		StorageBuffer*			m_dispersion;
+		IndexBuffer*			m_indexBuffer;
 		VertexArrayObject*		m_vao;
 		GLSLShader*				m_computeVertexTransform;
 		GLSLShaderProgram*		m_computeVertexTransformProgram;
+		GLSLShader*				m_computeVertexInitialize;
+		GLSLShaderProgram*		m_computeVertexInitializeProgram; 
 		GLSLShader*				m_vertexShader;
 		GLSLShader*				m_fragmentShader;
 		GLSLShaderProgram*		m_shadingProgram;
@@ -51,5 +55,6 @@ namespace Indy
 		Vector2f				m_windVec;
 		float					m_length;
 		float					m_phillipsSpectrum;
+		float					m_elapsedTimeInSec;
 	};
 }
