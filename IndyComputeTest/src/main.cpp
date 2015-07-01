@@ -58,6 +58,10 @@ int main( int argc, char** argv)
 	glContext = win32GLContext;
 #endif
 	glContext->Bind();
+
+	glEnable(GL_CULL_FACE);
+	glEnable(GL_DEPTH_TEST);
+
 	
 	printf("Vendor %s \n", glContext->GetVendor());
 	printf("Version %s \n", glContext->GetVersion());
@@ -110,7 +114,6 @@ int main( int argc, char** argv)
 		game.UpdateFrame( frameTimeInSeconds);
 		updateTimer.Stop();
 		const double updateTimerMS = updateTimer.GetMilliSeconds();
-		Sleep(60);
 		renderTimer.Start();
 		game.DrawFrame( frameTimeInSeconds);
 		renderTimer.Stop();
@@ -120,7 +123,19 @@ int main( int argc, char** argv)
 		double totalUpdateRenderTime = updateTimerMS + renderTimeInMS;
 		//if (totalUpdateRenderTime < 16.6f) Sleep(16.6f - totalUpdateRenderTime);
 
-		printf("~fps %f \n", 1000.0f / totalUpdateRenderTime);
+		//printf("~fps %f \n", 1000.0f / totalUpdateRenderTime);
+
+		static int counter = 0;
+		static double TotalTime = totalUpdateRenderTime;
+		TotalTime += totalUpdateRenderTime;
+		if (counter == 25)
+		{
+			printf("~fps %f \n", 1000.0f / (TotalTime / counter));
+			counter = 0;
+			TotalTime = 0;
+		}
+		++counter;
+
 
 		// check GL error
 		glContext->HasGLError();

@@ -1,12 +1,12 @@
 #define NUM_VERTICES_PER_EDGE 128
 
-#define WORK_GROUP_SIZE 16
+#define WORK_GROUP_SIZE 8
 
 #define LENGTH 64
 
-#define WIND_VEC Indy::Vector2f(25.1f,25.1f)
+#define WIND_VEC Indy::Vector2f(25.001f,25.001f)
 
-#define PHILLIPS 0.0005f
+#define PHILLIPS 0.0002f
 
 #define SHADER_LAYOUT_INDEX_VERTICES 0
 #define SHADER_LAYOUT_INDEX_RANDOM_VARS 1

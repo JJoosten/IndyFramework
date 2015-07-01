@@ -83,17 +83,6 @@ Complex hTildeStart(int nPrime, int mPrime)
 layout (local_size_x = WORK_GROUP_SIZE, local_size_y = WORK_GROUP_SIZE, local_size_z = 1) in;
 void main() 
 {
-	/* Compute Shader Input From OpenGL 
-	--- Work group dimensions ---
-	gl_NumWorkGroups (uvec3)
-	gl_WorkGroupSize (const uvec3)
-	--- Work group and invocation IDs ---
-	gl_WorkGroupID (uvec3)
-	gl_LocalInvocationID (uvec3)
-	--- Derived variables ---
-	gl_GlobalInvocationID (uvec3)
-	gl_LocalInvocationIndex (uint) */
-
 	uint index = gl_GlobalInvocationID.y * gl_NumWorkGroups.x * gl_WorkGroupSize.x + gl_GlobalInvocationID.x;
 
 	int valx = int(gl_GlobalInvocationID.x);

@@ -101,7 +101,8 @@ void Indy::Ocean::UpdateFrame(const double deltaTimeSec)
 		m_dispersion->Bind();
 
 		// distribute work in quads
-		glDispatchCompute(NUM_VERTICES_PER_EDGE / WORK_GROUP_SIZE, NUM_VERTICES_PER_EDGE / WORK_GROUP_SIZE, 1);
+		int numCompute = (NUM_VERTICES_PER_EDGE + (WORK_GROUP_SIZE / 2)) / WORK_GROUP_SIZE;
+		glDispatchCompute(numCompute, numCompute, 1);
 
 		m_dispersion->Unbind();
 
@@ -344,7 +345,8 @@ void Indy::Ocean::createhValues()
 		m_dispersion->Bind();
 
 		// distribute work in quads
-		glDispatchCompute(NUM_VERTICES_PER_EDGE / WORK_GROUP_SIZE, NUM_VERTICES_PER_EDGE / WORK_GROUP_SIZE, 1);
+		int numCompute = (NUM_VERTICES_PER_EDGE + (WORK_GROUP_SIZE / 2)) / WORK_GROUP_SIZE;
+		glDispatchCompute(numCompute, numCompute, 1);
 
 		m_hValues->Unbind();
 

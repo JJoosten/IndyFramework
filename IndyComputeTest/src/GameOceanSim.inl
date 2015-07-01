@@ -109,7 +109,7 @@ namespace Indy
 	private:
 		void loadCamera(void)
 		{
-			float pos[3] = { 0.0f, 5.0f, 0.0f };
+			float pos[3] = { 10.0f, 45.0f, -30.0f };
 			float pitch = 60;
 
 			m_camera = new Camera();
