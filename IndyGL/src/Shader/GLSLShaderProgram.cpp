@@ -142,7 +142,7 @@ namespace Indy
 
 		if ( result != GL_TRUE)
 		{
-			GLsizei stringLength = 0;
+			GLsizei stringLength = 1024;
 
 			char infoLog[1024];
 			memset( infoLog, 0, 1024);
